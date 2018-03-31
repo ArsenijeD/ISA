@@ -25,3 +25,9 @@ Name: sql11229910
 Username: sql11229910
 Password: n99HsTTTwR
 Port number: 3306
+
+
+JENKINS
+uss:admin
+pass:praksalevi9
+
