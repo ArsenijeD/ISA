@@ -15,6 +15,7 @@ Azure:
 username: praksa2018@gmail.com
 pass: praksalevi9
 */
+
 mysql:
 workbanch:https://dev.mysql.com/downloads/file/?id=474210
 hosting: https://www.freemysqlhosting.net
