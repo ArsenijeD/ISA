@@ -1,19 +1,17 @@
 # ISA
 projekat iz predmeta ISA, 7. semestar
 
+mail:
+username: praksa2018@gmail.com
+pass: praksalevi9
 
 SQL server:
+/*ne koristimo  Azure:
 
 username: isa-admin
 server name: tim-snova
 pass: praksalevi9!
 db name: ISA
-
-/*ne koristimo
-Azure:
-
-username: praksa2018@gmail.com
-pass: praksalevi9
 */
 mysql:
 workbanch:https://dev.mysql.com/downloads/file/?id=474210
@@ -27,3 +25,9 @@ Name: sql11229910
 Username: sql11229910
 Password: n99HsTTTwR
 Port number: 3306
+
+
+JENKINS
+uss:admin
+pass:praksalevi9
+
