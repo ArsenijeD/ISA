@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/user/create", method = RequestMethod.GET)
+    @RequestMapping(value = "	", method = RequestMethod.GET)
     public ModelAndView getUserCreatePage() {
         LOGGER.debug("User create form triggered");
         return new ModelAndView("userCreate", "form", new UserCreateForm());
