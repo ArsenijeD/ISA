@@ -1,7 +1,9 @@
 package com.example.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -11,10 +13,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.domain.FriendRequest;
+import com.example.domain.FriendRequestStatus;
 import com.example.domain.MyRole;
 import com.example.domain.User;
 import com.example.domain.UserCreateForm;
 import com.example.domain.VerificationToken;
+import com.example.repository.FriendRequestRepository;
 import com.example.repository.RoleRepository;
 import com.example.repository.UserRepository;
 import com.example.repository.VerificationTokenRepository;
@@ -28,6 +33,9 @@ public class UserServiceImpl implements UserService {
 	 public static final String TOKEN_EXPIRED = "expired";
      public static final String TOKEN_VALID = "valid";
 	    
+    @Autowired 
+    private FriendRequestRepository friendRequestRepository;
+    
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -111,4 +119,14 @@ public class UserServiceImpl implements UserService {
 	    public VerificationToken getVerificationToken(final String VerificationToken) {
 	        return tokenRepository.findByToken(VerificationToken);
 	    }
+
+		@Override
+		public List<User> getAllFriends(long id) {
+			ArrayList<User> friends=new ArrayList<User>();
+			ArrayList<FriendRequest> allReq=(ArrayList<FriendRequest>) friendRequestRepository.findByStatusAndSender(FriendRequestStatus.APPROVED, id);
+			for(FriendRequest freq : allReq){
+				friends.add(freq.getSender());
+			}
+			return friends;
+		}
 }
