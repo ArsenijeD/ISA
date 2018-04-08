@@ -18,8 +18,8 @@
 			<c:if test="${not empty currentUser}">
 				<li>
 					<form action="/logout" method="post">
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}" />
+						 <input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" /> 
 						<button type="submit">Log out</button>
 					</form>
 				</li>
@@ -31,6 +31,6 @@
 				<li><a href="/users">View all users</a></li>
 			</c:if>
 		</ul>
-	</nav>
+	</nav> 
 </body>
 </html>

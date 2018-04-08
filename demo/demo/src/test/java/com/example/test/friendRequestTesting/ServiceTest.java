@@ -1,4 +1,4 @@
-package testing.friendRequestTesting;
+package com.example.test.friendRequestTesting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
