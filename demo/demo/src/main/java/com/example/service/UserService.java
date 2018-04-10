@@ -1,9 +1,8 @@
 package com.example.service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
-
-import org.springframework.stereotype.Service;
 
 import com.example.domain.User;
 import com.example.domain.UserCreateForm;
@@ -29,6 +28,8 @@ public interface UserService {
     void saveRegisteredUser(User user);
     
     public VerificationToken getVerificationToken(final String VerificationToken);
+    
+    public List<User> getAllFriends(long id);
 
 
 }
