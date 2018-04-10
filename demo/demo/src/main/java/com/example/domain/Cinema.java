@@ -74,17 +74,28 @@ public class Cinema implements Serializable {
 		this.admins = admins;
 	}
 
+	public String getOpis() {
+		return opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
+
+	public Cinema(String name, String opis, String adress, Set<User> admins) {
+		super();
+		this.name = name;
+		this.opis = opis;
+		this.adress = adress;
+		this.admins = admins;
+	}
+
 	public Cinema() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cinema(String name, String adress, Set<User> admins) {
-		super();
-		this.name = name;
-		this.adress = adress;
-		this.admins = admins;
-	}
+	
 	
 	
 

@@ -1,3 +1,4 @@
+
 package com.example;
 
 import org.springframework.boot.SpringApplication;
@@ -11,7 +12,6 @@ public class DemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 		System.out.println("helloo mavene jodza.");
-		//CinemaController cinemaController = new CinemaController();
-		//cinemaController.getCinemas();
+	
 	}
 }
