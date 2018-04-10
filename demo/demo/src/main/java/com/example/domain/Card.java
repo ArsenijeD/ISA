@@ -7,13 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ticket")
-public class Ticket implements Serializable{
+@Table(name = "card")
+public class Card implements Serializable{
 
 	/**
 	 * 
@@ -23,7 +22,7 @@ public class Ticket implements Serializable{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticket_id", nullable = false, updatable = false)
+    @Column(name = "card_id", nullable = false, updatable = false)
     private Long id;
 	
 	@Column(name = "price", nullable = false)
@@ -36,29 +35,34 @@ public class Ticket implements Serializable{
 	private boolean reserved;
 	
 	
-	@OneToOne(mappedBy = "ticket")
-	private ProjectionSeats projectionSeats;
+	@OneToOne(mappedBy = "card")
+	private PresentationChairs presentationChairs;
 
-	
+
 	public Long getId() {
 		return id;
 	}
+
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+
 	public int getPrice() {
 		return price;
 	}
+
 
 	public void setPrice(int price) {
 		this.price = price;
 	}
 
+
 	public int getDiscount() {
 		return discount;
 	}
+
 
 	public void setDiscount(int discount) {
 		this.discount = discount;
@@ -69,35 +73,36 @@ public class Ticket implements Serializable{
 		return reserved;
 	}
 
+
 	public void setReserved(boolean reserved) {
 		this.reserved = reserved;
 	}
 
-	public ProjectionSeats getProjectionSeats() {
-		return projectionSeats;
+
+	public PresentationChairs getPresentationChairs() {
+		return presentationChairs;
 	}
 
-	public void setProjectionSeats(ProjectionSeats projectionSeats) {
-		this.projectionSeats = projectionSeats;
+
+	public void setPresentationChairs(PresentationChairs presentationChairs) {
+		this.presentationChairs = presentationChairs;
 	}
 
-	public Ticket() {
+
+	public Card() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ticket(int price, int discount, boolean reserved, ProjectionSeats projectionSeats) {
+
+	public Card(int price, int discount, boolean reserved, PresentationChairs presentationChairs) {
 		super();
 		this.price = price;
 		this.discount = discount;
 		this.reserved = reserved;
-		this.projectionSeats = projectionSeats;
+		this.presentationChairs = presentationChairs;
 	}
-
-
 	
 	
-	
-
 
 }

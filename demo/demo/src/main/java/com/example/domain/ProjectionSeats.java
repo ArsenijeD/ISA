@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +20,8 @@ public class ProjectionSeats implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
 	
 	@Column(name = "taken", nullable = false)
     private boolean taken;
@@ -30,6 +35,10 @@ public class ProjectionSeats implements Serializable{
 	@ManyToOne
     @JoinColumn(name="seat_id", nullable=false)
     private Seat seat;
+
+	@OneToOne
+	@JoinColumn(name = "ticket_id")
+	private Ticket ticket;
 
 	public boolean isTaken() {
 		return taken;
@@ -55,17 +64,32 @@ public class ProjectionSeats implements Serializable{
 		this.seat = seat;
 	}
 
+
+	public Ticket getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
+	}
+
 	public ProjectionSeats() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProjectionSeats(boolean taken, Projection projection, Seat seat) {
+	public ProjectionSeats(boolean taken, Ticket ticket) {
 		super();
 		this.taken = taken;
-		this.projection = projection;
-		this.seat = seat;
+		this.ticket = ticket;
 	}
+
+
+	
+
+
+
+	
 	
 	
 	
