@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,8 +33,8 @@ public class Cinema implements Serializable {
 	@Column(name = "name", nullable = false, unique = true, columnDefinition="VARCHAR(40)")
     private String name;
 	
-	@Column(name = "opis", nullable = false, unique = true, columnDefinition="VARCHAR(50)")
-    private String opis;
+	@Column(name = "description", nullable = false, columnDefinition="VARCHAR(50)")
+    private String description;
 	
 	@Column(name = "adress", nullable = false, unique = true, columnDefinition="VARCHAR(40)")
     private String adress;
@@ -41,7 +42,19 @@ public class Cinema implements Serializable {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_cinema", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "cinema_id"))
     private Set<User> admins;
+	
+	@OneToMany(mappedBy="cinema")
+    private Set<Hall> halls;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "cinema_projection", joinColumns = @JoinColumn(name = "cinema_id"), inverseJoinColumns = @JoinColumn(name = "projection_id"))
+    private Set<Projection> projections;
 
+	
+	 @OneToMany(mappedBy="cinema")
+	 private Set<RatingCinema> ratings;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -73,27 +86,63 @@ public class Cinema implements Serializable {
 	public void setAdmins(Set<User> admins) {
 		this.admins = admins;
 	}
-
-	public String getOpis() {
-		return opis;
+	
+	
+	public String getDescription() {
+		return description;
 	}
 
-	public void setOpis(String opis) {
-		this.opis = opis;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public Cinema(String name, String opis, String adress, Set<User> admins) {
-		super();
-		this.name = name;
-		this.opis = opis;
-		this.adress = adress;
-		this.admins = admins;
+	public Set<Hall> getHalls() {
+		return halls;
 	}
 
+	public void setHalls(Set<Hall> halls) {
+		this.halls = halls;
+	}
+	
+	
+	public Set<Projection> getProjections() {
+		return projections;
+	}
+
+	public void setProjections(Set<Projection> projections) {
+		this.projections = projections;
+	}
+	
+	
+
+	public Set<RatingCinema> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Set<RatingCinema> ratings) {
+		this.ratings = ratings;
+	}
+
+	
 	public Cinema() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+
+	public Cinema(String name, String description, String adress, Set<User> admins, Set<Hall> halls,
+			Set<Projection> projections, Set<RatingCinema> ratings) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.adress = adress;
+		this.admins = admins;
+		this.halls = halls;
+		this.projections = projections;
+		this.ratings = ratings;
+	}
+
+	
 
 	
 	
