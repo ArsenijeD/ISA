@@ -123,10 +123,12 @@ public class Cinema implements Serializable {
 		this.ratings = ratings;
 	}
 
+	
 	public Cinema() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 
 	public Cinema(String name, String description, String adress, Set<User> admins, Set<Hall> halls,
 			Set<Projection> projections, Set<RatingCinema> ratings) {
@@ -142,7 +144,6 @@ public class Cinema implements Serializable {
 
 	
 
-	
 	
 	
 	

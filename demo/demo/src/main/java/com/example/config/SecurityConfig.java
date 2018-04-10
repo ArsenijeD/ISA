@@ -22,7 +22,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/regitrationConfirm.html?token=**", "/public/**","/h2-console/**, /cinemas/**").permitAll()// / ili /public/billo sta ne prolazi autent. i moze bilo ko
+                .antMatchers("/","/regitrationConfirm.html?token=**", "/public/**", "/public/cinemas/**","/h2-console/**, /cinemas/**").permitAll()// / ili /public/billo sta ne prolazi autent. i moze bilo ko
                 .antMatchers("/users/**").hasAuthority("ADMIN")
                 .anyRequest().fullyAuthenticated()
                 .and()
