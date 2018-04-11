@@ -41,4 +41,10 @@ public class FriendRequest {
 	public void setReceiver(User receiver) {
 		this.receiver = receiver;
 	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
