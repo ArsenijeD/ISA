@@ -9,12 +9,14 @@ import { routing } from './app.routing';
 import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
 
 import { RegisterCinemaService } from './services/register-cinema.service';
+import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterCinemaComponent
+    RegisterCinemaComponent,
+    AdminProfileComponent
   ],
   imports: [
     BrowserModule,

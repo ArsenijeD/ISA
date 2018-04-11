@@ -81,6 +81,7 @@ public class CinemaController {
 		
 	}
 	
+	
 //	@RequestMapping(value="/registerCinema", method = RequestMethod.POST) 
 //	public ResponseEntity registerCinema(@RequestBody Cinema c) {
 //		System.out.println("POGODIO ME JE");
