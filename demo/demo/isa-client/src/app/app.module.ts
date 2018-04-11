@@ -12,6 +12,7 @@ import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.com
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
 
 import { CinemaService } from './services/cinema.service'
+import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
 
 
 @NgModule({
@@ -21,6 +22,8 @@ import { CinemaService } from './services/cinema.service'
     HomeGuestComponent,
     ViewCinemasComponent,
     ViewTheatersComponent
+    LoginComponent,
+    RegisterCinemaComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,7 @@ import { CinemaService } from './services/cinema.service'
     HttpClientModule,
     HttpModule
   ],
-  providers: [HttpClientModule, CinemaService],
+  providers: [HttpClientModule, CinemaService, RegisterCinemaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

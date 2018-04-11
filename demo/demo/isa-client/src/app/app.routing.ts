@@ -4,6 +4,7 @@ import { LoginComponent } from "./components/login-component.component";
 import { HomeGuestComponent } from './components/home-guest/home-guest.component';
 import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.component';
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
+import { RegisterCinemaComponent } from "./components/register-cinema/register-cinema.component";
 
 
 const appRoutes: Routes = 
