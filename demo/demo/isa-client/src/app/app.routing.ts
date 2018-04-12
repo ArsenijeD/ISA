@@ -5,6 +5,7 @@ import { HomeGuestComponent } from './components/home-guest/home-guest.component
 import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.component';
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
 import { RegisterCinemaComponent } from "./components/register-cinema/register-cinema.component";
+import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component'
 
 
 const appRoutes: Routes = 
@@ -17,6 +18,11 @@ const appRoutes: Routes =
     {
         path: 'home-guest',
         component: HomeGuestComponent
+    },
+
+    {
+        path: 'cinema-repertoire',
+        component: CinemaRepertoireComponent
     },
 
     {

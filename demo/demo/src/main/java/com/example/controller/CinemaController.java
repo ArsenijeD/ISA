@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.domain.Cinema;
+import com.example.domain.Theater;
 import com.example.service.CinemaService;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/public/cinemas")
 public class CinemaController {
 
@@ -31,7 +33,7 @@ public class CinemaController {
 			value = "/getAll", 
 			method = RequestMethod.GET, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Cinema> getCinemas() {
+	public List<Cinema>  getCinemas() {
 		
 		return cinemaService.getAll();
 

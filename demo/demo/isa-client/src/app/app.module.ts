@@ -13,7 +13,8 @@ import { ViewTheatersComponent } from './components/view-theaters/view-theaters.
 
 import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
 
-import { CinemaService } from './services/cinema.service'
+import { CinemaService } from './services/cinema.service';
+import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component'
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CinemaService } from './services/cinema.service'
     HomeGuestComponent,
     ViewCinemasComponent,
     ViewTheatersComponent,
-    RegisterCinemaComponent
+    RegisterCinemaComponent,
+    CinemaRepertoireComponent
   ],
   imports: [
     BrowserModule,

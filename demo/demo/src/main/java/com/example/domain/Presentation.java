@@ -29,8 +29,11 @@ public class Presentation implements Serializable{
     private Long id;
 	
 	@Column(name = "date", nullable = false)
-    private Date date;
+    private String date;
 	
+	
+	@Column(name = "time", nullable = false)
+	private String time;
 	
 	@ManyToOne
     @JoinColumn(name="performance_id", nullable=false)
@@ -38,8 +41,12 @@ public class Presentation implements Serializable{
 
 	
 	@OneToMany(mappedBy="presentation")
-    private Set<PresentationChairs> presentationChairs;
+    private Set<Card> cards;
 
+	
+	@Column(name = "discount")
+	private int discount;
+	
 
 	public Long getId() {
 		return id;
@@ -51,12 +58,12 @@ public class Presentation implements Serializable{
 	}
 
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -71,13 +78,36 @@ public class Presentation implements Serializable{
 	}
 
 
-	public Set<PresentationChairs> getPresentationChairs() {
-		return presentationChairs;
+	
+
+	public Set<Card> getCards() {
+		return cards;
 	}
 
 
-	public void setPresentationChairs(Set<PresentationChairs> presentationChairs) {
-		this.presentationChairs = presentationChairs;
+	public void setCards(Set<Card> cards) {
+		this.cards = cards;
+	}
+
+
+	public String getTime() {
+		return time;
+	}
+
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	
+
+	public int getDiscount() {
+		return discount;
+	}
+
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
 	}
 
 
@@ -87,12 +117,21 @@ public class Presentation implements Serializable{
 	}
 
 
-	public Presentation(Date date, Performance performance, Set<PresentationChairs> presentationChairs) {
+	public Presentation(String date, String time, Performance performance, Set<Card> cards, int discount) {
 		super();
 		this.date = date;
+		this.time = time;
 		this.performance = performance;
-		this.presentationChairs = presentationChairs;
+		this.cards = cards;
+		this.discount = discount;
 	}
+
+
+	
+
+
+	
+
 
 
 

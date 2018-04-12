@@ -29,13 +29,16 @@ public class Seat implements Serializable{
     private Long id;
 	
 	
+	@Column(name = "seat_number", nullable = false, updatable = false)
+	private int number;
+	
 	@ManyToOne
     @JoinColumn(name="hall_id", nullable=false)
     private Hall hall;
 
 	
 	@OneToMany(mappedBy="seat")
-    private Set<ProjectionSeats> projectionSeats;
+    private Set<Ticket> tickets;
 	
 
 	public Long getId() {
@@ -44,6 +47,16 @@ public class Seat implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 	public Hall getHall() {
@@ -55,25 +68,29 @@ public class Seat implements Serializable{
 	}
 	
 
-	public Set<ProjectionSeats> getProjectionSeats() {
-		return projectionSeats;
+	public Set<Ticket> getTickets() {
+		return tickets;
 	}
 
-	public void setProjectionSeats(Set<ProjectionSeats> projectionSeats) {
-		this.projectionSeats = projectionSeats;
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 
-	
 	public Seat() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Seat(Hall hall, Set<ProjectionSeats> projectionSeats) {
+	public Seat(int number, Hall hall, Set<Ticket> tickets) {
 		super();
+		this.number = number;
 		this.hall = hall;
-		this.projectionSeats = projectionSeats;
+		this.tickets = tickets;
 	}
+
+	
+	
+
 
 	
 	

@@ -46,10 +46,6 @@ public class Cinema implements Serializable {
 	@OneToMany(mappedBy="cinema")
     private Set<Hall> halls;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "cinema_projection", joinColumns = @JoinColumn(name = "cinema_id"), inverseJoinColumns = @JoinColumn(name = "projection_id"))
-    private Set<Projection> projections;
-
 	
 	 @OneToMany(mappedBy="cinema")
 	 private Set<RatingCinema> ratings;
@@ -105,15 +101,6 @@ public class Cinema implements Serializable {
 	}
 	
 	
-	public Set<Projection> getProjections() {
-		return projections;
-	}
-
-	public void setProjections(Set<Projection> projections) {
-		this.projections = projections;
-	}
-	
-	
 
 	public Set<RatingCinema> getRatings() {
 		return ratings;
@@ -131,14 +118,13 @@ public class Cinema implements Serializable {
 
 
 	public Cinema(String name, String description, String adress, Set<User> admins, Set<Hall> halls,
-			Set<Projection> projections, Set<RatingCinema> ratings) {
+			 Set<RatingCinema> ratings) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.adress = adress;
 		this.admins = admins;
 		this.halls = halls;
-		this.projections = projections;
 		this.ratings = ratings;
 	}
 

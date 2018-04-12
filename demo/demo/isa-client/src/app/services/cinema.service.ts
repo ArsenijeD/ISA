@@ -13,12 +13,21 @@ import { HttpHeaders, HttpClient, HttpErrorResponse, HttpParams  } from '@angula
 @Injectable()
 export class CinemaService {
 
+
+  private c = new BehaviorSubject<any>(null);
+  currentCinema = this.c.asObservable();
+
+
   constructor(private http: Http) { 
 
   }
 
   getCinemas(){
-    return this.http.get("http://localhost:8080/public/cinemas/getAll").map(data => data.json())
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get("http://localhost:8080/public/cinemas/getAll", {headers:headers}).map(data => data.json())
     .catch((err:HttpErrorResponse) =>
     {
         alert(err.status + " " + err.error.error + " \n" + err.error.message);
@@ -34,6 +43,12 @@ export class CinemaService {
     alert(JSON.stringify(cinema));
     return this.http.post('http://localhost:8080/public/cinemas/register', 
       JSON.stringify(cinema), { headers : headers }).map((data : Response) => data.json());
+  }
+
+
+  selectCinema(cinema: any) {
+
+    this.c.next(cinema);
   }
 
 }

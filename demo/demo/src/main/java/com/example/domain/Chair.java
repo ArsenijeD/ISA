@@ -34,7 +34,7 @@ public class Chair implements Serializable{
 
 	
 	@OneToMany(mappedBy="chair")
-    private Set<PresentationChairs> presentationChairs;
+    private Set<Card> cards;
 
 
 	public Long getId() {
@@ -57,13 +57,14 @@ public class Chair implements Serializable{
 	}
 
 
-	public Set<PresentationChairs> getPresentationChairs() {
-		return presentationChairs;
+
+	public Set<Card> getCards() {
+		return cards;
 	}
 
 
-	public void setPresentationChairs(Set<PresentationChairs> presentationChairs) {
-		this.presentationChairs = presentationChairs;
+	public void setCards(Set<Card> cards) {
+		this.cards = cards;
 	}
 
 
@@ -73,11 +74,13 @@ public class Chair implements Serializable{
 	}
 
 
-	public Chair(Stage stage, Set<PresentationChairs> presentationChairs) {
+	public Chair(Stage stage, Set<Card> cards) {
 		super();
 		this.stage = stage;
-		this.presentationChairs = presentationChairs;
+		this.cards = cards;
 	}
+
+
 	
 	
 

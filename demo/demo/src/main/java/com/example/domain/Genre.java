@@ -24,25 +24,25 @@ public class Genre implements Serializable{
     private Long id;
 	
 	@Column(name = "name", nullable = false)
-    private GenreEnum name;
+    private String name;
 
 	
 	
 	public Genre() {}
 	
 
-	public Genre(GenreEnum name) {
+	public Genre(String name) {
 		super();
 		this.name = name;
 	}
 
 
 
-	public GenreEnum getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(GenreEnum name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	
