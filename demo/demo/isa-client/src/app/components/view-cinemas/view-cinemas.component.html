@@ -27,8 +27,8 @@
   
     
     
-     <!-- Page Content -->
-    <div class="container">
+    <!-- Page Content -->
+  <div class="container">
 
       <!-- Page Heading -->
       <h1 class="my-4">Cinemas
@@ -37,72 +37,29 @@
     
     <br>
 
-      <!-- Project One -->
-      <div class="row">
-        <div class="col-md-5">
-          <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/400x300" alt="">
-          </a>
-        </div>
-        <div class="col-md-5">
-          <h3>Project One</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.</p>
-        </div>
-      </div>
-      <!-- /.row -->
+    <ul class="cinemasArray">
+      <li *ngFor="let c of cinemasArray">
 
-      <hr>
+          <div class="row">
+              <div class="col-md-5">
+                <a href="#">
+                  <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/400x300" alt="">
+                </a>
+              </div>
+              <div class="col-md-5">
+                <h3>{{c.name}}</h3>
+                <br>
+                <p><b>Address: </b> {{c.adress}}</p>
+                <p> <b>Description: </b>{{c.description}}</p>
+              </div>
+            </div>
 
-      <!-- Project Two -->
-      <div class="row">
-        <div class="col-md-5">
-          <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/400x300" alt="">
-          </a>
-        </div>
-        <div class="col-md-5">
-          <h3>Project Two</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, odit velit cumque vero doloremque repellendus distinctio maiores rem expedita a nam vitae modi quidem similique ducimus! Velit, esse totam tempore.</p>
-        </div>
-      </div>
-      <!-- /.row -->
+            <hr>
 
-      <hr>
-
-      <!-- Project Three -->
-      <div class="row">
-        <div class="col-md-5">
-          <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/400x300" alt="">
-          </a>
-        </div>
-        <div class="col-md-5">
-          <h3>Project Three</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, temporibus, dolores, at, praesentium ut unde repudiandae voluptatum sit ab debitis suscipit fugiat natus velit excepturi amet commodi deleniti alias possimus!</p>
-        </div>
-      </div>
-      <!-- /.row -->
-
-      <hr>
-
-      <!-- Project Four -->
-      <div class="row">
-
-        <div class="col-md-5">
-          <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/400x300" alt="">
-          </a>
-        </div>
-        <div class="col-md-5">
-          <h3>Project Four</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, quidem, consectetur, officia rem officiis illum aliquam perspiciatis aspernatur quod modi hic nemo qui soluta aut eius fugit quam in suscipit?</p>
-        </div>
-      </div>
-      <!-- /.row -->
-
-      <hr>
+      </li>
+    </ul>
 
 
-    </div>
+  </div>
     <!-- /.container -->
 

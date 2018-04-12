@@ -6,15 +6,12 @@ import { CinemaService } from '../../services/cinema.service';
 @Component({
   selector: 'app-view-cinemas',
   templateUrl: './view-cinemas.component.html',
-  styleUrls: ['./view-cinemas.component.css']
+  styleUrls: ['./view-cinemas.component.css'],
+  providers: [CinemaService]
 })
 export class ViewCinemasComponent implements OnInit {
 
   private cinemasArray: any;
-
-  private selectedCinema: any;
-
-  private editButtonHidden: boolean = true;
 
 
   constructor(private router : Router, private cinemaService : CinemaService) {
@@ -32,7 +29,9 @@ export class ViewCinemasComponent implements OnInit {
         }
       );
 
-
   }
 
 }
+ 
+
+

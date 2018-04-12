@@ -11,29 +11,20 @@ import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient, HttpErrorResponse, HttpParams  } from '@angular/common/http';
 
 @Injectable()
-export class CinemaService {
+export class TheaterService {
 
   constructor(private http: Http) { 
 
   }
 
-  getCinemas(){
-    return this.http.get("http://localhost:8080/public/cinemas/getAll").map(data => data.json())
+  getTheaters(){
+    return this.http.get("http://localhost:8080/public/theaters/getAll").map(data => data.json())
     .catch((err:HttpErrorResponse) =>
     {
         alert(err.status + " " + err.error.error + " \n" + err.error.message);
         return Observable.throw(err);
     });
   
-  }
-
-  registerCinema(cinema : any) {
-
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    alert(JSON.stringify(cinema));
-    return this.http.post('http://localhost:8080/public/cinemas/register', 
-      JSON.stringify(cinema), { headers : headers }).map((data : Response) => data.json());
   }
 
 }
