@@ -6,6 +6,7 @@ import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.com
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
 import { RegisterCinemaComponent } from "./components/register-cinema/register-cinema.component";
 import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component'
+import { TheaterRepertoireComponent } from './components/theater-repertoire/theater-repertoire.component'
 
 
 const appRoutes: Routes = 
@@ -23,6 +24,11 @@ const appRoutes: Routes =
     {
         path: 'cinema-repertoire',
         component: CinemaRepertoireComponent
+    },
+
+    {
+        path: 'theater-repertoire',
+        component: TheaterRepertoireComponent
     },
 
     {

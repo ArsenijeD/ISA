@@ -14,7 +14,9 @@ import { ViewTheatersComponent } from './components/view-theaters/view-theaters.
 import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
 
 import { CinemaService } from './services/cinema.service';
-import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component'
+import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component';
+import { TheaterRepertoireComponent } from './components/theater-repertoire/theater-repertoire.component'
+import { TheaterService } from './services/theater.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema
     ViewCinemasComponent,
     ViewTheatersComponent,
     RegisterCinemaComponent,
-    CinemaRepertoireComponent
+    CinemaRepertoireComponent,
+    TheaterRepertoireComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema
     HttpClientModule,
     HttpModule
   ],
-  providers: [HttpClientModule, CinemaService],
+  providers: [HttpClientModule, CinemaService, TheaterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

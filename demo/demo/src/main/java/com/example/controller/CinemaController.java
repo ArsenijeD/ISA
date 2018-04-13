@@ -35,6 +35,8 @@ public class CinemaController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Cinema>  getCinemas() {
 		
+		System.out.println("Number of cinemas: " + cinemaService.getAll().size());
+		
 		return cinemaService.getAll();
 
 	}

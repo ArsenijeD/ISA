@@ -13,6 +13,9 @@ import { HttpHeaders, HttpClient, HttpErrorResponse, HttpParams  } from '@angula
 @Injectable()
 export class TheaterService {
 
+  private t = new BehaviorSubject<any>(null);
+  currentTheater = this.t.asObservable();
+
   constructor(private http: Http) { 
 
   }
@@ -25,6 +28,11 @@ export class TheaterService {
         return Observable.throw(err);
     });
   
+  }
+
+  selectTheater(theater: any) {
+
+    this.t.next(theater);
   }
 
 }

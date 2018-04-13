@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "hall")
 public class Hall implements Serializable {
@@ -35,17 +37,23 @@ public class Hall implements Serializable {
 	private int number;
 	
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="cinema_id", nullable=false)
+	@JsonIgnore
     private Cinema cinema;
 	
 	
-	@OneToMany(mappedBy="hall")
+	@OneToMany(mappedBy="hall", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
     private Set<Seat> seats;
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "hall_projection", joinColumns = @JoinColumn(name = "hall_id"), inverseJoinColumns = @JoinColumn(name = "projection_id"))
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "hall_projection", joinColumns = @JoinColumn(name = "hall_id"), inverseJoinColumns = @JoinColumn(name = "projection_id"))
+//    private Set<Projection> projections;
+	
+	@OneToMany(mappedBy="hall", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
     private Set<Projection> projections;
 
 

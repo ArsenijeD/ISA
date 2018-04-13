@@ -10,6 +10,7 @@ import { CinemaService } from '../../services/cinema.service';
 export class CinemaRepertoireComponent implements OnInit {
 
   private currentCinema: any;
+  private hallsArray : any;
 
 
   constructor(private router : Router, private cinemaService : CinemaService) { }
@@ -20,6 +21,22 @@ export class CinemaRepertoireComponent implements OnInit {
       currentCinema => 
       {this.currentCinema = currentCinema;
       console.log(currentCinema);});
+
+
+      this.cinemaService.getHallsByCinemaID(this.currentCinema.id)
+      .subscribe(
+        data=> 
+        {this.hallsArray = data;
+          
+          console.log(data);
+          console.log(this.currentCinema.id);
+        }
+      );
+    
+
   }
+
+
+
 
 }

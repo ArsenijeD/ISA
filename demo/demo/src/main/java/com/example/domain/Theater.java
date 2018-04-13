@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "theater")
 public class Theater implements Serializable{
@@ -44,12 +46,14 @@ public class Theater implements Serializable{
     @JoinTable(name = "user_theater", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "theater_id"))
     private Set<User> admins;
 	
-	@OneToMany(mappedBy="theater")
+	@OneToMany(mappedBy="theater",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
     private Set<Stage> stages;
 	
 
-	 @OneToMany(mappedBy="theater")
-	 private Set<RatingTheater> ratings;
+	@OneToMany(mappedBy="theater",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<RatingTheater> ratings;
 
 	 
 	 

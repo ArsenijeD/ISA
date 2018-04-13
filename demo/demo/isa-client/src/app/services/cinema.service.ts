@@ -46,9 +46,26 @@ export class CinemaService {
   }
 
 
-  selectCinema(cinema: any) {
+  selectCinema(cinema : any) {
 
     this.c.next(cinema);
+  }
+
+
+  getHallsByCinemaID(cinemaID : any) {
+
+    console.log(cinemaID);
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get("http://localhost:8080/public/halls/getHallsByCinemaID/"+JSON.stringify(cinemaID), {headers:headers}).map(data => data.json())
+    .catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        return Observable.throw(err);
+    });
+
   }
 
 }

@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "stage")
@@ -32,13 +34,18 @@ public class Stage implements Serializable{
     @Column(name = "stage_id", nullable = false, updatable = false)
     private Long id;
 	
+	@Column(name = "stage_number", nullable = false, updatable = false)
+	private int number;
 	
-	@ManyToOne
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="theater_id", nullable=false)
+	@JsonIgnore
     private Theater theater;
 	
 	
-	@OneToMany(mappedBy="stage")
+	@OneToMany(mappedBy="stage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
     private Set<Chair> chairs;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -70,8 +77,17 @@ public class Stage implements Serializable{
 	public void setChairs(Set<Chair> chairs) {
 		this.chairs = chairs;
 	}
-
 	
+	
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
 	public Set<Projection> getProjections() {
 		return projections;
 	}
@@ -85,12 +101,15 @@ public class Stage implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Stage(Theater theater, Set<Chair> chairs, Set<Projection> projections) {
+	public Stage(int number, Theater theater, Set<Chair> chairs, Set<Projection> projections) {
 		super();
+		this.number = number;
 		this.theater = theater;
 		this.chairs = chairs;
 		this.projections = projections;
 	}
+
+	
 
 	
 	

@@ -5,12 +5,12 @@ import { TheaterService } from '../../services/theater.service';
 @Component({
   selector: 'app-view-theaters',
   templateUrl: './view-theaters.component.html',
-  styleUrls: ['./view-theaters.component.css'],
-  providers: [TheaterService]
+  styleUrls: ['./view-theaters.component.css']
 })
 export class ViewTheatersComponent implements OnInit {
 
   private theatersArray: any;
+  private selectedTheater: any;
 
 
   constructor(private router : Router, private theaterService : TheaterService) {
@@ -30,4 +30,19 @@ export class ViewTheatersComponent implements OnInit {
 
   }
 
+  onClickTheaterDetails(Theater:any) : void {
+    this.selectedTheater = Theater;
+
+    this.theaterService.selectTheater(Theater);
+
+    this.theaterService.currentTheater.subscribe(
+      currentTheater => 
+      {
+      console.log("viev-cinema 2: " +  currentTheater);});
+
+    this.router.navigateByUrl('/theater-repertoire');
+  }
+
 }
+
+
