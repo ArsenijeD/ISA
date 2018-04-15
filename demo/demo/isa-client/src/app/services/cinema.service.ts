@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import {Http} from "@angular/http";
+import {Http, Response, Headers} from "@angular/http";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import 'rxjs/Rx'
 
 
 import 'rxjs/add/operator/map';
@@ -18,13 +20,32 @@ export class CinemaService {
   }
 
   getCinemas(){
-    return this.http.get("http://localhost:8080/public/cinemas/getAll").map(data => data)
+    return this.http.get("http://localhost:8080/public/cinemas/getAll").map(data => data.json())
     .catch((err:HttpErrorResponse) =>
     {
         alert(err.status + " " + err.error.error + " \n" + err.error.message);
         return Observable.throw(err);
     });
   
+  }
+
+  registerCinema(cinema : any) {
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    alert(JSON.stringify(cinema));
+    return this.http.post('http://localhost:8080/public/cinemas/register', 
+      JSON.stringify(cinema), { headers : headers }).map((data : Response) => data.json());
+  }
+
+  updateCinema(cinema : any) {
+
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    alert(JSON.stringify(cinema));
+    return this.http.put('http://localhost:8080/public/cinemas/changeCinemaAdmin', 
+      JSON.stringify(cinema), { headers : headers }).map((data : Response) => data.json());
   }
 
 }

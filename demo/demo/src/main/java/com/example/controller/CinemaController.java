@@ -3,6 +3,7 @@ package com.example.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,13 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.domain.Cinema;
 import com.example.service.CinemaService;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/public/cinemas")
 public class CinemaController {
@@ -57,7 +59,7 @@ public class CinemaController {
 		
 	}
 	
-	@CrossOrigin(origins = "*")
+	
 	@RequestMapping(
 			value = "/register",
 			method = RequestMethod.POST,
@@ -79,6 +81,27 @@ public class CinemaController {
 		return true;
 		
 		
+	}
+	
+	@RequestMapping(value = "/changeCinemaAdmin", method = RequestMethod.PUT)
+	public @ResponseBody Boolean updateCinema(@RequestBody Cinema c){
+	 
+		for (com.example.domain.User u : c.getAdmins()) {
+			
+			System.out.println(u.getFirst_name());
+		}
+		System.out.println("POGODJEN CONTROLLER /changeCinemaAdmin");
+		try {
+			
+			cinemaService.updateCinema(c);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
 	}
 	
 	

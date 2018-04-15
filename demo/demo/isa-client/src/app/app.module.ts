@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { FormsModule} from '@angular/forms'
 
 
 import { AppComponent } from './app.component';
@@ -12,31 +13,36 @@ import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.com
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
 
 import { CinemaService } from './services/cinema.service'
+import { UserService } from './services/user.service'
+import { AdService } from './services/ad.service'
+
 import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
 
 
-import { RegisterCinemaService } from './services/register-cinema.service';
-import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
-
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AdminProfilePageComponent } from './components/admin-profile-page/admin-profile-page.component';
+import { FanZoneComponent } from './components/fan-zone/fan-zone.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdminProfileComponent
     HomeGuestComponent,
     ViewCinemasComponent,
-    ViewTheatersComponent
+    ViewTheatersComponent,
     LoginComponent,
-    RegisterCinemaComponent
+    RegisterCinemaComponent,
+    AdminProfilePageComponent,
+    FanZoneComponent
   ],
   imports: [
     BrowserModule,
     routing,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    NgbModule.forRoot(),
+    FormsModule
   ],
-  providers: [HttpClientModule, CinemaService, RegisterCinemaService],
+  providers: [HttpClientModule, CinemaService, UserService, AdService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

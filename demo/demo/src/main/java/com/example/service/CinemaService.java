@@ -15,5 +15,6 @@ public interface CinemaService {
 	boolean registerCinema(Cinema c);
 	
 	Cinema getCinemaByName(String name);
-	
+		
+	boolean updateCinema(Cinema c);
 }

@@ -1,0 +1,301 @@
+
+<div class="container">
+    <div class="row my-2">
+        <div class="col-lg-8 order-lg-2">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="JavaScript:void(0)" (click) = "promeniAktivnost(0)"  class={{aktivnosti[0]}}>Cinemas</a>
+                </li>
+                <li class="nav-item">
+                    <a href="JavaScript:void(0)" (click) = "promeniAktivnost(1)"  class={{aktivnosti[1]}}>System admins</a>
+                </li>
+                <li class="nav-item">
+                    <a href="JavaScript:void(0)" (click) = "promeniAktivnost(2)"  class={{aktivnosti[2]}}>Fan zone admins</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="JavaScript:void(0)" (click) = "promeniAktivnost(3)"  class={{aktivnosti[3]}}>Users</a>
+                </li>
+            </ul>
+
+            
+
+            <div class="tab-content py-4" >
+                <!-- cinemas -->
+                <div class="tab-pane active" id="cinemas" *ngIf=aktivna_tabela[0]>
+                    <div class="container">           
+                        <table class="table">
+                          <thead>
+                            <tr>
+
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Adress</th>
+                                <th>Description</th>
+
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                              <tr class="active" *ngFor="let cinema of cinemas; let i = index">
+
+                                  <th scope="row">{{i + 1}}</th>
+                                  <td>{{cinema.name}}</td>
+                                  <td>{{cinema.adress}}</td>
+                                  <td>{{cinema.description}}</td>
+                                  
+                                  <td>
+ 
+                                    <ng-template #contentAdmins let-c="close" let-d="dismiss">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Admins:</h4>
+                                          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          
+                                            <table class="table">
+                                                <thead>
+                                                  <tr>
+                                    
+                                                      <th>#</th>
+                                                      <th>First name</th>
+                                                      <th>Last name</th>
+                                                      <th>E-mail</th>
+                                    
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="active" *ngFor="let admin of cinema.admins; let i = index">
+
+                                                        <th scope="row">{{i + 1}}</th>
+                                                        <td>{{admin.first_name}}</td>
+                                                        <td>{{admin.last_name}}</td>
+                                                        <td>{{admin.email}}</td>
+                                                    
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                            
+                                    
+                                        </div>
+                                        <!-- <div class="modal-footer">
+                                          <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+                                        </div> -->
+                                      </ng-template>
+
+                                    <button id="admins"  (click)="openAdmins(contentAdmins)" type="button" class="btn btn-primary btn-sm center" >admins</button>
+                                    
+                                    
+                                  </td>
+
+                              </tr>
+                          </tbody>
+                        </table>
+
+                        
+                        <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+                        <button id="addCinema"  (click)="openCinema(contentCinema)" type="button" class="btn btn-primary btn-sm center" >add</button>
+                        
+                      </div>
+                </div>
+
+
+
+                <!-- System admins -->
+                <div class="tab-pane active" id="systemAdmins" *ngIf=aktivna_tabela[1] >
+                    <div class="container">           
+                        <table class="table">
+                          <thead>
+                            <tr>
+    
+                                <th>#</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>E-mail</th>
+    
+                            </tr>
+                          </thead>
+                          <tbody>
+    
+                              
+                          </tbody>
+                        </table>
+                        
+                      </div>
+                </div>
+
+
+
+
+
+                <!-- Fan zone admins -->
+                <div class="tab-pane active" id="fanZoneAdmins" *ngIf=aktivna_tabela[2] >
+                    <div class="container">           
+                        <table class="table">
+                          <thead>
+                            <tr>
+    
+                                <th>#</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>E-mail</th>
+    
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="active" *ngFor="let fanZoneAdmin of fanZoneAdmins; let i = index">
+
+                                <th scope="row">{{i + 1}}</th>
+                                <td>{{fanZoneAdmin.first_name}}</td>
+                                <td>{{fanZoneAdmin.last_name}}</td>
+                                <td>{{fanZoneAdmin.email}}</td>
+                            
+                            </tr>
+                              
+                          </tbody>
+                        </table>
+                        
+                      </div>
+                </div>
+
+
+
+
+                <!-- Users -->
+                <div class="tab-pane active" id="fanZoneAdmins" *ngIf=aktivna_tabela[3] >
+                    <div class="container">           
+                        <table class="table">
+                          <thead>
+                            <tr>
+    
+                                <th>#</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>E-mail</th>
+                                <th>Medal</th>
+    
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="active" *ngFor="let user of users; let i = index">
+
+                                <th scope="row">{{i + 1}}</th>
+                                <td>{{user.first_name}}</td>
+                                <td>{{user.last_name}}</td>
+                                <td>{{user.email}}</td>
+                                <td>GOLD</td>
+                                <td>
+
+
+                                    <ng-template #contentCinemaModal let-c="close" let-d="dismiss">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Cinemas:</h4>
+                                          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          
+                                            <table class="table">
+                                                <thead>
+                                                  <tr>
+                      
+                                                      <th>#</th>
+                                                      <th>Name</th>
+                                                      <th>Adress</th>
+                                                      <th>Description</th>
+                      
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                      
+                                                    <tr class="active" *ngFor="let cinema of cinemas; let i = index">
+                      
+                                                        <th scope="row">{{i + 1}}</th>
+                                                        <td>{{cinema.name}}</td>
+                                                        <td>{{cinema.adress}}</td>
+                                                        <td>{{cinema.description}}</td>
+                                                        <td>
+
+                                                                <button id="pickCinema"  (click) = "promoteToCinemaAdmin(user, cinema)" type="button" value="submit" class="btn btn-primary center btn-sm">Pick</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            
+                                    
+                                        </div>
+                                        <!-- <div class="modal-footer">
+                                          <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+                                        </div> -->
+                                      </ng-template>
+
+                                    <button id="addCinemaAdmin" (click)="openCinemaModal(contentCinemaModal)" ngbTooltip="set user as cinema admin" type="button" value="submit" class="btn btn-primary center btn-sm">Cinema</button>
+
+                                    <button id="addFanZoneAdmin" (click)="promoteToFanZoneAdmin(user)" ngbTooltip="set user as fan zone admin" type="button" value="submit" class="btn btn-primary center btn-sm">Fan Zone</button>
+
+                                </td>
+                            </tr>
+                              
+                          </tbody>
+                        </table>
+                        
+                      </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <div class="col-lg-4 order-lg-1 text-center">
+            <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            <h6 class="mt-2">Upload a different photo</h6>
+            <label class="custom-file">
+                <input type="file" id="file" class="custom-file-input">
+                <span class="custom-file-control">Choose file</span>
+            </label>
+        </div>
+    </div>
+</div>
+
+<!-- modalni dijalozi -->
+
+<ng-template #contentCinema let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Register cinema:</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      
+        <form name="myform" method="POST">
+            <div class="form-group">
+                <label for="cinemaName">Cinema Name *</label>
+                <input id="cinemaName" name="cinemaName" class="form-control" type="text" data-validation="required" #cinemaName>
+                <span id="error_cinemaName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="cinemaAdress">Adress *</label>
+                <input id="cinemaAdress" name="cinemaAdress" class="form-control" type="text" data-validation="email" #cinemaAdress>
+                <span id="error_cinemaAdress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="cinemaDescription">Description *</label>
+                <input id="cinemaDescription" name="cinemaDescription"  class="form-control" type="text" data-validation="required" #cinemaDescription >
+                <span id="error_cinemaDescription" class="text-danger"></span>
+            </div>
+            
+            <button  (click) = "onSubmit(cinemaName.value, cinemaAdress.value, cinemaDescription.value)" data-dismiss="modal" id="submit" type="button" value="submit" class="btn btn-primary center">Submit</button>
+
+        </form>
+
+    </div>
+    <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div> -->
+  </ng-template>
+  
