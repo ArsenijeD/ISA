@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import {Http, Response, Headers} from "@angular/http";
+
+import {Http, Response, Headers } from "@angular/http";
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import 'rxjs/Rx'
@@ -15,12 +17,22 @@ import { HttpHeaders, HttpClient, HttpErrorResponse, HttpParams  } from '@angula
 @Injectable()
 export class CinemaService {
 
+
+  private c = new BehaviorSubject<any>(null);
+  currentCinema = this.c.asObservable();
+
+
   constructor(private http: Http) { 
 
   }
 
   getCinemas(){
-    return this.http.get("http://localhost:8080/public/cinemas/getAll").map(data => data.json())
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get("http://localhost:8080/public/cinemas/getAll", {headers:headers}).map(data => data.json())
+
     .catch((err:HttpErrorResponse) =>
     {
         alert(err.status + " " + err.error.error + " \n" + err.error.message);
@@ -38,14 +50,36 @@ export class CinemaService {
       JSON.stringify(cinema), { headers : headers }).map((data : Response) => data.json());
   }
 
-  updateCinema(cinema : any) {
 
+  updateCinema(cinema : any) {
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     alert(JSON.stringify(cinema));
     return this.http.put('http://localhost:8080/public/cinemas/changeCinemaAdmin', 
       JSON.stringify(cinema), { headers : headers }).map((data : Response) => data.json());
+
+
+  selectCinema(cinema : any) {
+
+    this.c.next(cinema);
+  }
+
+
+  getHallsByCinemaID(cinemaID : any) {
+
+    console.log(cinemaID);
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get("http://localhost:8080/public/halls/getHallsByCinemaID/"+JSON.stringify(cinemaID), {headers:headers}).map(data => data.json())
+    .catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        return Observable.throw(err);
+    });
+
   }
 
 }

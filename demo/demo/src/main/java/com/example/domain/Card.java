@@ -2,13 +2,19 @@ package com.example.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "card")
@@ -20,33 +26,42 @@ public class Card implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "card_id", nullable = false, updatable = false)
-    private Long id;
+//	@Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "card_id", nullable = false, updatable = false)
+//    private Long id;
 	
 	@Column(name = "price", nullable = false)
     private int price;
 	
-	@Column(name = "discount")
-	private int discount;
+//	@Column(name = "discount")
+//	private int discount;
 	
 	@Column(name = "reserved")
 	private boolean reserved;
 	
 	
-	@OneToOne(mappedBy = "card")
-	private PresentationChairs presentationChairs;
+	@Id
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="presentation_id", nullable=false)
+	@JsonIgnore
+    private Presentation presentation;
+	
+	@Id
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="chair_id", nullable=false)
+	@JsonIgnore
+    private Chair chair;
 
 
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+//	public Long getId() {
+//		return id;
+//	}
+//
+//
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 
 
 	public int getPrice() {
@@ -59,14 +74,14 @@ public class Card implements Serializable{
 	}
 
 
-	public int getDiscount() {
-		return discount;
-	}
-
-
-	public void setDiscount(int discount) {
-		this.discount = discount;
-	}
+//	public int getDiscount() {
+//		return discount;
+//	}
+//
+//
+//	public void setDiscount(int discount) {
+//		this.discount = discount;
+//	}
 
 
 	public boolean isReserved() {
@@ -79,13 +94,24 @@ public class Card implements Serializable{
 	}
 
 
-	public PresentationChairs getPresentationChairs() {
-		return presentationChairs;
+
+	public Presentation getPresentation() {
+		return presentation;
 	}
 
 
-	public void setPresentationChairs(PresentationChairs presentationChairs) {
-		this.presentationChairs = presentationChairs;
+	public void setPresentation(Presentation presentation) {
+		this.presentation = presentation;
+	}
+
+
+	public Chair getChair() {
+		return chair;
+	}
+
+
+	public void setChair(Chair chair) {
+		this.chair = chair;
 	}
 
 
@@ -95,13 +121,14 @@ public class Card implements Serializable{
 	}
 
 
-	public Card(int price, int discount, boolean reserved, PresentationChairs presentationChairs) {
+	public Card(int price, boolean reserved) {
 		super();
 		this.price = price;
-		this.discount = discount;
 		this.reserved = reserved;
-		this.presentationChairs = presentationChairs;
 	}
+
+
+	
 	
 	
 

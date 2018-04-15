@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "theater")
 public class Theater implements Serializable{
@@ -44,15 +46,14 @@ public class Theater implements Serializable{
     @JoinTable(name = "user_theater", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "theater_id"))
     private Set<User> admins;
 	
-	@OneToMany(mappedBy="theater")
+	@OneToMany(mappedBy="theater",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
     private Set<Stage> stages;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "theater_presentation", joinColumns = @JoinColumn(name = "theater_id"), inverseJoinColumns = @JoinColumn(name = "presentation_id"))
-    private Set<Projection> projections;
 
-	 @OneToMany(mappedBy="theater")
-	 private Set<RatingTheater> ratings;
+	@OneToMany(mappedBy="theater",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<RatingTheater> ratings;
 
 	 
 	 
@@ -104,13 +105,6 @@ public class Theater implements Serializable{
 		this.stages = stages;
 	}
 
-	public Set<Projection> getProjections() {
-		return projections;
-	}
-
-	public void setProjections(Set<Projection> projections) {
-		this.projections = projections;
-	}
 
 	public Set<RatingTheater> getRatings() {
 		return ratings;
@@ -126,14 +120,13 @@ public class Theater implements Serializable{
 	}
 
 	public Theater(String name, String description, String adress, Set<User> admins, Set<Stage> stages,
-			Set<Projection> projections, Set<RatingTheater> ratings) {
+			Set<RatingTheater> ratings) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.adress = adress;
 		this.admins = admins;
 		this.stages = stages;
-		this.projections = projections;
 		this.ratings = ratings;
 	}
 	 

@@ -122,6 +122,8 @@ public class UserServiceImpl implements UserService {
 	        return tokenRepository.findByToken(VerificationToken);
 	    }
 
+	
+		
 		@Override
 		public List<User> getAllFriends(long id) {
 			ArrayList<User> friends=new ArrayList<User>();

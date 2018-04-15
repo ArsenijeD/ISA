@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "film")
@@ -59,11 +61,13 @@ public class Film implements Serializable {
     @JoinTable(name = "film_genres", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genre;
 	
-	@OneToMany(mappedBy="film")
+	@OneToMany(mappedBy="film",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
     private Set<Projection> projections;
 	
 	
-	 @OneToMany(mappedBy="film")
+	 @OneToMany(mappedBy="film",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	 @JsonIgnore
 	 private Set<RatingFilm> ratings;
 	
 	

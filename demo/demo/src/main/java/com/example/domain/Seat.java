@@ -3,8 +3,10 @@ package com.example.domain;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "seat")
@@ -29,13 +33,18 @@ public class Seat implements Serializable{
     private Long id;
 	
 	
-	@ManyToOne
+	@Column(name = "seat_number", nullable = false, updatable = false)
+	private int number;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="hall_id", nullable=false)
+	@JsonIgnore
     private Hall hall;
 
 	
-	@OneToMany(mappedBy="seat")
-    private Set<ProjectionSeats> projectionSeats;
+	@OneToMany(mappedBy="seat",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
+    private Set<Ticket> tickets;
 	
 
 	public Long getId() {
@@ -44,6 +53,16 @@ public class Seat implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 	public Hall getHall() {
@@ -55,25 +74,29 @@ public class Seat implements Serializable{
 	}
 	
 
-	public Set<ProjectionSeats> getProjectionSeats() {
-		return projectionSeats;
+	public Set<Ticket> getTickets() {
+		return tickets;
 	}
 
-	public void setProjectionSeats(Set<ProjectionSeats> projectionSeats) {
-		this.projectionSeats = projectionSeats;
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 
-	
 	public Seat() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Seat(Hall hall, Set<ProjectionSeats> projectionSeats) {
+	public Seat(int number, Hall hall, Set<Ticket> tickets) {
 		super();
+		this.number = number;
 		this.hall = hall;
-		this.projectionSeats = projectionSeats;
+		this.tickets = tickets;
 	}
+
+	
+	
+
 
 	
 	

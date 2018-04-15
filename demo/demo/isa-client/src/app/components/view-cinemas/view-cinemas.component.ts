@@ -11,10 +11,7 @@ import { CinemaService } from '../../services/cinema.service';
 export class ViewCinemasComponent implements OnInit {
 
   private cinemasArray: any;
-
   private selectedCinema: any;
-
-  private editButtonHidden: boolean = true;
 
 
   constructor(private router : Router, private cinemaService : CinemaService) {
@@ -32,7 +29,22 @@ export class ViewCinemasComponent implements OnInit {
         }
       );
 
+  }
 
+  onClickCinemaDetails(Cinema:any) : void {
+    this.selectedCinema = Cinema;
+    console.log("view-cineam: " + Cinema);  
+    this.cinemaService.selectCinema(Cinema);
+
+    this.cinemaService.currentCinema.subscribe(
+      currentCinema => 
+      {
+      console.log("viev-cinema 2: " +  currentCinema);});
+
+    this.router.navigateByUrl('/cinema-repertoire');
   }
 
 }
+ 
+
+
