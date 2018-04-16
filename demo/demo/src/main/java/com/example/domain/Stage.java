@@ -38,9 +38,9 @@ public class Stage implements Serializable{
 	private int number;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="theater_id", nullable=false)
-    private Theater theater;
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name="theater_id", nullable=false)
+//    private Theater theater;
 	
 	
 //	@OneToMany(mappedBy="stage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -66,14 +66,6 @@ public class Stage implements Serializable{
 
 	
 
-	public Theater getTheater() {
-		return theater;
-	}
-
-	public void setTheater(Theater theater) {
-		this.theater = theater;
-	}
-
 	public int getNumber() {
 		return number;
 	}
@@ -82,7 +74,6 @@ public class Stage implements Serializable{
 		this.number = number;
 	}
 
-	
 	
 
 	public Set<Presentation> getPresentations() {
@@ -98,10 +89,9 @@ public class Stage implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Stage(int number, Theater theater, Set<Presentation> presentations) {
+	public Stage(int number, Set<Presentation> presentations) {
 		super();
 		this.number = number;
-		this.theater = theater;
 		this.presentations = presentations;
 	}
 

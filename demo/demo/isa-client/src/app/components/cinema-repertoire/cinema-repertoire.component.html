@@ -34,13 +34,12 @@
       <h1 class="my-4">{{currentCinema.name}}
 <!--        <small>Secondary Text</small>-->
       </h1>
-    
-    <br>
+  
 
       <h2>Repertoar:</h2>
+      <div class="col-12"><button type="button" (click)="onClickAddProjection()" class="btn pull-right btn-info">Add projection</button></div>
 
-      <br>
-
+      <br><br>
     <ul>
       <li *ngFor="let h of currentCinema.halls">
 
@@ -79,6 +78,9 @@
                   <button type="button" class="btn btn-success" (click)="onClickReserve(p)">Reserve</button>
                   </div>
                 </div>
+                <button type="button" class="btn btn-warning" (click)="onClickChangeProjection(p)">Change</button>
+                <button type="button" class="btn btn-danger" (click)="onClickDeleteProjection(p)">Delete</button>
+
               </div>
 
           </li>  
