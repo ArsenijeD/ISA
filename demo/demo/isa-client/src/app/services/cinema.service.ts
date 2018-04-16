@@ -59,7 +59,8 @@ export class CinemaService {
     return this.http.put('http://localhost:8080/public/cinemas/changeCinemaAdmin', 
       JSON.stringify(cinema), { headers : headers }).map((data : Response) => data.json());
 
-
+  }
+  
   selectCinema(cinema : any) {
 
     this.c.next(cinema);

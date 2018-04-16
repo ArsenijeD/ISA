@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { CinemaService } from '../../services/cinema.service';
 
 
+
+
+
 @Component({
   selector: 'app-view-cinemas',
   templateUrl: './view-cinemas.component.html',
@@ -13,6 +16,9 @@ export class ViewCinemasComponent implements OnInit {
   private cinemasArray: any;
   private selectedCinema: any;
 
+  latitude = 51.678418;
+  longitude = 7.809007;
+  
 
   constructor(private router : Router, private cinemaService : CinemaService) {
 
@@ -28,6 +34,8 @@ export class ViewCinemasComponent implements OnInit {
           console.log(data);
         }
       );
+
+      
 
   }
 

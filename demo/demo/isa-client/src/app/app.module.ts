@@ -13,14 +13,13 @@ import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.com
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
 
 
-import { CinemaService } from './services/cinema.service'
-import { UserService } from './services/user.service'
-import { AdService } from './services/ad.service'
+import { CinemaService } from './services/cinema.service';
+import { UserService } from './services/user.service';
+import { AdService } from './services/ad.service';
 
 
 import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
 
-import { CinemaService } from './services/cinema.service';
 import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component';
 import { TheaterRepertoireComponent } from './components/theater-repertoire/theater-repertoire.component'
 import { TheaterService } from './services/theater.service';
@@ -29,6 +28,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AdminProfilePageComponent } from './components/admin-profile-page/admin-profile-page.component';
 import { FanZoneComponent } from './components/fan-zone/fan-zone.component';
 
+import { AgmCoreModule} from '@agm/core'
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +38,7 @@ import { FanZoneComponent } from './components/fan-zone/fan-zone.component';
     LoginComponent,
     RegisterCinemaComponent,
     AdminProfilePageComponent,
-    FanZoneComponent
+    FanZoneComponent,
     RegisterCinemaComponent,
     CinemaRepertoireComponent,
     TheaterRepertoireComponent
@@ -50,7 +50,10 @@ import { FanZoneComponent } from './components/fan-zone/fan-zone.component';
     HttpClientModule,
     HttpModule,
     NgbModule.forRoot(),
-    FormsModule
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBWhwJkhsPej0DGz5a0MKu-x_24m6RBVYc'
+    })
   ],
   providers: [HttpClientModule, CinemaService, TheaterService, UserService, AdService],
   bootstrap: [AppComponent]
