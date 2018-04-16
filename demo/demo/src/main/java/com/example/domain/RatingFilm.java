@@ -37,8 +37,7 @@ public class RatingFilm implements Serializable {
     private int value;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="film_id", nullable=false)
-	@JsonIgnore
+    @JoinColumn(name="film_name", nullable=false)
     private Film film;
 	
 	

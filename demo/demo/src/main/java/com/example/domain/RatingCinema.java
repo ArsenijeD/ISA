@@ -38,7 +38,6 @@ public class RatingCinema implements Serializable{
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="cinema_id", nullable=false)
-	@JsonIgnore
     private Cinema cinema;
 
 	public Long getId() {

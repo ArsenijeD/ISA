@@ -44,13 +44,11 @@ public class Card implements Serializable{
 	@Id
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="presentation_id", nullable=false)
-	@JsonIgnore
     private Presentation presentation;
 	
 	@Id
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="chair_id", nullable=false)
-	@JsonIgnore
     private Chair chair;
 
 

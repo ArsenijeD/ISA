@@ -83,4 +83,34 @@ export class CinemaService {
 
   }
 
+  getProjectionsByHallID(hallID : any) {
+    
+    // console.log("ID sale je : " + hallID);
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get("http://localhost:8080/public/projections/getProjectionsByHallID/"+JSON.stringify(hallID), {headers:headers}).map(data => data.json())
+    .catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        return Observable.throw(err);
+    });
+
+  }
+
+  getFilmByName(filmName : any) {
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get("http://localhost:8080/public/films/getFilmByName/"+JSON.stringify(filmName), {headers:headers}).map(data => data.json())
+    .catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        return Observable.throw(err);
+    });
+
+  }
+
 }

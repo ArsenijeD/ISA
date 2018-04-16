@@ -44,9 +44,13 @@ public class Presentation implements Serializable{
     private Performance performance;
 
 	
-	@OneToMany(mappedBy="presentation",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnore
-    private Set<Card> cards;
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name="stage_id", nullable=false)
+//    private Stage stage;
+	
+//	@OneToMany(mappedBy="presentation",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JsonIgnore
+//    private Set<Card> cards;
 
 	
 	@Column(name = "discount")
@@ -83,17 +87,6 @@ public class Presentation implements Serializable{
 	}
 
 
-	
-
-	public Set<Card> getCards() {
-		return cards;
-	}
-
-
-	public void setCards(Set<Card> cards) {
-		this.cards = cards;
-	}
-
 
 	public String getTime() {
 		return time;
@@ -116,20 +109,24 @@ public class Presentation implements Serializable{
 	}
 
 
+
+
 	public Presentation() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public Presentation(String date, String time, Performance performance, Set<Card> cards, int discount) {
+	public Presentation(String date, String time, Performance performance, int discount) {
 		super();
 		this.date = date;
 		this.time = time;
 		this.performance = performance;
-		this.cards = cards;
 		this.discount = discount;
 	}
+
+
+	
 
 
 	

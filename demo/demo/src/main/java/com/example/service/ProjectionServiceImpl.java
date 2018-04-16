@@ -33,4 +33,10 @@ public class ProjectionServiceImpl implements ProjectionService{
 		return true;
 	}
 
+	@Override
+	public List<Projection> getProjectionsByHallID(Long hallID) {
+		
+		return projectionRepository.findByHallID(hallID);
+	}
+
 }

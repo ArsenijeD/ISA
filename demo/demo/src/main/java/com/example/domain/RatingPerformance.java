@@ -38,7 +38,6 @@ public class RatingPerformance implements Serializable {
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="performance_id", nullable=false)
-	@JsonIgnore
     private Performance performance;
 
 	public Long getId() {

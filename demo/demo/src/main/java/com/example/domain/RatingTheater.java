@@ -39,7 +39,6 @@ public class RatingTheater implements Serializable{
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="theater_id", nullable=false)
-	@JsonIgnore
     private Theater theater;
 
 	public Long getId() {
