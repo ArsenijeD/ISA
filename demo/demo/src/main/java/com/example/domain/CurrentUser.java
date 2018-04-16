@@ -27,8 +27,13 @@ public class CurrentUser extends org.springframework.security.core.userdetails.U
         return user.getId();
     }
 
-    public Set<MyRole> getRole() {
-        return user.getRoles();
+//    public Set<MyRole> getRole() {
+//        return user.getRoles();
+//    }
+    
+    public MyRole getRole() {
+    	
+    	return user.getRole();
     }
 
     @Override
@@ -42,13 +47,13 @@ public class CurrentUser extends org.springframework.security.core.userdetails.U
 	public Collection<GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		pomocni=new ArrayList<GrantedAuthority>();
-        for(MyRole role: user.getRoles()){
-        	System.out.println("uloga:"+role.getName());
-        	SimpleGrantedAuthority pom=new SimpleGrantedAuthority(role.getName());
+        //for(MyRole role: user.getRoles()){
+        //	System.out.println("uloga:"+role.getName());
+        	SimpleGrantedAuthority pom=new SimpleGrantedAuthority(user.getRole().getName());
         	System.out.println("pom je:"+pom);
         	pomocni.add(pom);
         	System.out.println("ovo radi");
-        }
+        //}
         return pomocni;
 	}
     

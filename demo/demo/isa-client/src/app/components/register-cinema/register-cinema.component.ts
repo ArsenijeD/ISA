@@ -24,7 +24,9 @@ export class RegisterCinemaComponent implements OnInit {
 
     alert("iz komponente: " + cinemaName);
     this.cinemaService.registerCinema({name : cinemaName, adress : cinemaAdress, description : cinemaDescription}).subscribe(data => console.log(data));
-    //this.router.navigateByUrl('/');
+
+    this.router.navigateByUrl('/adminProfile');
+
   }
 
 }

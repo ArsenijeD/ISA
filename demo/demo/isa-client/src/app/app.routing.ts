@@ -5,8 +5,13 @@ import { HomeGuestComponent } from './components/home-guest/home-guest.component
 import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.component';
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
 import { RegisterCinemaComponent } from "./components/register-cinema/register-cinema.component";
+
+import { AdminProfilePageComponent } from "./components/admin-profile-page/admin-profile-page.component";
+import { FanZoneComponent } from "./components/fan-zone/fan-zone.component";
+
 import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component'
 import { TheaterRepertoireComponent } from './components/theater-repertoire/theater-repertoire.component'
+
 
 
 const appRoutes: Routes = 
@@ -46,6 +51,24 @@ const appRoutes: Routes =
         redirectTo: '/login',
         pathMatch:'full'
         //component: LoginComponent
+    },
+
+    {
+
+        path: 'registerCinema',
+        component:  RegisterCinemaComponent
+    },
+
+    {
+
+        path: 'adminProfile',
+        component:  AdminProfilePageComponent
+        
+    },
+
+    {
+        path: 'fanZone',
+        component: FanZoneComponent
     }
 
 ]

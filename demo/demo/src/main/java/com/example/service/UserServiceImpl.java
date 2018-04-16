@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.domain.Cinema;
 import com.example.domain.FriendRequest;
 import com.example.domain.FriendRequestStatus;
 import com.example.domain.MyRole;
@@ -69,7 +71,7 @@ public class UserServiceImpl implements UserService {
 		MyRole role=roleRepository.findOneByName(form.getRole().toString());
 		System.out.println("sad ce rola");
 		System.out.println("rola je:"+role.getName());
-		user.getRoles().add(role);
+		user.setRole(role);
 		System.out.println("dodao role");
 		userRepository.save(user);
 		return user;
@@ -130,5 +132,29 @@ public class UserServiceImpl implements UserService {
 				friends.add(freq.getSender());
 			}
 			return friends;
+		}
+
+		@Override
+		public Set<User> getUsersByIdIn(Set<Long> ids) {
+			
+			return userRepository.findByIdIn(ids);
+		}
+
+		@Override
+		public List<User> getAll() {
+			
+			return userRepository.findAll();
+		}
+
+		@Override
+		public boolean updateUserRole(User u) {
+			
+			User user = userRepository.findOne(u.getId());
+			user.setRole(u.getRole());
+			user.setId(u.getId());
+			
+			//userRepository.save(user);
+			userRepository.flush();
+			return true;
 		}
 }

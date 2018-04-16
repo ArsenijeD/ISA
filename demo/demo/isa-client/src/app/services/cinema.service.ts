@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
+
 import {Http, Response, Headers } from "@angular/http";
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import 'rxjs/Rx'
 
 
 import 'rxjs/add/operator/map';
@@ -28,6 +32,7 @@ export class CinemaService {
     headers.append('Content-Type', 'application/json');
 
     return this.http.get("http://localhost:8080/public/cinemas/getAll", {headers:headers}).map(data => data.json())
+
     .catch((err:HttpErrorResponse) =>
     {
         alert(err.status + " " + err.error.error + " \n" + err.error.message);
@@ -46,6 +51,16 @@ export class CinemaService {
   }
 
 
+  updateCinema(cinema : any) {
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    alert(JSON.stringify(cinema));
+    return this.http.put('http://localhost:8080/public/cinemas/changeCinemaAdmin', 
+      JSON.stringify(cinema), { headers : headers }).map((data : Response) => data.json());
+
+  }
+  
   selectCinema(cinema : any) {
 
     this.c.next(cinema);
