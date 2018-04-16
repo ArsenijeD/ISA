@@ -39,7 +39,7 @@ public class Theater implements Serializable{
 	@Column(name = "description", nullable = false, columnDefinition="VARCHAR(50)")
     private String description;
 	
-	@Column(name = "adress", nullable = false, unique = true, columnDefinition="VARCHAR(40)")
+	@Column(name = "adress", nullable = false, unique = true, columnDefinition="VARCHAR(100)")
     private String adress;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

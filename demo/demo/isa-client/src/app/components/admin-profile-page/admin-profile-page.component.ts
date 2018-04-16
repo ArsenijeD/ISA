@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CinemaService } from '../../services/cinema.service';
 import { UserService } from '../../services/user.service';
 
+import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
+import {} from '@types/googlemaps';
+
 @Component({
   selector: 'app-admin-profile-page',
   templateUrl: './admin-profile-page.component.html',
@@ -21,17 +25,29 @@ export class AdminProfilePageComponent implements OnInit {
   users : any;
   fanZoneAdmins : any;
 
-  constructor(private router : Router, private cinemaService : CinemaService, private userService : UserService, private modalService: NgbModal) { }
+  @ViewChild('cinemaAdress') searchElement : ElementRef;
+
+  
+  
+  constructor(private mapsAPILoader : MapsAPILoader, private ngZone : NgZone, private router : Router, private cinemaService : CinemaService, private userService : UserService, private modalService: NgbModal) { }
 
   ngOnInit() {
 
-    this.aktivnosti = ["nav-link active", "nav-link", "nav-link", "nav-link"];
-    this.aktivna_tabela = [true, false, false, false];
+    this.aktivnosti = ["nav-link active", "nav-link", "nav-link", "nav-link", "nav-link"];
+    this.aktivna_tabela = [true, false, false, false, false];
 
     this.cinemaService.getCinemas().subscribe(data=> { this.cinemas = data});
     // this.userService.getUsers().subscribe(data=> { this.users = data});
+  
+    
   }
 
+  ngAfterViewInit() {
+
+    
+  }
+  
+  
   promeniAktivnost(index: number) {
 
     
@@ -71,16 +87,44 @@ export class AdminProfilePageComponent implements OnInit {
 
 
   //modalni dijalozi
-  openCinema(contentCinema) {
-    this.modalService.open(contentCinema).result.then((result) => {
-      
-    }, (reason) => {
-      
-    });
+  // openCinema(contentCinema) {
+
     
+  //   this.modalService.open(contentCinema).result.then((result) => {
+      
+      
+  //   }, (reason) => {
+      
+  //   });
+
+    
+    
+    
+  // }
+
+  searchInit() {
+
+    this.mapsAPILoader.load().then(
+
+      () => {
+
+        let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {types : ["address"]});
+
+        autocomplete.addListener("place_change", () => {
+
+          this.ngZone.run(() => {
+
+            let place : google.maps.places.PlaceResult = autocomplete.getPlace();
+
+            if (place.geometry == undefined || place.geometry == null)
+            return;
+          });
+        })
+
+      }
+    );
     
   }
-
   // private getDismissReason(reason: any): string {
   //   if (reason === ModalDismissReasons.ESC) {
   //     return 'by pressing ESC';
@@ -93,6 +137,7 @@ export class AdminProfilePageComponent implements OnInit {
 
   openAdmins(contentAdmins) {
     this.modalService.open(contentAdmins).result.then((result) => {
+      
       
     }, (reason) => {
       

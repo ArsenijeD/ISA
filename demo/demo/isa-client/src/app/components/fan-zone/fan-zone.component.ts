@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { AdService } from '../../services/ad.service';
+
+import {} from '@types/googlemaps';
+import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-fan-zone',
@@ -13,9 +16,14 @@ export class FanZoneComponent implements OnInit {
   adDate : string;
   adImage : string;
 
-  constructor(private adService : AdService) { }
+
+
+  constructor( private adService : AdService) { }
 
   ngOnInit() {
+
+
+    
   }
 
   onSubmit() {
