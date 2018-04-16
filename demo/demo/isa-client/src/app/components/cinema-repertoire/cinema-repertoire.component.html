@@ -1,3 +1,98 @@
-<p>
-  {{currentCinema.name}}
-</p>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="jquery.min.js"></script>
+  	
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+	
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="home-guest">Home</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="myNavbar">	        
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+	        <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+  
+    
+    
+    <!-- Page Content -->
+  <div class="container">
+
+      <!-- Page Heading -->
+      <h1 class="my-4">{{currentCinema.name}}
+<!--        <small>Secondary Text</small>-->
+      </h1>
+    
+    <br>
+
+      <h2>Repertoar:</h2>
+
+      <br>
+
+    <ul>
+      <li *ngFor="let h of currentCinema.halls">
+
+        <div class="container">
+          <h4>Sala {{h.number}}</h4>
+          <br>
+
+          <li *ngFor="let p of h.projections">
+            <div class="row">
+                <div class="col-md-5">
+                  <a href="#">
+                    <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/400x300" alt="">
+                  </a>
+                </div>
+                <div class="col-md-5">
+                  <h3>{{p.film.name}}</h3>
+                  <br>
+                  <div class="col-md-6">
+                    <p> <b>Genre: </b>{{p.film.genre}}</p>
+                    <p> <b>Description: </b>{{p.film.description}}</p>
+                    <p> <b>Duration: </b>{{p.film.duration}} min</p>
+                    <p> <b>Average rating: </b>{{p.film.averageRating}}</p>
+                  
+                  </div>  
+                  <!-- <br>
+                  <p><b>Address: </b> {{c.adress}}</p>
+                  <p> <b>Description: </b>{{c.description}}</p> -->
+
+                  <div class="col-md-5">
+                    
+                    <p> <b>Date: </b>{{p.date}}</p>
+                    <p> <b>Start time: </b>{{p.time}}</p>
+                    <br>
+                    <p> <b>Discount: </b>{{p.discount}} %</p>
+                    <br>
+                  <button type="button" class="btn btn-success" (click)="onClickReserve(p)">Reserve</button>
+                  </div>
+                </div>
+              </div>
+
+          </li>  
+
+
+        </div>
+
+        <hr>
+
+      </li>
+    </ul>
+
+
+  </div>
+    <!-- /.container -->
+
+

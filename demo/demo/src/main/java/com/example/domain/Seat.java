@@ -38,13 +38,12 @@ public class Seat implements Serializable{
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="hall_id", nullable=false)
-	@JsonIgnore
     private Hall hall;
 
 	
-	@OneToMany(mappedBy="seat",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnore
-    private Set<Ticket> tickets;
+//	@OneToMany(mappedBy="seat",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JsonIgnore
+//    private Set<Ticket> tickets;
 	
 
 	public Long getId() {
@@ -74,24 +73,17 @@ public class Seat implements Serializable{
 	}
 	
 
-	public Set<Ticket> getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(Set<Ticket> tickets) {
-		this.tickets = tickets;
-	}
 
 	public Seat() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Seat(int number, Hall hall, Set<Ticket> tickets) {
+	public Seat(int number, Hall hall) {
 		super();
 		this.number = number;
 		this.hall = hall;
-		this.tickets = tickets;
+
 	}
 
 	

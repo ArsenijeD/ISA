@@ -40,18 +40,20 @@ public class Stage implements Serializable{
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="theater_id", nullable=false)
-	@JsonIgnore
     private Theater theater;
 	
 	
-	@OneToMany(mappedBy="stage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnore
-    private Set<Chair> chairs;
+//	@OneToMany(mappedBy="stage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Set<Chair> chairs;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "stage_presentation", joinColumns = @JoinColumn(name = "stage_id"), inverseJoinColumns = @JoinColumn(name = "presentation_id"))
-    private Set<Projection> projections;
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "stage_presentation", joinColumns = @JoinColumn(name = "stage_id"), inverseJoinColumns = @JoinColumn(name = "presentation_id"))
+//    private Set<Projection> projections;
 
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "stage_presentations", joinColumns = @JoinColumn(name = "stage_id"), inverseJoinColumns = @JoinColumn(name = "presentation_id"))
+    private Set<Presentation> presentations;
 
 	
 	public Long getId() {
@@ -62,6 +64,8 @@ public class Stage implements Serializable{
 		this.id = id;
 	}
 
+	
+
 	public Theater getTheater() {
 		return theater;
 	}
@@ -69,16 +73,6 @@ public class Stage implements Serializable{
 	public void setTheater(Theater theater) {
 		this.theater = theater;
 	}
-
-	public Set<Chair> getChairs() {
-		return chairs;
-	}
-
-	public void setChairs(Set<Chair> chairs) {
-		this.chairs = chairs;
-	}
-	
-	
 
 	public int getNumber() {
 		return number;
@@ -88,12 +82,15 @@ public class Stage implements Serializable{
 		this.number = number;
 	}
 
-	public Set<Projection> getProjections() {
-		return projections;
+	
+	
+
+	public Set<Presentation> getPresentations() {
+		return presentations;
 	}
 
-	public void setProjections(Set<Projection> projections) {
-		this.projections = projections;
+	public void setPresentations(Set<Presentation> presentations) {
+		this.presentations = presentations;
 	}
 
 	public Stage() {
@@ -101,13 +98,16 @@ public class Stage implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Stage(int number, Theater theater, Set<Chair> chairs, Set<Projection> projections) {
+	public Stage(int number, Theater theater, Set<Presentation> presentations) {
 		super();
 		this.number = number;
 		this.theater = theater;
-		this.chairs = chairs;
-		this.projections = projections;
+		this.presentations = presentations;
 	}
+
+
+	
+	
 
 	
 

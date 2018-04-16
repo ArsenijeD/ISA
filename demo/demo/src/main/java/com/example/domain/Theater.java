@@ -43,17 +43,17 @@ public class Theater implements Serializable{
     private String adress;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_theater", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "theater_id"))
+    @JoinTable(name = "user_theater", joinColumns = @JoinColumn(name = "theater_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> admins;
 	
-	@OneToMany(mappedBy="theater",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "theater_stages", joinColumns = @JoinColumn(name = "theater_id"), inverseJoinColumns = @JoinColumn(name = "stage_id"))
     private Set<Stage> stages;
 	
 
-	@OneToMany(mappedBy="theater",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnore
-	private Set<RatingTheater> ratings;
+//	@OneToMany(mappedBy="theater",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JsonIgnore
+//	private Set<RatingTheater> ratings;
 
 	 
 	 
@@ -97,6 +97,9 @@ public class Theater implements Serializable{
 		this.admins = admins;
 	}
 
+
+	
+	
 	public Set<Stage> getStages() {
 		return stages;
 	}
@@ -105,30 +108,22 @@ public class Theater implements Serializable{
 		this.stages = stages;
 	}
 
-
-	public Set<RatingTheater> getRatings() {
-		return ratings;
-	}
-
-	public void setRatings(Set<RatingTheater> ratings) {
-		this.ratings = ratings;
-	}
-
 	public Theater() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Theater(String name, String description, String adress, Set<User> admins, Set<Stage> stages,
-			Set<RatingTheater> ratings) {
+	public Theater(String name, String description, String adress, Set<User> admins, Set<Stage> stages) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.adress = adress;
 		this.admins = admins;
 		this.stages = stages;
-		this.ratings = ratings;
 	}
+
+
+	
 	 
 	 
 	

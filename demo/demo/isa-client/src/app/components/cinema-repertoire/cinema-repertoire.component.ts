@@ -12,6 +12,8 @@ export class CinemaRepertoireComponent implements OnInit {
   private currentCinema: any;
   private hallsArray : any;
 
+  private projectionsArray : any[] = [];
+
 
   constructor(private router : Router, private cinemaService : CinemaService) { }
 
@@ -23,19 +25,38 @@ export class CinemaRepertoireComponent implements OnInit {
       console.log(currentCinema);});
 
 
-      this.cinemaService.getHallsByCinemaID(this.currentCinema.id)
-      .subscribe(
-        data=> 
-        {this.hallsArray = data;
+      // this.cinemaService.getHallsByCinemaID(this.currentCinema.id)
+      // .subscribe(
+      //   data=> 
+      //   {this.hallsArray = data;
           
-          console.log(data);
-          console.log(this.currentCinema.id);
-        }
-      );
-    
+      //     console.log(data);
 
+      //     this.hallsArray.forEach(hall => {
+        
+      //       this.cinemaService.getProjectionsByHallID(hall.id)
+      //       .subscribe(
+      //       data=> 
+      //         {
+                
+      //           this.projectionsArray.push(data);
+      //           // console.log(data);
+                
+      //         }
+      //       );
+
+      //     });
+
+      //      console.log(this.projectionsArray);
+          
+      //   }
+      // );   
+      
+      
   }
 
+
+  
 
 
 

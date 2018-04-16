@@ -1,12 +1,18 @@
 package com.example.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,15 +38,29 @@ public class Actor implements Serializable{
     private String surname;
 
 	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "film_actors", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
+    private Set<Film> films;
 	
+	
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "performance_actors", joinColumns = @JoinColumn(name = "performance_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
+    private Set<Performance> performance;
 	
 	public Actor() {}
 	
-	public Actor(String firstname, String surname) {
+
+
+	public Actor(String firstname, String surname, Set<Film> films, Set<Performance> performance) {
 		super();
 		this.firstname = firstname;
 		this.surname = surname;
+		this.films = films;
+		this.performance = performance;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -64,6 +84,30 @@ public class Actor implements Serializable{
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+
+
+	public Set<Film> getFilms() {
+		return films;
+	}
+
+
+
+	public void setFilms(Set<Film> films) {
+		this.films = films;
+	}
+
+
+
+	public Set<Performance> getPerformance() {
+		return performance;
+	}
+
+
+
+	public void setPerformance(Set<Performance> performance) {
+		this.performance = performance;
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.example.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @Entity
 @Table(name = "cinema")
@@ -42,22 +45,23 @@ public class Cinema implements Serializable {
     private String adress;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_cinema", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "cinema_id"))
+    @JoinTable(name = "user_cinema", joinColumns = @JoinColumn(name = "cinema_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> admins;
 	
-	@OneToMany(mappedBy="cinema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "cinema_halls", joinColumns = @JoinColumn(name = "cinema_id"), inverseJoinColumns = @JoinColumn(name = "hall_id"))
     private Set<Hall> halls;
 	
 	
-	 @OneToMany(mappedBy="cinema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	 @JsonIgnore
-	 private Set<RatingCinema> ratings;
+//	 @OneToMany(mappedBy="cinema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	 @JsonIgnore
+//	 private Set<RatingCinema> ratings;
 	
 	
 	public Long getId() {
 		return id;
 	}
+
 
 	public void setId(Long id) {
 		this.id = id;
@@ -95,7 +99,8 @@ public class Cinema implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
+	
 	public Set<Hall> getHalls() {
 		return halls;
 	}
@@ -103,34 +108,24 @@ public class Cinema implements Serializable {
 	public void setHalls(Set<Hall> halls) {
 		this.halls = halls;
 	}
-	
-	
 
-	public Set<RatingCinema> getRatings() {
-		return ratings;
-	}
-
-	public void setRatings(Set<RatingCinema> ratings) {
-		this.ratings = ratings;
-	}
-
-	
 	public Cinema() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
-	public Cinema(String name, String description, String adress, Set<User> admins, Set<Hall> halls,
-			 Set<RatingCinema> ratings) {
+	public Cinema(String name, String description, String adress, Set<User> admins, Set<Hall> halls) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.adress = adress;
 		this.admins = admins;
 		this.halls = halls;
-		this.ratings = ratings;
 	}
+
+
+
+
 
 	
 

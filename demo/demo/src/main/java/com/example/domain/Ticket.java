@@ -43,13 +43,11 @@ public class Ticket implements Serializable{
 	@Id
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="projection_id", nullable=false)
-	@JsonIgnore
     private Projection projection;
 	
 	@Id
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="seat_id", nullable=false)
-	@JsonIgnore
     private Seat seat;
 
 	

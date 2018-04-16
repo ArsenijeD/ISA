@@ -37,13 +37,11 @@ public class Chair implements Serializable{
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="stage_id", nullable=false)
-	@JsonIgnore
     private Stage stage;
 
 	
-	@OneToMany(mappedBy="chair", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnore
-    private Set<Card> cards;
+//	@OneToMany(mappedBy="chair", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Set<Card> cards;
 
 
 	public Long getId() {
@@ -77,28 +75,17 @@ public class Chair implements Serializable{
 	}
 
 
-
-	public Set<Card> getCards() {
-		return cards;
-	}
-
-
-	public void setCards(Set<Card> cards) {
-		this.cards = cards;
-	}
-
-
 	public Chair() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public Chair(int number, Stage stage, Set<Card> cards) {
+	public Chair(int number, Stage stage) {
 		super();
 		this.number = number;
 		this.stage = stage;
-		this.cards = cards;
+
 	}
 
 
