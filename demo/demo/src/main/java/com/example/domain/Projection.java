@@ -42,7 +42,8 @@ public class Projection implements Serializable{
 	private String time;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name="film_id", nullable=false)
     private Film film;
 	
@@ -112,7 +113,7 @@ public class Projection implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Projection(String date, String time, int discount) {
+	public Projection(Film film, String date, String time, int discount) {
 		super();
 		this.date = date;
 		this.time = time;

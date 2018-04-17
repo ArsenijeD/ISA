@@ -5,6 +5,7 @@ import { CinemaService } from '../../services/cinema.service';
 import { UserService } from '../../services/user.service';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-admin-profile-page',
   templateUrl: './admin-profile-page.component.html',

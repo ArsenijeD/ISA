@@ -29,6 +29,11 @@ import { AdminProfilePageComponent } from './components/admin-profile-page/admin
 import { FanZoneComponent } from './components/fan-zone/fan-zone.component';
 
 import { AgmCoreModule} from '@agm/core'
+
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,

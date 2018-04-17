@@ -39,7 +39,7 @@ public class Presentation implements Serializable{
 	@Column(name = "time", nullable = false)
 	private String time;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name="performance_id", nullable=false)
     private Performance performance;
 
