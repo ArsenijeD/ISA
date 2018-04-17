@@ -41,7 +41,7 @@ public class Cinema implements Serializable {
 	@Column(name = "description", nullable = false, columnDefinition="VARCHAR(50)")
     private String description;
 	
-	@Column(name = "adress", nullable = false, columnDefinition="VARCHAR(40)")
+	@Column(name = "adress", nullable = false, columnDefinition="VARCHAR(100)")
     private String adress;
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

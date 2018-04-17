@@ -16,6 +16,7 @@ import { ViewTheatersComponent } from './components/view-theaters/view-theaters.
 import { CinemaService } from './services/cinema.service';
 import { UserService } from './services/user.service';
 import { AdService } from './services/ad.service';
+import { GeocoderService } from './services/geocoder.service';
 
 
 import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
@@ -30,8 +31,8 @@ import { FanZoneComponent } from './components/fan-zone/fan-zone.component';
 
 import { AgmCoreModule} from '@agm/core'
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -57,10 +58,11 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
     NgbModule.forRoot(),
     FormsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBWhwJkhsPej0DGz5a0MKu-x_24m6RBVYc'
+      apiKey: 'AIzaSyBWhwJkhsPej0DGz5a0MKu-x_24m6RBVYc',
+      libraries: ["places"]
     })
   ],
-  providers: [HttpClientModule, CinemaService, TheaterService, UserService, AdService],
+  providers: [HttpClientModule, CinemaService, TheaterService, UserService, AdService, GeocoderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

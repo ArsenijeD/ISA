@@ -14,6 +14,7 @@
       </li>
     </ul>
   </nav>
+
   
     
     
@@ -28,7 +29,7 @@
     <br>
 
     <ul class="cinemasArray">
-      <li *ngFor="let c of cinemasArray">
+      <li *ngFor="let c of cinemasArray; let i = index">
 
           <div class="row">
               <div class="col-md-5">
@@ -36,8 +37,8 @@
                   <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/400x300" alt="">
                 </a> -->
                 
-                <agm-map [latitude]="latitude" [longitude]="longitude">
-                  <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                <agm-map [latitude]="latitudes[i]" [longitude]="longitudes[i]" >
+                  <agm-marker [latitude]="latitudes[i]" [longitude]="longitudes[i]" ></agm-marker>
                 </agm-map>
               </div>
               <div class="col-md-5">
