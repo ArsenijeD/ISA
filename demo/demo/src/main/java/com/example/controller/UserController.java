@@ -14,25 +14,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.OnRegistrationCompleteEvent;
 import com.example.RegistrationListener;
+import com.example.domain.Cinema;
+import com.example.domain.CurrentUser;
 import com.example.domain.User;
 import com.example.domain.UserCreateForm;
 import com.example.domain.VerificationToken;
 import com.example.service.UserService;
-@Controller
+@RestController
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -49,7 +53,18 @@ public class UserController {
     @Autowired
     private MessageSource messages;
 
+  
+  @RequestMapping(
+    		value = "/angularUser",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+    public CurrentUser getUserPageAngular(@ModelAttribute("currentUser") CurrentUser currentUser) {
+    	System.out.println("treba da vrati:" +currentUser);
+        return currentUser;
+    }
     
+  
+  
     @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
     @RequestMapping("/user/{id}")
     public ModelAndView getUserPage(@PathVariable Long id) {
@@ -57,22 +72,29 @@ public class UserController {
         return new ModelAndView("user", "user", userService.getUserById(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id))));
     }
-
+    /*jsp
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "	", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/create", method = RequestMethod.GET)
     public ModelAndView getUserCreatePage() {
         LOGGER.debug("User create form triggered");
         return new ModelAndView("userCreate", "form", new UserCreateForm());
-    }
+    }*/
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/user/create", method = RequestMethod.POST)
-    public String handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult,WebRequest  request) {
-        LOGGER.debug("Processing user create form={}, bindingResult={}", form, bindingResult);
+ 
+   // @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(
+			value = "/public/user/create",
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes=MediaType.APPLICATION_JSON_VALUE
+			)
+    public User handleUserCreateForm(@Valid  @RequestBody  UserCreateForm form,BindingResult bindingResult,WebRequest  request) {
+        LOGGER.debug("Processing user create form={}, bindingResult={}");//, form, bindingResult);
         final User registered;
         if (bindingResult.hasErrors()) {
             // failed validation
-            return "userCreate";
+            //return "userCreate";
+        	return null;
         }
         try {
         	registered=userService.create(form);        
@@ -85,21 +107,23 @@ public class UserController {
         } catch (DataIntegrityViolationException e) {
             //email exists
             LOGGER.warn("Duplicate email.", e);
-            return "userCreate";
+            //return "userCreate";
+            return null;
         }
            
         // ok, redirect
-        return "redirect:/users";
+        return registered;
     }
 
     @RequestMapping(value = "/public/registrationConfirm", method = RequestMethod.GET)
-    public String confirmRegistration(final HttpServletRequest request, final Model model, @RequestParam("token") final String token) throws UnsupportedEncodingException {
+    public boolean confirmRegistration(final HttpServletRequest request, final Model model, @RequestParam("token") final String token) throws UnsupportedEncodingException {
     	    Locale locale = request.getLocale();    	     
     	    VerificationToken verificationToken = userService.getVerificationToken(token);
     	    if (verificationToken == null) {
-    	        String message = messages.getMessage("auth.message.invalidToken", null, locale);
-    	        model.addAttribute("message", message);
-    	        return "redirect:/badUser.html?lang=" + locale.getLanguage();
+    	       // String message = messages.getMessage("auth.message.invalidToken", null, locale);
+    	       //model.addAttribute("message", message);
+    	    	System.out.println("token nije dobar");
+    	        return false;
     	    }
     	     
     	    User user = verificationToken.getUser();
@@ -107,12 +131,12 @@ public class UserController {
     	    if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
     	        String messageValue = messages.getMessage("auth.message.expired", null, locale);
     	        model.addAttribute("message", messageValue);
-    	        return "redirect:/badUser.html?lang=" + locale.getLanguage();
+    	        return false;
     	    } 
     	     
     	    user.setEnabled(true); 
     	    userService.saveRegisteredUser(user); 
-    	    return "redirect:/login";
+    	    return true;
     	    //return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); 
     	}
     

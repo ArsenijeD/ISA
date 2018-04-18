@@ -24,7 +24,7 @@ public class LoginController {
         LOGGER.debug("Login page triggered, error={}", error);
         
         
-        return new ModelAndView("login.jsp");
+        return new ModelAndView("login");
     }
 
 }

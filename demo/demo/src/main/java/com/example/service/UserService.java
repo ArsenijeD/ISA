@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.domain.FriendRequest;
 import com.example.domain.User;
 import com.example.domain.UserCreateForm;
 import com.example.domain.VerificationToken;
@@ -29,7 +30,21 @@ public interface UserService {
     
     public VerificationToken getVerificationToken(final String VerificationToken);
     
-    public List<User> getAllFriends(long id);
+    //////friend request
+    public List<User> getAllFriends(long friendId);
 
-
+    public List<FriendRequest> getAllFriendRequestSentPending(Long senderId);
+    
+    public List<FriendRequest> getALLFriendRequestReceivedPending(Long receiverId);
+    
+    public Boolean sendRequest(Long senderId,Long receiverId);
+    
+    public Boolean approveRequest(Long frequestId,Long receiverId);
+    
+    public Boolean rejectRequest(Long frequestId,Long receiverId);
+    
+    public Boolean deleteSentRequest(Long frequestId,Long senderId);
+    
+    public Boolean deleteFriend(Long frequestId,long friendUnfrinder);
+    
 }

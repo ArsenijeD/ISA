@@ -18,10 +18,10 @@ export class CinemaService {
   }
 
   getCinemas(){
-    return this.http.get("http://localhost:8080/public/cinemas/getAll").map(data => data.json())
+    return this.http.get("http://localhost:8080/cinemas/getAll").map(data => data.json())
     .catch((err:HttpErrorResponse) =>
     {
-        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        // alert(err.status + " " + err.error.error + " \n" + err.error.message);
         return Observable.throw(err);
     });
   

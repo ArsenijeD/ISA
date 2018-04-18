@@ -24,26 +24,30 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/","/regitrationConfirm.html?token=**", "/public/**", "/public/cinemas/**","/h2-console/**, /cinemas/**").permitAll()// / ili /public/billo sta ne prolazi autent. i moze bilo ko
                 .antMatchers("/users/**").hasAuthority("ADMIN")
-                .anyRequest().fullyAuthenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login")
-                .usernameParameter("email")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .deleteCookies("remember-me")
-                .logoutSuccessUrl("/")
-                .permitAll()
-                .and()
-                .rememberMe()
-                .and()
-                .sessionManagement()
-                .maximumSessions(1);
-        http.csrf().disable();
+                .anyRequest().fullyAuthenticated();
+ //               .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .failureUrl("/login")
+//                .usernameParameter("email")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")*/
+//               // .deleteCookies("remember-me")
+               // .logoutSuccessUrl("/")
+                //.permitAll();
+                //.and()
+                //.rememberMe()
+                //.and()
+               // .sessionManagement()
+               // .maximumSessions(1);
+        http.cors().and().csrf().disable();
         http.headers().frameOptions().disable();
+        // http.formLogin().defaultSuccessUrl("/userCreate",true);//uvek baca na tu stranicu
+        //ovako baca na tu stranicu samo kad direktno gadjas /login, a inace te prosledi dalje na ono sto si prvobitno gadjao
+       // http.formLogin().defaultSuccessUrl("/public/angularUser");
+        http.httpBasic();
     }
 
     @Override
@@ -51,5 +55,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
+    
 
 }

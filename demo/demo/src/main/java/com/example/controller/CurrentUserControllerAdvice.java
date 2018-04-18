@@ -16,7 +16,9 @@ public class CurrentUserControllerAdvice {
     @ModelAttribute("currentUser")
     public CurrentUser getCurrentUser(Authentication authentication) {
     	LOGGER.debug("CurrentUserControllerAdvice triggered.");
+    	System.out.println("currentUser controler advice");
         return (authentication == null) ? null : (CurrentUser) authentication.getPrincipal();
+        
     }
 
 

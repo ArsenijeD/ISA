@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.example.domain.FriendRequest;
 import com.example.domain.FriendRequestStatus;
 import com.example.domain.MyRole;
+import com.example.domain.Role;
 import com.example.domain.User;
 import com.example.domain.UserCreateForm;
 import com.example.domain.VerificationToken;
@@ -23,6 +24,7 @@ import com.example.repository.FriendRequestRepository;
 import com.example.repository.RoleRepository;
 import com.example.repository.UserRepository;
 import com.example.repository.VerificationTokenRepository;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -66,10 +68,13 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setEmail(form.getEmail());
 		user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
-		MyRole role=roleRepository.findOneByName(form.getRole().toString());
-		System.out.println("sad ce rola");
-		System.out.println("rola je:"+role.getName());
-		user.getRoles().add(role);
+		user.setName(form.getName());
+		user.setLastName(form.getLastName());
+		user.setCity(form.getCity());
+		user.setPhoneNumber(form.getPhoneNumber());
+		//MyRole role=roleRepository.findOneByName(Role.USER.toString());
+		//System.out.println("rola je:"+role.getName());
+		//user.getRoles().add(role);
 		System.out.println("dodao role");
 		userRepository.save(user);
 		return user;
@@ -119,16 +124,109 @@ public class UserServiceImpl implements UserService {
 	    public VerificationToken getVerificationToken(final String VerificationToken) {
 	        return tokenRepository.findByToken(VerificationToken);
 	    }
-
-	
-		
+			
 		@Override
-		public List<User> getAllFriends(long id) {
+		public List<User> getAllFriends(long friendId) {
 			ArrayList<User> friends=new ArrayList<User>();
-			ArrayList<FriendRequest> allReq=(ArrayList<FriendRequest>) friendRequestRepository.findByStatusAndSender(FriendRequestStatus.APPROVED, id);
+			ArrayList<FriendRequest> allReq=(ArrayList<FriendRequest>) friendRequestRepository.findApprovedRequests(friendId,FriendRequestStatus.APPROVED);
 			for(FriendRequest freq : allReq){
 				friends.add(freq.getSender());
 			}
 			return friends;
 		}
+
+		@Override
+		public List<FriendRequest> getAllFriendRequestSentPending(Long senderId) {
+			return friendRequestRepository.findBySenderAndStatus(senderId, FriendRequestStatus.PENDING);
+		}
+
+		@Override
+		public List<FriendRequest> getALLFriendRequestReceivedPending(Long receiverId) {
+			return friendRequestRepository.findByReceiverAndStatus(receiverId, FriendRequestStatus.PENDING);
+		}
+
+		@Override
+		public Boolean sendRequest(Long senderId, Long receiverId) {
+			//receiver and sender are same
+			if(senderId==receiverId) {
+				return false;
+			}
+			
+			//cannot send request if another request is already pending,or you are already friends
+			if(friendRequestRepository.findBySenderAndReceiverAndNotTwoStatus(senderId,receiverId,FriendRequestStatus.APPROVED,FriendRequestStatus.PENDING).size()!=0) {
+				return false;
+			}
+			
+			FriendRequest fr=new FriendRequest();
+			fr.setReceiver(userRepository.findOne(receiverId));
+			fr.setSender(userRepository.findOne(senderId));
+			fr.setStatus(FriendRequestStatus.PENDING);
+			
+			if( friendRequestRepository.save(fr)!=null) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+
+		@Override
+		public Boolean approveRequest(Long frequestId, Long receiverId) {
+			// TODO Auto-generated method stub
+			FriendRequest fr=friendRequestRepository.findOne(frequestId);
+			if(fr.getReceiver().getId()==receiverId) {
+				if(fr.getStatus()==FriendRequestStatus.PENDING) {
+					fr.setStatus(FriendRequestStatus.APPROVED);
+					friendRequestRepository.flush();
+					return true;
+				}else {
+					return false;
+				}
+			}else {
+				return false;
+			}
+		}
+
+		//ili da se trazi preko sendera i receivera i da moze biti samo jedan zapis 
+		@Override
+		public Boolean rejectRequest(Long frequestId, Long receiverId) {
+			// TODO Auto-generated method stub
+			FriendRequest fr=friendRequestRepository.findOne(frequestId);
+			if(fr.getReceiver().getId()==receiverId && fr.getStatus()==FriendRequestStatus.PENDING) {
+				friendRequestRepository.delete(frequestId);
+				friendRequestRepository.flush();
+				return true;
+			}else {
+			return false;
+			}
+		}
+
+		@Override
+		public Boolean deleteSentRequest(Long frequestId, Long senderId) {
+			// TODO Auto-generated method stub
+			FriendRequest fr=friendRequestRepository.findOne(frequestId);
+			if(fr.getSender().getId()==senderId && fr.getStatus()==FriendRequestStatus.PENDING) {
+				friendRequestRepository.delete(frequestId);
+				friendRequestRepository.flush();
+				return true;
+			}else {
+			return false;
+			}
+		}
+
+		@Override
+		public Boolean deleteFriend(Long frequestId, long friendUnfriender) {
+			// TODO Auto-generated method stub
+			FriendRequest fr=friendRequestRepository.findOne(frequestId);
+			if((fr.getSender().getId()==friendUnfriender || fr.getReceiver().getId()==friendUnfriender )&& fr.getStatus()==FriendRequestStatus.APPROVED) {
+				friendRequestRepository.delete(frequestId);
+				friendRequestRepository.flush();
+				return true;
+			}else {
+			return false;
+			}
+		}
+		
+		
+
+	
 }
