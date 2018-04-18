@@ -1,0 +1,247 @@
+
+<div class="container">
+    <div class="row my-2">
+        <div class="col-lg-8 order-lg-2">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="JavaScript:void(0)" (click) = "promeniAktivnost(0)"  class={{aktivnosti[0]}}>On waiting ads</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="JavaScript:void(0)" (click) = "promeniAktivnost(1)"  class={{aktivnosti[1]}}>My ads</a>
+                </li>
+                <li class="nav-item">
+                    <a href="JavaScript:void(0)" (click) = "promeniAktivnost(2)"  class={{aktivnosti[2]}}>Change profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="JavaScript:void(0)" (click) = "promeniAktivnost(3)"  class={{aktivnosti[3]}}>New ad</a>
+                </li>
+                
+
+                
+            </ul>
+
+            
+
+            <div class="tab-content py-4" >
+                <!-- Users ads -->
+                <div class="tab-pane active" id="onWaitingAds" *ngIf=aktivna_tabela[0]>
+                    <div class="container">           
+                       
+                        <div class="container" style="margin-top:50px" *ngFor="let unconfirmedAd of unconfirmedAds; let i = index">
+                    
+                            <article class="col-12">
+                              
+                              <div class = "row">
+                  
+                                  <div class="col-4">
+                  
+                                      <img class="card-img-top" src="assets/images/{{unconfirmedAd.image}}">
+                  
+                                  </div>
+                  
+                                  <div class="col-4">
+                  
+                                    <div class="row">
+                  
+                                        <h3>Name:<span style="font-weight:normal"> {{unconfirmedAd.name}} </span></h3>
+                                        
+                                    </div>
+                  
+                                    <div class="row">
+                  
+                                        <h4>Description:<span style="font-weight:normal"> {{unconfirmedAd.description}} </span></h4> 
+                  
+                                    </div>
+                  
+                                    <div class="row">
+                  
+                                        <h5> Valid until: <span style="font-weight:normal"> {{unconfirmedAd.date}} </span></h5>
+
+                                    </div>
+
+                                    <div class="row" style="margin-top:30px">
+                  
+                                        <h5> Posted by: <span style="font-weight:normal"> {{unconfirmedAd.user.first_name}} {{unconfirmedAd.user.last_name}}</span></h5>
+
+                                    </div>
+                  
+ 
+                                  </div>
+
+                                  
+                                  
+                                  <div cass="col-4" style="margin-left: 30px">
+
+                                      <button   (click) = "approveAd(unconfirmedAd)" id="approveBtn" type="button" value="submit" class="btn btn-primary center">approve</button>
+                                 
+                                  </div>
+
+                                  <div cass="col-4" style="margin-left: 5px">
+                                      
+                                      <button   (click) = "rejectAd(unconfirmedAd)" id="rejectBtn" type="button" value="submit" class="btn btn-danger center">reject</button>
+                                 
+                                  </div>
+
+                              </div>  
+           
+                            </article>
+                            <hr>
+                        </div>
+                      </div>
+                </div>
+
+                
+
+                <!-- My ads -->
+                <div class="tab-pane active" id="myAds" *ngIf=aktivna_tabela[1] >
+                    <div class="container">           
+                        <div class="container" style="margin-top:50px" *ngFor="let myAd of myAds; let i = index">
+                    
+                            <article class="col-12">
+                              
+                              <div class = "row">
+                  
+                                  <div class="col-4">
+                  
+                                      <img class="card-img-top" src="assets/images/{{myAd.image}}">
+                  
+                                  </div>
+                  
+                                  <div class="col-4">
+                  
+                                    <div class="row">
+                  
+                                        <h3>Name:<span style="font-weight:normal"> {{myAd.name}} </span></h3>
+                                        
+                                    </div>
+                  
+                                    <div class="row">
+                  
+                                        <h4>Description:<span style="font-weight:normal"> {{myAd.description}} </span></h4> 
+                  
+                                    </div>
+                  
+                                    <div class="row">
+                  
+                                        <h5> Valid until: <span style="font-weight:normal"> {{myAd.date}} </span></h5>
+
+                                    </div>
+
+                                    
+
+                                    <div class="row" style="margin-top:30px">
+                  
+                                        <!-- <h5> Posted by: <span style="font-weight:normal"> {{unconfirmedAd.user.first_name}} {{unconfirmedAd.user.last_name}}</span></h5> -->
+
+                                    </div>
+                  
+ 
+                                  </div>
+
+                                  <div class="col-4">
+
+                                      <h3>Bids: </h3>
+                  
+                                  </div>
+                              </div>  
+           
+                            </article>
+                            <hr>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Change profile -->
+                <div class="tab-pane active" id="changeProfile" *ngIf=aktivna_tabela[2] >
+                    <div class="container">           
+                        
+                        fff
+                    </div>
+                </div>
+
+                
+
+
+
+
+
+                <!-- New ad -->
+                <div class="tab-pane active" id="newAd" *ngIf=aktivna_tabela[3] >
+                    <div class="container">           
+                        
+                        <form name="myform" method="POST">  
+                            <div class="form-group ">
+                              <div class="col-6">
+              
+                                  <label for="adName">Name *</label>
+                                  <input id="adName" [(ngModel)]="adName" name="adName" class="form-control" type="text" data-validation="required" #name>
+                                  <span id="error_adName" class="text-danger"></span>
+              
+                              </div>
+                                
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-6">
+                                  <label for="adDescription">Description *</label>
+                                  <input [(ngModel)]="adDescription" id="adDescription" name="adDescription"  class="form-control" type="text" data-validation="required" #description >
+                                  <span id="error_adDescription" class="text-danger"></span>
+                                </div>
+                            </div>
+              
+                            
+                          
+                            <div class="form-group">
+                              <div class="col-6">
+                                <label for="adDescription">Date *</label>
+                                <div class="input-group">
+                                  <input class="form-control" placeholder="yyyy-mm-dd"
+                                          name="dp" [(ngModel)]="adDate" ngbDatepicker #d="ngbDatepicker">
+                                  <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                      <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+              
+                            
+                            <div class="form-group">
+                                <div class="col-6">
+                                  <label for="adDescription">Image</label>
+                                  <!-- <input [(ngModel)]="adImage" class="form-control" type="file" name="image" #fileInput placeholder="Upload file..." />           -->
+                                  <input [(ngModel)]="adImage" class="form-control" type="file" name="pic"  #file>
+                                </div>
+                            </div>
+              
+                            <div class="form-group">
+                                <div class="col-6">
+                                  <button  id="submit" (click) = "onSubmit(file.value)" type="button" value="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                            
+              
+                        </form>
+                    </div>
+                </div>
+
+                
+
+
+              </div>
+            </div>
+
+        <div class="col-lg-4 order-lg-1 text-center">
+            <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            <h6 class="mt-2">Upload a different photo</h6>
+            <label class="custom-file">
+                <input type="file" id="file" class="custom-file-input">
+                <span class="custom-file-control">Choose file</span>
+            </label>
+        </div>
+    </div>
+</div>
+

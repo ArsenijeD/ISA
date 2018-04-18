@@ -27,4 +27,44 @@ export class AdService {
       JSON.stringify(ad), { headers : headers }).map((data : Response) => data.json());
   }
 
+  getAdsOfCurrentUser(){
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get("http://localhost:8080/public/oglasi/getOglasForCurrentUser", {headers:headers}).map(data => data.json())
+
+    .catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        return Observable.throw(err);
+    });
+  
+  }
+
+  getAdsByConfirmed(confirmed : number){
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get("http://localhost:8080/public/oglasi/getOglasByConfirmed/" + confirmed, {headers:headers}).map(data => data.json())
+
+    .catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        return Observable.throw(err);
+    });
+  
+  }
+
+  changeAdStatus(ad : any) {
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    alert(JSON.stringify(ad));
+    return this.http.put('http://localhost:8080/public/oglasi/changeOglasStatus', 
+      JSON.stringify(ad), { headers : headers }).map((data : Response) => data.json());
+
+  }
+
 }

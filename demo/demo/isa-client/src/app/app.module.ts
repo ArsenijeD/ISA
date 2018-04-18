@@ -29,7 +29,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AdminProfilePageComponent } from './components/admin-profile-page/admin-profile-page.component';
 import { FanZoneComponent } from './components/fan-zone/fan-zone.component';
 
-import { AgmCoreModule} from '@agm/core'
+import { AgmCoreModule} from '@agm/core';
+
+import { FanZoneAdminProfileComponent } from './components/fan-zone-admin-profile/fan-zone-admin-profile.component'
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { AgmCoreModule} from '@agm/core'
     FanZoneComponent,
     RegisterCinemaComponent,
     CinemaRepertoireComponent,
-    TheaterRepertoireComponent
+    TheaterRepertoireComponent,
+    FanZoneAdminProfileComponent
 
   ],
   imports: [

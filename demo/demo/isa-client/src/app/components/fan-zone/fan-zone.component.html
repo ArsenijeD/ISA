@@ -1,7 +1,7 @@
 <h1> Welcome to fan zone:</h1>
 
 <ngb-tabset>
-    <ngb-tab title="New ad">>
+    <ngb-tab title="New ad">
       <ng-template ngbTabContent>
         
           <form name="myform" method="POST">  
@@ -41,22 +41,105 @@
                 </div>
               </div>
 
+              
               <div class="form-group">
                   <div class="col-4">
-                    <label for="adDescription">Image *</label>
-                    <input [(ngModel)]="adImage" class="form-control" type="file" name="image" #fileInput placeholder="Upload file..." />          
+                    <label for="adDescription">Image</label>
+                    <!-- <input [(ngModel)]="adImage" class="form-control" type="file" name="image" #fileInput placeholder="Upload file..." />           -->
+                    <input [(ngModel)]="adImage" class="form-control" type="file" name="pic"  #file>
                   </div>
               </div>
 
-              <button  id="submit" (click) = "onSubmit()" type="button" value="submit" class="btn btn-primary">Submit</button>
+              <div class="form-group">
+                  <div class="col-4">
+                    <button  id="submit" (click) = "onSubmit(file.value)" type="button" value="submit" class="btn btn-primary">Submit</button>
+                  </div>
+              </div>
+              
 
           </form>
       </ng-template>
     </ngb-tab>
+
     <ngb-tab>
-      <ng-template ngbTabTitle> title</ng-template>
-      <ng-template ngbTabContent>
-        
+     
+      <ng-template ngbTabTitle> My ads </ng-template>
+      <ng-template ngbTabContent >
+      
+        <div class="container" style="margin-top:50px;" *ngFor="let myAd of myAds; let i = index">
+                    
+          <article class="col-10">
+            
+            <div class = "row">
+
+                <div class="col-4">
+
+                    <img class="card-img-top" src="assets/images/{{myAd.image}}">
+
+                </div>
+
+                <div class="col-4">
+
+                  <div class="row">
+
+                      <h3>Name:<span style="font-weight:normal"> {{myAd.name}} </span></h3>
+                      
+                  </div>
+
+                  <div class="row">
+
+                      <h4>Description:<span style="font-weight:normal"> {{myAd.description}} </span></h4> 
+
+                  </div>
+
+                  <div class="row">
+
+                      <h5> Valid until: <span style="font-weight:normal"> {{myAd.date}} </span></h5>      
+                  </div>
+
+                  <!-- <div class="row" style="margin-top:100px;">
+
+                    <h3>Status:</h3>
+                    
+                  </div> -->
+
+                  <div class="row" *ngIf="myAd.confirmed == 0">
+ 
+                      <span class="badge badge-info">Waiting for admin to approve</span>
+
+                  </div>
+
+                  <div class="row" *ngIf="myAd.confirmed == 1">
+
+                      <span class="badge badge-success">Approved</span>
+
+                  </div>
+
+                  <div class="row" *ngIf="myAd.confirmed == 2">
+
+                      <span class="badge badge-danger">Rejected</span>
+
+                  </div>
+
+                  
+                    
+
+                </div>
+                  
+                <div class="col-4" *ngIf="myAd.confirmed == 1">
+
+                    <h3>Bids: </h3>
+
+                </div>
+
+            </div>  
+
+            
+            
+          </article>
+          <hr>
+        </div>
+               
       </ng-template>
     </ngb-tab>
     <ngb-tab title="Disabled">
