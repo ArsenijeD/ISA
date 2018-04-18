@@ -1,6 +1,7 @@
 package com.example.domain;
 
-import java.util.HashSet;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,21 +14,59 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
 
 	
     public User() {
 		super();
-		roles=new HashSet<MyRole>();
+		roles=new ArrayList<MyRole>();
 		enabled=false;
+		
 	}
 
+
+	public ArrayList<MyRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(ArrayList<MyRole> roles) {
+		this.roles = roles;
+	}
+
+	public Set<Ad> getAds() {
+		return ads;
+	}
+
+	public void setAds(Set<Ad> ads) {
+		this.ads = ads;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	
 
 
 	@Id
@@ -35,8 +74,49 @@ public class User {
     @Column(name = "user_id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     private String email;
+    //,nullable = false, unique = true
+    @Column(name = "first_name", nullable = false)
+    private String first_name;
+    
+//nullable = false, unique = true
+    @Column(name = "last_name", nullable = false)
+    private String last_name;
+
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private ArrayList<MyRole> roles;
+    
+
+    @Column(name = "enabled", nullable = true)
+    private boolean enabled;
+     
+    @OneToMany(mappedBy="user")
+    private Set<Ad> ads;
+    
+    public String getFirst_name() {
+		return first_name;
+	}
+
+	public void setFirst_name(String first_name) {
+		this.first_name = first_name;
+	}
+
+	public String getLast_name() {
+		return last_name;
+	}
+
+
+
+	public void setLast_name(String last_name) {
+		this.last_name = last_name;
+	}
+
+
     //,nullable = false, unique = true
     @Column(name = "first_name")
     private String firstName;
@@ -51,18 +131,10 @@ public class User {
     @Column(name="phone_number",nullable=true)
     private String phoneNumber;
     
-    @Column(name = "password_hash", nullable = false)
-    private String passwordHash;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<MyRole> roles;
-    
-    @Column(name = "enabled", nullable = true)
-    private boolean enabled;
-     
-   
-    public Long getId() {
+
+
+	public Long getId() {
         return id;
     }
 
@@ -82,13 +154,13 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public Set<MyRole> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<MyRole> roles) {
-		this.roles = roles;
-	}
+//    public Set<MyRole> getRoles() {
+//		return roles;
+//	}
+//
+//	public void setRoles(Set<MyRole> roles) {
+//		this.roles = roles;
+//	}
 
 	public boolean isEnabled() {
 		return enabled;
@@ -98,8 +170,6 @@ public class User {
 		this.enabled = enabled;
 	}
 
-
-	
 
 	public String getFirstName() {
 		return firstName;
@@ -145,4 +215,6 @@ public class User {
                 ", role=" + roles +
                 '}';
     }
+
+
 }

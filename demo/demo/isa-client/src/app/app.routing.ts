@@ -9,6 +9,13 @@ import { TestComponent } from "./components/test/test.component";
 import { RegisterUserComponent } from "./components/register-user/register-user.component";
 import { RegistrationConfirmComponent } from "./components/registration-confirm/registration-confirm.component";
 
+import { AdminProfilePageComponent } from "./components/admin-profile-page/admin-profile-page.component";
+import { FanZoneComponent } from "./components/fan-zone/fan-zone.component";
+
+import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component'
+import { TheaterRepertoireComponent } from './components/theater-repertoire/theater-repertoire.component'
+
+
 
 const appRoutes: Routes = 
 [
@@ -16,6 +23,16 @@ const appRoutes: Routes =
     {
         path: 'home-guest',
         component: HomeGuestComponent
+    },
+
+    {
+        path: 'cinema-repertoire',
+        component: CinemaRepertoireComponent
+    },
+
+    {
+        path: 'theater-repertoire',
+        component: TheaterRepertoireComponent
     },
 
     {
@@ -49,6 +66,24 @@ const appRoutes: Routes =
         redirectTo: '/login',
         pathMatch:'full'
         //component: LoginComponent
+    },
+
+    {
+
+        path: 'registerCinema',
+        component:  RegisterCinemaComponent
+    },
+
+    {
+
+        path: 'adminProfile',
+        component:  AdminProfilePageComponent
+        
+    },
+
+    {
+        path: 'fanZone',
+        component: FanZoneComponent
     }
 
 ]

@@ -3,15 +3,21 @@ package com.example.domain;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -28,15 +34,26 @@ public class Stage implements Serializable{
     @Column(name = "stage_id", nullable = false, updatable = false)
     private Long id;
 	
-	
-	@ManyToOne
-    @JoinColumn(name="theater_id", nullable=false)
-    private Theater theater;
+	@Column(name = "stage_number", nullable = false, updatable = false)
+	private int number;
 	
 	
-	@OneToMany(mappedBy="stage")
-    private Set<Chair> chairs;
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name="theater_id", nullable=false)
+//    private Theater theater;
+	
+	
+//	@OneToMany(mappedBy="stage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Set<Chair> chairs;
+	
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "stage_presentation", joinColumns = @JoinColumn(name = "stage_id"), inverseJoinColumns = @JoinColumn(name = "presentation_id"))
+//    private Set<Projection> projections;
 
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "stage_presentations", joinColumns = @JoinColumn(name = "stage_id"), inverseJoinColumns = @JoinColumn(name = "presentation_id"))
+    private Set<Presentation> presentations;
 
 	
 	public Long getId() {
@@ -47,20 +64,24 @@ public class Stage implements Serializable{
 		this.id = id;
 	}
 
-	public Theater getTheater() {
-		return theater;
+	
+
+	public int getNumber() {
+		return number;
 	}
 
-	public void setTheater(Theater theater) {
-		this.theater = theater;
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
-	public Set<Chair> getChairs() {
-		return chairs;
+	
+
+	public Set<Presentation> getPresentations() {
+		return presentations;
 	}
 
-	public void setChairs(Set<Chair> chairs) {
-		this.chairs = chairs;
+	public void setPresentations(Set<Presentation> presentations) {
+		this.presentations = presentations;
 	}
 
 	public Stage() {
@@ -68,11 +89,19 @@ public class Stage implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Stage(Theater theater, Set<Chair> chairs) {
+	public Stage(int number, Set<Presentation> presentations) {
 		super();
-		this.theater = theater;
-		this.chairs = chairs;
+		this.number = number;
+		this.presentations = presentations;
 	}
+
+
+	
+	
+
+	
+
+	
 	
 	
 	

@@ -3,15 +3,21 @@ package com.example.domain;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "hall")
@@ -27,14 +33,25 @@ public class Hall implements Serializable {
     @Column(name = "hall_id", nullable = false, updatable = false)
     private Long id;
 	
-	
-	@ManyToOne
-    @JoinColumn(name="cinema_id", nullable=false)
-    private Cinema cinema;
+	@Column(name = "hall_number", nullable = false, updatable = false)
+	private int number;
 	
 	
-	@OneToMany(mappedBy="hall")
-    private Set<Seat> seats;
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name="cinema_id", nullable=false)
+//	@JsonIgnore
+//    private Cinema cinema;
+	
+	
+//	@OneToMany(mappedBy="hall", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	@JsonIgnore
+//  private Set<Seat> seats;
+	
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "hall_projections", joinColumns = @JoinColumn(name = "hall_id"), inverseJoinColumns = @JoinColumn(name = "projection_id"))
+    private Set<Projection> projections;
 
 
 	
@@ -45,31 +62,47 @@ public class Hall implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	
 
-	public Cinema getCinema() {
-		return cinema;
+	public int getNumber() {
+		return number;
 	}
 
-	public void setCinema(Cinema cinema) {
-		this.cinema = cinema;
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
-	public Set<Seat> getSeats() {
-		return seats;
+	public Set<Projection> getProjections() {
+		return projections;
 	}
 
-	public void setSeats(Set<Seat> seats) {
-		this.seats = seats;
+	public void setProjections(Set<Projection> projections) {
+		this.projections = projections;
 	}
 
 	
-	public Hall() {}
+	
+	public Hall() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Hall(int number, Set<Projection> projections) {
+		super();
+		this.number = number;
+		this.projections = projections;
+	}
 
 	
-	public Hall(Cinema cinema, Set<Seat> seats) {
-		this.cinema = cinema;
-		this.seats = seats;
-	}
+	
+
+	
+	
+	
+	
+
+	
 	
 	
 	

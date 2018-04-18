@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule} from '@angular/core';
 import { HttpClientModule, HttpClient,} from '@angular/common/http';
 import { HttpModule,Http } from '@angular/http';
+import { FormsModule} from '@angular/forms'
+
+
 
 //componenets
 import { AppComponent } from './app.component';
@@ -13,14 +16,34 @@ import {LoginComponent} from './components/login/login.component';
 import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import { TestComponent } from './components/test/test.component'
+import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component';
+import { TheaterRepertoireComponent } from './components/theater-repertoire/theater-repertoire.component';
+import { AdminProfilePageComponent } from './components/admin-profile-page/admin-profile-page.component';
+import { FanZoneComponent } from './components/fan-zone/fan-zone.component';
+
 
 //services
 import { CinemaService } from './services/cinema.service';
 import { LoginService } from './services/login.service';
 import { AuthServiceService} from './services/auth-service.service';
+import { UserService } from './services/user.service';
+import { AdService } from './services/ad.service';
+import { GeocoderService } from './services/geocoder.service';
+import { TheaterService } from './services/theater.service';
+
 //httpClient interceptor
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+
+import { AgmCoreModule} from '@agm/core'
+
+
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
 
 //http interceptor
 import {MyCustomHttp} from './services/my-custom-http';
@@ -38,18 +61,31 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     ViewCinemasComponent,
     ViewTheatersComponent,
     RegisterCinemaComponent,
-    LoginComponent,
     TestComponent,
+    LoginComponent
     RegisterUserComponent,
-    RegistrationConfirmComponent
+    RegistrationConfirmComponent,
+    RegisterCinemaComponent,
+    AdminProfilePageComponent,
+    FanZoneComponent,
+    RegisterCinemaComponent,
+    CinemaRepertoireComponent,
+    TheaterRepertoireComponent
   ],
   imports: [
     BrowserModule,
     routing,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    NgbModule.forRoot(),
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBWhwJkhsPej0DGz5a0MKu-x_24m6RBVYc',
+      libraries: ["places"]
+    })
   ],
-  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService,
+<<<<<<< HEAD
+  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true } //httpClient Interceptor
     {
       provide: Http,

@@ -19,6 +19,7 @@ import com.example.service.TheaterService;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/public/theaters")
 public class TheaterController {
 	

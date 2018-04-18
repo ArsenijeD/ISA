@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "presentation")
@@ -29,17 +33,29 @@ public class Presentation implements Serializable{
     private Long id;
 	
 	@Column(name = "date", nullable = false)
-    private Date date;
+    private String date;
 	
 	
-	@ManyToOne
+	@Column(name = "time", nullable = false)
+	private String time;
+	
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name="performance_id", nullable=false)
     private Performance performance;
 
 	
-	@OneToMany(mappedBy="presentation")
-    private Set<PresentationChairs> presentationChairs;
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name="stage_id", nullable=false)
+//    private Stage stage;
+	
+//	@OneToMany(mappedBy="presentation",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JsonIgnore
+//    private Set<Card> cards;
 
+	
+	@Column(name = "discount")
+	private int discount;
+	
 
 	public Long getId() {
 		return id;
@@ -51,12 +67,12 @@ public class Presentation implements Serializable{
 	}
 
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -71,14 +87,28 @@ public class Presentation implements Serializable{
 	}
 
 
-	public Set<PresentationChairs> getPresentationChairs() {
-		return presentationChairs;
+
+	public String getTime() {
+		return time;
 	}
 
 
-	public void setPresentationChairs(Set<PresentationChairs> presentationChairs) {
-		this.presentationChairs = presentationChairs;
+	public void setTime(String time) {
+		this.time = time;
 	}
+
+	
+
+	public int getDiscount() {
+		return discount;
+	}
+
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
+
 
 
 	public Presentation() {
@@ -87,12 +117,23 @@ public class Presentation implements Serializable{
 	}
 
 
-	public Presentation(Date date, Performance performance, Set<PresentationChairs> presentationChairs) {
+	public Presentation(String date, String time, Performance performance, int discount) {
 		super();
 		this.date = date;
+		this.time = time;
 		this.performance = performance;
-		this.presentationChairs = presentationChairs;
+		this.discount = discount;
 	}
+
+
+	
+
+
+	
+
+
+	
+
 
 
 

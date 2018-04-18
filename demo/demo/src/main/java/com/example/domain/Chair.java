@@ -3,8 +3,10 @@ package com.example.domain;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "chair")
@@ -28,13 +32,16 @@ public class Chair implements Serializable{
     private Long id;
 	
 	
-	@ManyToOne
+	@Column(name = "chair_number", nullable = false, updatable = false)
+	private int number;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="stage_id", nullable=false)
     private Stage stage;
 
 	
-	@OneToMany(mappedBy="chair")
-    private Set<PresentationChairs> presentationChairs;
+//	@OneToMany(mappedBy="chair", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Set<Card> cards;
 
 
 	public Long getId() {
@@ -44,6 +51,17 @@ public class Chair implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+
+	
+	public int getNumber() {
+		return number;
+	}
+
+
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 
@@ -57,27 +75,23 @@ public class Chair implements Serializable{
 	}
 
 
-	public Set<PresentationChairs> getPresentationChairs() {
-		return presentationChairs;
-	}
-
-
-	public void setPresentationChairs(Set<PresentationChairs> presentationChairs) {
-		this.presentationChairs = presentationChairs;
-	}
-
-
 	public Chair() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public Chair(Stage stage, Set<PresentationChairs> presentationChairs) {
+	public Chair(int number, Stage stage) {
 		super();
+		this.number = number;
 		this.stage = stage;
-		this.presentationChairs = presentationChairs;
+
 	}
+
+
+	
+
+
 	
 	
 

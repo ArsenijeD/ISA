@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "film")
@@ -30,6 +32,7 @@ public class Film implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "film_id", nullable = false, updatable = false)
     private Long id;
+	
 	
 	@Column(name = "name", nullable = false, unique = true, columnDefinition="VARCHAR(40)")
     private String name;
@@ -47,24 +50,29 @@ public class Film implements Serializable {
 	@Column(name="price", nullable = false)
 	private int price;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "film_director", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "director_id"))
-    private Set<Director> director;
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "film_director", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "director_id"))
+//    private Set<Director> director;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "film_actors", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
-    private Set<Actor> actors;
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "film_actors", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
+//    private Set<Actor> actors;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "film_genres", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Set<Genre> genre;
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "film_genres", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
+//    private Set<Genre> genre;
 	
-	@OneToMany(mappedBy="film")
-    private Set<Projection> projections;
+	@Column(name = "genre", nullable = false, columnDefinition="VARCHAR(50)")
+    private String genre;
+	
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JoinTable(name = "film_projections", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "projection_id"))
+//    private Set<Projection> projections;
 	
 	
-	 @OneToMany(mappedBy="film")
-	 private Set<RatingFilm> ratings;
+//	 @OneToMany(mappedBy="film",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	 @JsonIgnore
+//	 private Set<RatingFilm> ratings;
 	
 	
 	// POSTER IMAGE treba dodati !!!!
@@ -73,23 +81,21 @@ public class Film implements Serializable {
 	public Film() {}
 	
 
-	public Film(String name, int duration, float averageRating, String description, int price, Set<Director> director,
-			Set<Actor> actors, Set<Genre> genre, Set<Projection> projections, Set<RatingFilm> ratings) {
-		super();
-		this.name = name;
-		this.duration = duration;
-		this.averageRating = averageRating;
-		this.description = description;
-		this.price = price;
-		this.director = director;
-		this.actors = actors;
-		this.genre = genre;
-		this.projections = projections;
-		this.ratings = ratings;
-	}
+
+	public Film(String name, int duration, float averageRating, String description, int price, String genre) {
+	super();
+	this.name = name;
+	this.duration = duration;
+	this.averageRating = averageRating;
+	this.description = description;
+	this.price = price;
+	this.genre = genre;
+}
 
 
-	
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -122,21 +128,6 @@ public class Film implements Serializable {
 		this.averageRating = averageRating;
 	}
 
-	public Set<Director> getDirector() {
-		return director;
-	}
-
-	public void setDirector(Set<Director> director) {
-		this.director = director;
-	}
-
-	public Set<Actor> getActors() {
-		return actors;
-	}
-
-	public void setActors(Set<Actor> actors) {
-		this.actors = actors;
-	}
 
 	public String getDescription() {
 		return description;
@@ -154,36 +145,17 @@ public class Film implements Serializable {
 		this.price = price;
 	}
 
-	public Set<Genre> getGenre() {
+	
+	public String getGenre() {
 		return genre;
 	}
 
-	public void setGenre(Set<Genre> genre) {
+
+	public void setGenre(String genre) {
 		this.genre = genre;
 	}
 
-	public Set<Projection> getProjections() {
-		return projections;
-	}
 
-	public void setProjections(Set<Projection> projections) {
-		this.projections = projections;
-	}
-
-
-	public Set<RatingFilm> getRatings() {
-		return ratings;
-	}
-
-
-	public void setRatings(Set<RatingFilm> ratings) {
-		this.ratings = ratings;
-	}
-
-	
-	
-	
-	
 
 
 }

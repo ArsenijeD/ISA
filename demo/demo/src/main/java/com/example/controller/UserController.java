@@ -1,9 +1,13 @@
 package com.example.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -18,12 +22,15 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,11 +39,18 @@ import com.example.OnRegistrationCompleteEvent;
 import com.example.RegistrationListener;
 import com.example.domain.Cinema;
 import com.example.domain.CurrentUser;
+
+import com.example.domain.MyRole;
 import com.example.domain.User;
 import com.example.domain.UserCreateForm;
 import com.example.domain.VerificationToken;
+import com.example.repository.UserRepository;
 import com.example.service.UserService;
+
+
 @RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/public")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -139,5 +153,74 @@ public class UserController {
     	    return true;
     	    //return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); 
     	}
+    
+//	    @RequestMapping(
+//				value = "/getUserAdmins/{admins}", 
+//				method = RequestMethod.GET, 
+//				produces = MediaType.APPLICATION_JSON_VALUE,
+//				consumes = MediaType.APPLICATION_JSON_VALUE)
+//		public Set<User> getCinemaAdmins(@PathVariable("admins") Set<Long> ids) {
+//			System.out.println("pogodjen getUserAdmins");
+//			return userService.getUsersByIdIn(ids);
+//	
+//		}
+    
+	    @RequestMapping(
+				value = "/getOnlyUsers", 
+				method = RequestMethod.GET, 
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<User> getUsersOnly() {
+			
+	    	System.out.println("pogodjen /getOnlyUsers");
+			List<User> all = userService.getAll();
+			List<User> users = new ArrayList<User>();
+			
+			for (User u : all) {
+				
+				if (u.getRoles().get(0).getName().equals("USER"))
+					users.add(u);
+			}
+			
+			return users;
+			
+		}
+	    
+	    @RequestMapping(
+				value = "/getFanZoneAdmins", 
+				method = RequestMethod.GET, 
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<User> getFanZoneAdmins() {
+			
+	    	System.out.println("pogodjen /getFanZoneAdmins");
+			List<User> all = userService.getAll();
+			List<User> fanZoneAdmins = new ArrayList<User>();
+			
+			for (User u : all) {
+				
+				if (u.getRoles().get(0).getName().equals("fan_zone_admin"))
+					fanZoneAdmins.add(u);
+			}
+			
+			return fanZoneAdmins;
+			
+		}
+	    
+	    @RequestMapping(value = "/changeUserRole", method = RequestMethod.PUT)
+		public @ResponseBody Boolean changeUserRole(@RequestBody User u){
+		 
+			
+			System.out.println("POGODJEN CONTROLLER /changeUserRole");
+			try {
+				
+				userService.updateUserRole(u);
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				return false;
+			}
+			
+			return true;
+		}
     
 }

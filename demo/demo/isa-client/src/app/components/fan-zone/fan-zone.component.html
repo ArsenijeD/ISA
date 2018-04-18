@@ -1,0 +1,67 @@
+<h1> Welcome to fan zone:</h1>
+
+<ngb-tabset>
+    <ngb-tab title="New ad">>
+      <ng-template ngbTabContent>
+        
+          <form name="myform" method="POST">  
+              <div class="form-group ">
+                <div class="col-4">
+
+                    <label for="adName">Name *</label>
+                    <input id="adName" [(ngModel)]="adName" name="adName" class="form-control" type="text" data-validation="required" #name>
+                    <span id="error_adName" class="text-danger"></span>
+
+                </div>
+                  
+              </div>
+              
+              <div class="form-group">
+                  <div class="col-4">
+                    <label for="adDescription">Description *</label>
+                    <input [(ngModel)]="adDescription" id="adDescription" name="adDescription"  class="form-control" type="text" data-validation="required" #description >
+                    <span id="error_adDescription" class="text-danger"></span>
+                  </div>
+              </div>
+
+              
+            
+              <div class="form-group">
+                <div class="col-4">
+                  <label for="adDescription">Date *</label>
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                            name="dp" [(ngModel)]="adDate" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                        <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                  <div class="col-4">
+                    <label for="adDescription">Image *</label>
+                    <input [(ngModel)]="adImage" class="form-control" type="file" name="image" #fileInput placeholder="Upload file..." />          
+                  </div>
+              </div>
+
+              <button  id="submit" (click) = "onSubmit()" type="button" value="submit" class="btn btn-primary">Submit</button>
+
+          </form>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+      <ng-template ngbTabTitle> title</ng-template>
+      <ng-template ngbTabContent>
+        
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Disabled">
+      <ng-template ngbTabContent>
+        
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>

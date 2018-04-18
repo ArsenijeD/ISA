@@ -3,6 +3,7 @@ package com.example.service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.example.domain.FriendRequest;
 import com.example.domain.User;
@@ -18,6 +19,11 @@ public interface UserService {
 
 	Collection<User> getAllUsers();
 
+	boolean updateUserRole(User u);
+	List<User> getAll();
+	
+	Set<User> getUsersByIdIn(Set<Long> ids);
+	
 	User create(UserCreateForm form);
 	
 	void createVerificationTokenForUser(final User user, final String token);

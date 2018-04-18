@@ -25,7 +25,7 @@ public class CinemaServiceImpl implements CinemaService {
 	@Override
 	public Cinema getCinemaByID(Long id) {
 		
-		return cinemaRepository.findById(id);
+		return cinemaRepository.findOneById(id);
 		
 	}
 
@@ -42,6 +42,18 @@ public class CinemaServiceImpl implements CinemaService {
 	public Cinema getCinemaByName(String name) {
 		
 		return cinemaRepository.findByName(name);
+	}
+
+	@Override
+	public boolean updateCinema(Cinema c) {
+		
+		Cinema cinema = cinemaRepository.findOne(c.getId());
+		cinema.setAdmins(c.getAdmins());
+		cinema.setId(c.getId());
+		
+		
+		cinemaRepository.flush();
+		return true;
 	}
 
 }
