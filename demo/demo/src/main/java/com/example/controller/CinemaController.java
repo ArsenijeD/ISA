@@ -88,7 +88,7 @@ public class CinemaController {
 	 
 		for (com.example.domain.User u : c.getAdmins()) {
 			
-			System.out.println(u.getFirst_name());
+			System.out.println(u.getFirstName());
 		}
 		System.out.println("POGODJEN CONTROLLER /changeCinemaAdmin");
 		try {

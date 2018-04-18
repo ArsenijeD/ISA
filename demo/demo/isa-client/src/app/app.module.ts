@@ -39,7 +39,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
-import { AgmCoreModule} from '@agm/core'
+import { AgmCoreModule} from '@agm/core';
 
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
@@ -50,6 +50,7 @@ import {MyCustomHttp} from './services/my-custom-http';
 import {RequestOptions, XHRBackend} from '@angular/http';
 import { Router } from '@angular/router';
 import { RegistrationConfirmComponent } from './components/registration-confirm/registration-confirm.component';
+import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
 // factory dependency injection
 export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestOptions, auth: AuthServiceService,router:Router) {
   return new MyCustomHttp(backend, defaultOptions, auth,router);
@@ -62,7 +63,7 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     ViewTheatersComponent,
     RegisterCinemaComponent,
     TestComponent,
-    LoginComponent
+    LoginComponent,
     RegisterUserComponent,
     RegistrationConfirmComponent,
     RegisterCinemaComponent,
@@ -70,7 +71,8 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     FanZoneComponent,
     RegisterCinemaComponent,
     CinemaRepertoireComponent,
-    TheaterRepertoireComponent
+    TheaterRepertoireComponent,
+    UserProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +86,6 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
       libraries: ["places"]
     })
   ],
-<<<<<<< HEAD
   providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true } //httpClient Interceptor
     {

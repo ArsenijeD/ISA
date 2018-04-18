@@ -2,6 +2,7 @@ package com.example.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,49 +23,62 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
-
+	
+	//private ArrayList<MyRole> roleList=null;
 	
     public User() {
 		super();
-		roles=new ArrayList<MyRole>();
+		roles=new HashSet<MyRole>();
 		enabled=false;
 		
 	}
 
 
-	public ArrayList<MyRole> getRoles() {
-		return roles;
-	}
 
-	public void setRoles(ArrayList<MyRole> roles) {
+	/*public ArrayList<MyRole> getRoles() {
+		if(roleList==null) {
+			roleList=new ArrayList<MyRole>();
+			for(MyRole role:roles) {
+				roleList.add(role);
+			}
+			return roleList;
+
+		}else {
+			return roleList;
+		}
+	}*/
+    public Set<MyRole> getRoles(){
+    	return roles;
+    }
+    
+	public void setRoles(Set<MyRole> roles) {
 		this.roles = roles;
 	}
-
+/*
 	public Set<Ad> getAds() {
 		return ads;
 	}
-
+	//
 	public void setAds(Set<Ad> ads) {
 		this.ads = ads;
 	}
+	*/
 
-	public static long getSerialversionuid() {
+/*	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public String getLastName() {
-		return lastName;
-	}
+	//private static final long serialVersionUID = 1L;
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+*/
+//	public void setFirstName(String firstName) {
+//		this.firstName = firstName;
+//	}
 
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 
 	
 
@@ -76,44 +90,47 @@ public class User implements Serializable {
 
     @Column(name = "email", nullable = false)
     private String email;
-    //,nullable = false, unique = true
-    @Column(name = "first_name", nullable = false)
-    private String first_name;
-    
+
 //nullable = false, unique = true
     @Column(name = "last_name", nullable = false)
-    private String last_name;
+    private String lastName;
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private Set<MyRole> roles;
+    
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private ArrayList<MyRole> roles;
+    private Set<MyRole> roles;
+    
     
 
     @Column(name = "enabled", nullable = true)
     private boolean enabled;
-     
+     /*
     @OneToMany(mappedBy="user")
     private Set<Ad> ads;
-    
-    public String getFirst_name() {
-		return first_name;
+    */
+    public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String first_name) {
+		this.firstName = first_name;
 	}
 
 	public String getLast_name() {
-		return last_name;
+		return lastName;
 	}
 
 
 
 	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+		this.lastName = last_name;
 	}
 
 
@@ -122,8 +139,8 @@ public class User implements Serializable {
     private String firstName;
     
 //nullable = false, unique = true
-    @Column(name = "last_name")
-    private String lastName;
+//    @Column(name = "last_name")
+//    private String lastName;
 
     @Column(name="city",nullable=true)
     private String city;
@@ -139,7 +156,7 @@ public class User implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -171,15 +188,12 @@ public class User implements Serializable {
 	}
 
 
-	public String getFirstName() {
-		return firstName;
-	}
+//	public String getFirstName() {
+//		return firstName;
+//	}
 
-	public void setName(String firstName) {
-		this.firstName = firstName;
-	}
 
-	public String getName() {
+	public String getLastName() {
 		return lastName;
 	}
 

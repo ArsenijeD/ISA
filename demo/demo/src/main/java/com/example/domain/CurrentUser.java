@@ -2,7 +2,6 @@ package com.example.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -30,11 +29,10 @@ public class CurrentUser extends org.springframework.security.core.userdetails.U
 //    public Set<MyRole> getRole() {
 //        return user.getRoles();
 //    }
-    
-    public ArrayList<MyRole> getRole() {
-    	
+   /* mislim da nigde nisam koristio 
+    public ArrayList<MyRole> getRole() { 	
     	return user.getRoles();
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -47,13 +45,14 @@ public class CurrentUser extends org.springframework.security.core.userdetails.U
 	public Collection<GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		pomocni=new ArrayList<GrantedAuthority>();
-        //for(MyRole role: user.getRoles()){
+        for(MyRole role: user.getRoles()){
         //	System.out.println("uloga:"+role.getName());
-        	SimpleGrantedAuthority pom=new SimpleGrantedAuthority(user.getRoles().get(0).getName());
+			
+        	SimpleGrantedAuthority pom=new SimpleGrantedAuthority(role.getName());
         	System.out.println("pom je:"+pom);
         	pomocni.add(pom);
-        	System.out.println("ovo radi");
-        //}
+        	System.out.println("ovo radi"+pom.getAuthority());
+        }
         return pomocni;
 	}
     

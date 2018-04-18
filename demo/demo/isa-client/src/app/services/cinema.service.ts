@@ -34,7 +34,7 @@ export class CinemaService {
 
     return this.http.get("http://localhost:8080/public/cinemas/getAll", {headers:headers}).map(data => data.json())
 
-/    .catch((err:HttpErrorResponse) =>
+    .catch((err:HttpErrorResponse) =>
     {
         // alert(err.status + " " + err.error.error + " \n" + err.error.message);
         return Observable.throw(err);

@@ -50,7 +50,7 @@ import com.example.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/public")
+//@RequestMapping("/public")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -67,7 +67,7 @@ public class UserController {
     @Autowired
     private MessageSource messages;
 
-  
+   @PreAuthorize("hasAuthority('ADMIN')")
   @RequestMapping(
     		value = "/angularUser",
 			method = RequestMethod.GET,
@@ -177,8 +177,10 @@ public class UserController {
 			
 			for (User u : all) {
 				
-				if (u.getRoles().get(0).getName().equals("USER"))
-					users.add(u);
+				for(MyRole role:u.getRoles()) {
+					if (role.getName().equals("USER"))
+						users.add(u);
+				}
 			}
 			
 			return users;
@@ -196,9 +198,11 @@ public class UserController {
 			List<User> fanZoneAdmins = new ArrayList<User>();
 			
 			for (User u : all) {
+				for(MyRole role:u.getRoles()) {
+					if (role.getName().equals("fan_zone_admin"))
+						fanZoneAdmins.add(u);
+				}
 				
-				if (u.getRoles().get(0).getName().equals("fan_zone_admin"))
-					fanZoneAdmins.add(u);
 			}
 			
 			return fanZoneAdmins;

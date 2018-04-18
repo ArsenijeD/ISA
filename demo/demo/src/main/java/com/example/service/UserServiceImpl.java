@@ -28,6 +28,7 @@ import com.example.repository.UserRepository;
 import com.example.repository.VerificationTokenRepository;
 
 
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setEmail(form.getEmail());
 		user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
-		user.setName(form.getName());
+		user.setFirstName(form.getName());
 		user.setLastName(form.getLastName());
 		user.setCity(form.getCity());
 		user.setPhoneNumber(form.getPhoneNumber());
@@ -247,8 +248,10 @@ public class UserServiceImpl implements UserService {
 		public boolean updateUserRole(User u) {
 			
 			User user = userRepository.findOne(u.getId());
-			user.getRoles().remove(0);
-			user.getRoles().add(u.getRoles().get(0));
+			user.getRoles().clear();
+			for(MyRole role:u.getRoles()) {
+				user.getRoles().add(role);
+			}
 			user.setId(u.getId());
 			
 			//userRepository.save(user);
