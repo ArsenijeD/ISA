@@ -40,6 +40,13 @@ public class HallServiceImpl implements HallService{
 		return hallRepository.findByCinemaID(cinemaID);
 	}
 
+	@Override
+	public void save(Hall hall) {
+		
+		hallRepository.save(hall);
+		
+	}
+
 	
 
 }

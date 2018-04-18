@@ -15,5 +15,9 @@ public interface ProjectionService {
 	boolean registerProjection(Projection p);
 	
 	List<Projection> getProjectionsByHallID(Long hallID);
+	
+	void deleteById(Long id);
+	
+	boolean updateProjection(Projection p);
 
 }

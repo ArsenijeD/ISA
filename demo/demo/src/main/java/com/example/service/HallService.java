@@ -15,5 +15,7 @@ public interface HallService {
 	
 	List<Hall> getHallsByCinemaID(Long cinemaID);
 	
+	void save(Hall hall);
+	
 
 }

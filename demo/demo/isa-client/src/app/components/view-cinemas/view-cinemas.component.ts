@@ -64,7 +64,9 @@ export class ViewCinemasComponent implements OnInit {
     this.cinemaService.currentCinema.subscribe(
       currentCinema => 
       {
-      console.log("viev-cinema 2: " +  currentCinema);});
+      console.log("viev-cinema 2: " +  currentCinema);
+      }
+    );
 
     this.router.navigateByUrl('/cinema-repertoire');
   }

@@ -37,6 +37,29 @@ public class ProjectionServiceImpl implements ProjectionService{
 	public List<Projection> getProjectionsByHallID(Long hallID) {
 		
 		return projectionRepository.findByHallID(hallID);
+		
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		projectionRepository.deleteById(id);
+		
+	}
+
+	@Override
+	public boolean updateProjection(Projection p) {
+		
+		Projection projection = projectionRepository.findOne(p.getId());
+		
+		projection.setId(p.getId());
+		projection.setFilm(p.getFilm());
+		projection.setDate(p.getDate());
+		projection.setTime(p.getTime());
+		projection.setDiscount(p.getDiscount());
+		
+		projectionRepository.flush();
+		
+		return true;
 	}
 
 }
