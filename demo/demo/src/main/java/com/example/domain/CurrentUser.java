@@ -31,9 +31,9 @@ public class CurrentUser extends org.springframework.security.core.userdetails.U
 //        return user.getRoles();
 //    }
     
-    public MyRole getRole() {
+    public ArrayList<MyRole> getRole() {
     	
-    	return user.getRole();
+    	return user.getRoles();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class CurrentUser extends org.springframework.security.core.userdetails.U
 		pomocni=new ArrayList<GrantedAuthority>();
         //for(MyRole role: user.getRoles()){
         //	System.out.println("uloga:"+role.getName());
-        	SimpleGrantedAuthority pom=new SimpleGrantedAuthority(user.getRole().getName());
+        	SimpleGrantedAuthority pom=new SimpleGrantedAuthority(user.getRoles().get(0).getName());
         	System.out.println("pom je:"+pom);
         	pomocni.add(pom);
         	System.out.println("ovo radi");
