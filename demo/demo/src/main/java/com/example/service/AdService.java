@@ -17,4 +17,10 @@ public interface AdService {
 	ArrayList<Ad> getAdsByConfirmed(Long confirmed);
 	
 	boolean updateAd(Ad a);
+	
+	void deleteById(Long id);
+	
+	boolean updateWholeAd(Ad a);
+	
+	Ad findOneById(Long id);
 }

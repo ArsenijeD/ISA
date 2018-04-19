@@ -45,5 +45,32 @@ public class AdServiceImpl implements AdService {
 		adRepository.flush();
 		return true;
 	}
+
+	@Override
+	public void deleteById(Long id) {
+		
+		adRepository.deleteById(id);
+		
+	}
+
+	@Override
+	public boolean updateWholeAd(Ad a) {
+		
+		Ad ad = adRepository.findOne(a.getId());
+		ad.setName(a.getName());
+		ad.setDate(a.getDate());
+		ad.setDescription(a.getDescription());
+		ad.setImage(a.getImage());
+		ad.setId(a.getId());
+		
+		
+		adRepository.flush();
+		return true;
+	}
+
+	@Override
+	public Ad findOneById(Long id) {
 	
+		return adRepository.findOneById(id);
+	}
 }

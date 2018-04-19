@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { AdService } from '../../services/ad.service';
+import { BidService } from '../../services/bid.service';
 
 import {} from '@types/googlemaps';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
@@ -16,15 +17,28 @@ export class FanZoneComponent implements OnInit {
   adDate : any;
   adImage : any;
 
-  myAds : any;
+  myAds : any[];
+  bids : any[][];
+  officialAds : any[];
 
+  
+ 
 
-
-  constructor(private adService : AdService) { }
+  constructor(private adService : AdService, private bidService : BidService) { }
 
   ngOnInit() {
-
+    this.myAds = [];
+    this.bids = [];
+    this.officialAds = [];
     this.getMyAds();
+    this.getOfficialAds();
+    
+   
+
+  }
+
+  ngAfterViewInit() {
+
     
   }
 
@@ -48,8 +62,42 @@ export class FanZoneComponent implements OnInit {
 
   getMyAds() {
 
-    this.adService.getAdsOfCurrentUser().subscribe(data=> { this.myAds = data});
+    this.adService.getAdsOfCurrentUser().subscribe(data=> {
+      
+      this.myAds = data;
+      console.log(this.myAds);  
+    
+      
+
+      for (var _i = 0; _i < this.myAds.length; _i++) {
+
+        this.getBidsForSelectedAd(this.myAds[_i].id);
+
+      }  
+      
+
+    });
+
+   
   }
+
+  getOfficialAds() {
+
+    this.adService.getAdsByConfirmed(3).subscribe(data=> {
+
+      this.officialAds = data;
+      alert("off ads: " + JSON.stringify(this.officialAds));
+
+    });
+  }
+
+  
+  getBidsForSelectedAd(ad_id : number) {
+
+    this.bidService.getBidsForSelectedAd(ad_id).subscribe(data=> { this.bids.push(data); console.log(data); console.log("----")});
+
+  }
+
 
   
 }

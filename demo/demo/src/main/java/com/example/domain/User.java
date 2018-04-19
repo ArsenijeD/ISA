@@ -71,6 +71,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy="user")
     private Set<Ad> ads;
     
+    @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+    private Set<Bid> bids;
+    
     public String getFirst_name() {
 		return first_name;
 	}

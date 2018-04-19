@@ -3,7 +3,9 @@ package com.example.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domain.Ad;
 import com.example.domain.Cinema;
+import com.example.domain.Hall;
+import com.example.domain.Projection;
 import com.example.service.AdService;
 import com.example.service.CinemaService;
 
@@ -88,5 +92,46 @@ public class AdController {
 		
 		return true;
 	}
+	
+	@RequestMapping(value = "/updateOglas", method = RequestMethod.PUT)
+	public @ResponseBody Boolean updateOglas(@RequestBody Ad ad){
+	 
+	
+		
+		System.out.println("POGODJEN CONTROLLER /updateOglas");
+		try {
+			
+			adService.updateWholeAd(ad);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	@RequestMapping(
+			value = "/deleteOglas/{id}",
+			method = RequestMethod.DELETE, 
+			produces = MediaType.APPLICATION_JSON_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public boolean deleteOglas(@PathVariable("id") Long id) {
+
+		System.out.println("pogodio /deleteOglas");
+		try {
+			
+			adService.deleteById(id);
+			
+		} catch (Exception e) {
+			
+			return false;
+		}
+			
+		return true;
+	}
+	
 	
 }

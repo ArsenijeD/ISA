@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AdService } from '../../services/ad.service';
+import { Router } from '@angular/router';
+
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
+import { BidService } from '../../services/bid.service'
 
 @Component({
   selector: 'app-fan-zone-admin-profile',
@@ -18,7 +23,14 @@ export class FanZoneAdminProfileComponent implements OnInit {
   adDate : any;
   adImage : any;
 
-  constructor(private adService : AdService) { 
+  adNameUpdate : string;
+  adDescriptionUpdate : string;
+  adDateUpdate : any;
+  adImageUpdate : any;
+
+  bids : any[][];
+
+  constructor(private adService : AdService, private modalService: NgbModal, private router : Router, private bidService : BidService) { 
 
     
 
@@ -29,6 +41,8 @@ export class FanZoneAdminProfileComponent implements OnInit {
     this.aktivna_tabela = [true, false, false, false];
 
     this.getOnWaitingAds();
+
+    this.bids = [];
   }
 
   promeniAktivnost(index: number) {
@@ -75,12 +89,39 @@ export class FanZoneAdminProfileComponent implements OnInit {
 
   getOnWaitingAds() {
 
-    this.adService.getAdsByConfirmed(0).subscribe(data=> { this.unconfirmedAds = data; console.log(data)});
+    this.adService.getAdsByConfirmed(0).subscribe(data=> { 
+      
+      this.unconfirmedAds = data;
+      console.log(data);
+
+
+      
+    
+    
+    });
   }
 
+  getBidsForMyAds(ad_id : number) {
+
+    this.bidService.getBidsForSelectedAd(ad_id).subscribe(data=> { this.bids.push(data); console.log(data); console.log("----")});
+
+  }
   getMyAds() {
 
-    this.adService.getAdsByConfirmed(3).subscribe(data=> { this.myAds = data; console.log(data)});
+    this.adService.getAdsByConfirmed(3).subscribe(data=> { 
+      
+      this.myAds = data;
+      console.log(data);
+
+      for (var _i = 0; _i < this.myAds.length; _i++) {
+
+        this.getBidsForMyAds(this.myAds[_i].id);
+
+      }  
+
+
+    
+    });
   }
 
   approveAd(ad : any) {
@@ -111,6 +152,57 @@ export class FanZoneAdminProfileComponent implements OnInit {
     this.adDate="";
     this.adImage = "";
 
+  }
+
+  deleteAd(adID : any) {
+
+    this.adService.deleteAdById(adID).subscribe(data=> this.getMyAds());
+
+  }
+
+  updateAdModal(updateAd : any, myAd : any) {
+
+    //alert(JSON.stringify(myAd));
+    this.adNameUpdate = myAd.name;
+    this.adDescriptionUpdate = myAd.description;
+    var date_parts : any[] = myAd.date.split("-");
+    
+    // this.adDateUpdate.year = date_parts[0];
+    // this.adDateUpdate.month = date_parts[1];
+    // this.adDateUpdate.day = date_parts[2];
+
+    //this.adImageUpdate = myAd.image;
+
+    this.modalService.open(updateAd).result.then((result) => {
+      
+      
+    }, (reason) => {
+      
+    });
+
+    
+    //alert(JSON.stringify(admins))
+  }
+
+  onUpdate(file : any, ad : any) {
+
+    //alert(JSON.stringify(this.myAds[index]));
+    alert(JSON.stringify(ad));
+    var img = file.split("\\");
+
+    var img_pass = img[img.length - 1];
+
+    if (img_pass == "")
+      img_pass = "defaultOglas.jpg";
+
+    ad.name = this.adNameUpdate;
+    ad.description = this.adDescriptionUpdate;
+    ad.date = this.adDateUpdate.year + "-" + this.adDateUpdate.month + "-" + this.adDateUpdate.day;
+    ad.image = img_pass;
+
+   
+  
+    this.adService.updateWholeAd(ad).subscribe(data => this.getMyAds());
   }
 
 }

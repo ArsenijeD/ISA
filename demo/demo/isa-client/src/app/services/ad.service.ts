@@ -67,4 +67,30 @@ export class AdService {
 
   }
 
+  updateWholeAd(ad : any) {
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    alert(JSON.stringify(ad));
+    return this.http.put('http://localhost:8080/public/oglasi/updateOglas', 
+      JSON.stringify(ad), { headers : headers }).map((data : Response) => data.json());
+
+  }
+
+  deleteAdById(adID : any) {  
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.delete("http://localhost:8080/public/oglasi/deleteOglas/"+
+    JSON.stringify(adID),
+    {headers:headers})
+    .map((data) => data.json())
+    .catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        return Observable.throw(err);
+    });
+
+  }
+
 }

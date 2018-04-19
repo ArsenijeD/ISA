@@ -17,7 +17,7 @@ import { CinemaService } from './services/cinema.service';
 import { UserService } from './services/user.service';
 import { AdService } from './services/ad.service';
 import { GeocoderService } from './services/geocoder.service';
-
+import { BidService } from './services/bid.service';
 
 import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
 
@@ -65,7 +65,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
       libraries: ["places"]
     })
   ],
-  providers: [HttpClientModule, CinemaService, TheaterService, UserService, AdService, GeocoderService],
+  providers: [HttpClientModule, CinemaService, TheaterService, UserService, AdService, GeocoderService, BidService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

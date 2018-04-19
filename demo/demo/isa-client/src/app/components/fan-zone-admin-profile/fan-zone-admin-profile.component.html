@@ -5,8 +5,7 @@
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a href="JavaScript:void(0)" (click) = "promeniAktivnost(0)"  class={{aktivnosti[0]}}>On waiting ads</a>
-                </li>
-                
+                </li>                
                 <li class="nav-item">
                     <a href="JavaScript:void(0)" (click) = "promeniAktivnost(1)"  class={{aktivnosti[1]}}>My ads</a>
                 </li>
@@ -14,7 +13,7 @@
                     <a href="JavaScript:void(0)" (click) = "promeniAktivnost(2)"  class={{aktivnosti[2]}}>Change profile</a>
                 </li>
                 <li class="nav-item">
-                    <a href="JavaScript:void(0)" (click) = "promeniAktivnost(3)"  class={{aktivnosti[3]}}>New ad</a>
+                    <a href="JavaScript:void(0)" (click) = "promeniAktivnost(3)"  class={{aktivnosti[3]}}>New</a>
                 </li>
                 
 
@@ -60,9 +59,15 @@
 
                                     </div>
 
+                                    <div class="row">
+ 
+                                        <span class="badge badge-info">Waiting for admin to approve</span>
+                  
+                                    </div>
+
                                     <div class="row" style="margin-top:30px">
                   
-                                        <h5> Posted by: <span style="font-weight:normal"> {{unconfirmedAd.user.first_name}} {{unconfirmedAd.user.last_name}}</span></h5>
+                                        <!-- <h5> Posted by: <span style="font-weight:normal"> {{unconfirmedAd.user.first_name}} {{unconfirmedAd.user.last_name}}</span></h5> -->
 
                                     </div>
                   
@@ -128,12 +133,16 @@
 
                                     </div>
 
-                                    
+                                    <div class="row">
+ 
+                                        <span class="badge badge-primary">Posted by admin</span>
+                  
+                                    </div>
 
                                     <div class="row" style="margin-top:30px">
                   
-                                        <!-- <h5> Posted by: <span style="font-weight:normal"> {{unconfirmedAd.user.first_name}} {{unconfirmedAd.user.last_name}}</span></h5> -->
-
+                                        <h5> Posted by: <span style="font-weight:normal"> Miiirko </span></h5>
+                                        <!-- {{unconfirmedAd.user.first_name}} {{unconfirmedAd.user.last_name}} -->
                                     </div>
                   
  
@@ -141,9 +150,134 @@
 
                                   <div class="col-4">
 
-                                      <h3>Bids: </h3>
+                                    <div class="row">
+
+                                        <!-- modal -->
+                                        <ng-template #updateAd let-c="close" let-d="dismiss">
+                                            <div class="modal-header">
+                                            <h4 class="modal-title">Update ad:</h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            
+                                                <form name="myform" method="POST">  
+                                                    <div class="form-group ">
+                                                    <div class="col-12">
+
+                                                        <label for="adName">Name *</label>
+                                                        <input id="adName" [(ngModel)]="adNameUpdate" name="adNameUpdate" class="form-control" type="text" data-validation="required" #name>
+                                                        <span id="error_adName" class="text-danger"></span>
+
+                                                    </div>
+                                                        
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                        <div class="col-12">
+                                                        <label for="adDescription">Description *</label>
+                                                        <input [(ngModel)]="adDescriptionUpdate" id="adDescriptionUpdate" name="adDescription"  class="form-control" type="text" data-validation="required" #description >
+                                                        <span id="error_adDescription" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    
+                                                
+                                                    <div class="form-group">
+                                                    <div class="col-12">
+                                                        <label for="adDescription">Date *</label>
+                                                        <div class="input-group">
+                                                        <input class="form-control" placeholder="yyyy-mm-dd"
+                                                                name="dp" [(ngModel)]="adDateUpdate" ngbDatepicker #d="ngbDatepicker">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                                            <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                                                            </button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+
+                                                    
+                                                    <div class="form-group">
+                                                        <div class="col-12">
+                                                        <label for="adDescription">Image</label>
+                                                        <!-- <input [(ngModel)]="adImage" class="form-control" type="file" name="image" #fileInput placeholder="Upload file..." />           -->
+                                                        <input [(ngModel)]="adImageUpdate" class="form-control" type="file" name="pic"  #fileUpdate>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-12">
+
+                                                            <button  id="submitUpdate"  (click) = "onUpdate(fileUpdate.value, myAd)" type="button" value="submit" class="btn btn-primary">Submit</button>
+                                                        
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                </form>
+                                                
+                                                
+
+                                            </div>
+                                            <!-- <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+                                            </div> -->
+                                        </ng-template>
+
+                                        <button  (click)="updateAdModal(updateAd, myAd)" id="updateBtn" type="button" value="submit" class="btn btn-primary center">update</button>
+                                        <button  (click) = "deleteAd(myAd.id)"style="margin-left:5px" id="deleteBtn" type="button" value="submit" class="btn btn-danger center">delete</button>
+
+                                    </div>
+
+                                    <div class="row" style="margin-top:20px">
+
+                                            <ngb-accordion #acc="ngbAccordion" > 
+
+
+                                                    <ngb-panel title="Bids">
+                                                        <ng-template ngbPanelContent >
+                            
+                                                                
+                                                            <table class="table">
+                                                                <thead>
+                                                                  <tr>
+                                                    
+                                                                      <th>#</th>
+                                                                      <th>User</th>
+                                                                      <th>RSD</th>
+                                                                     
+                                                    
+                                                                  </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="active" *ngFor="let bid of bids[i]; let j = index">
+                            
+                                                                        <th scope="row">{{j + 1}}</th>
+                                                                        <td>{{bid.user.first_name}} {{bid.user.first_name}}</td>
+                                                                        <td>{{bid.money}}</td>
+                                                                        <td><button id="accept"  type="button" class="btn btn-primary btn-sm center" >accept</button></td>
+                                                                        
+                                                                    </tr>
+                            
+                                                                    
+                            
+                                                                </tbody>
+                                                            </table>
+                            
+                                                      
+                                                        </ng-template>
+                                                      </ngb-panel>
+                                                </ngb-accordion>
+
+                                    </div>
+                                      
                   
                                   </div>
+
+                                  
                               </div>  
            
                             </article>
@@ -153,24 +287,19 @@
                     </div>
                 </div>
 
+                
+
                 <!-- Change profile -->
                 <div class="tab-pane active" id="changeProfile" *ngIf=aktivna_tabela[2] >
                     <div class="container">           
                         
                         fff
                     </div>
-                </div>
-
-                
-
-
-
-
+                </div>             
 
                 <!-- New ad -->
-                <div class="tab-pane active" id="newAd" *ngIf=aktivna_tabela[3] >
+                <div class="tab-pane active" id="newAd" *ngIf=aktivna_tabela[3]>
                     <div class="container">           
-                        
                         <form name="myform" method="POST">  
                             <div class="form-group ">
                               <div class="col-6">
@@ -225,8 +354,11 @@
                             
               
                         </form>
+                        
                     </div>
                 </div>
+
+                
 
                 
 
@@ -244,4 +376,5 @@
         </div>
     </div>
 </div>
+
 

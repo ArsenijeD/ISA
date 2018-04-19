@@ -128,8 +128,45 @@
                   
                 <div class="col-4" *ngIf="myAd.confirmed == 1">
 
-                    <h3>Bids: </h3>
+                   
 
+                    <ngb-accordion #acc="ngbAccordion" > 
+
+
+                        <ngb-panel title="Bids" >
+                            <ng-template ngbPanelContent >
+
+                                    
+                                <table class="table">
+                                    <thead>
+                                      <tr>
+                        
+                                          <th>#</th>
+                                          <th>User</th>
+                                          <th>RSD</th>
+                                         
+                        
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="active" *ngFor="let bid of bids[i]; let j = index">
+
+                                            <th scope="row">{{j + 1}}</th>
+                                            <td>{{bid.user.first_name}} {{bid.user.first_name}}</td>
+                                            <td>{{bid.money}}</td>
+                                            <td><button id="accept"  type="button" class="btn btn-primary btn-sm center" >accept</button></td>
+                                            
+                                        </tr>
+
+                                        
+
+                                    </tbody>
+                                </table>
+
+                          
+                            </ng-template>
+                          </ngb-panel>
+                    </ngb-accordion>
                 </div>
 
             </div>  
@@ -142,9 +179,127 @@
                
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Disabled">
+
+    <ngb-tab title="Official adds">
       <ng-template ngbTabContent>
         
+            <div class="container" style="margin-top:50px;" *ngFor="let officialAd of officialAds; let i = index">
+                    
+                    <article class="col-10">
+                      
+                      <div class = "row">
+          
+                          <div class="col-4">
+          
+                              <img class="card-img-top" src="assets/images/{{officialAd.image}}">
+          
+                          </div>
+          
+                          <div class="col-4">
+          
+                            <div class="row">
+          
+                                <h3>Name:<span style="font-weight:normal"> {{officialAd.name}} </span></h3>
+                                
+                            </div>
+          
+                            <div class="row">
+          
+                                <h4>Description:<span style="font-weight:normal"> {{officialAd.description}} </span></h4> 
+          
+                            </div>
+          
+                            <div class="row">
+          
+                                <h5> Valid until: <span style="font-weight:normal"> {{officialAd.date}} </span></h5>      
+                            </div>
+          
+                            <!-- <div class="row" style="margin-top:100px;">
+          
+                              <h3>Status:</h3>
+                              
+                            </div> -->
+          
+                            <div class="row" *ngIf="officialAd.confirmed == 0">
+           
+                                <span class="badge badge-info">Waiting for admin to approve</span>
+          
+                            </div>
+          
+                            <div class="row" *ngIf="officialAd.confirmed == 1">
+          
+                                <span class="badge badge-success">Approved</span>
+          
+                            </div>
+          
+                            <div class="row" *ngIf="officialAd.confirmed == 2">
+          
+                                <span class="badge badge-danger">Rejected</span>
+          
+                            </div>
+
+                            <div class="row" *ngIf="officialAd.confirmed == 3">
+ 
+                                    <span class="badge badge-primary">Posted by admin</span>
+              
+                            </div>
+          
+                            
+                              
+          
+                          </div>
+                            
+                          <div class="col-4">
+          
+                             
+          
+                              <ngb-accordion #acc="ngbAccordion" > 
+          
+          
+                                  <ngb-panel title="Bids" >
+                                      <ng-template ngbPanelContent >
+          
+                                              
+                                          <table class="table">
+                                              <thead>
+                                                <tr>
+                                  
+                                                    <th>#</th>
+                                                    <th>User</th>
+                                                    <th>RSD</th>
+                                                   
+                                  
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <!-- <tr class="active" *ngFor="let bid of bids[i]; let j = index">
+          
+                                                      <th scope="row">{{j + 1}}</th>
+                                                      <td>{{bid.user.first_name}} {{bid.user.first_name}}</td>
+                                                      <td>{{bid.money}}</td>
+                                                      <td><button id="accept"  type="button" class="btn btn-primary btn-sm center" >accept</button></td>
+                                                      
+                                                  </tr> -->
+          
+                                                  
+          
+                                              </tbody>
+                                          </table>
+          
+                                    
+                                      </ng-template>
+                                    </ngb-panel>
+                              </ngb-accordion>
+                          </div>
+          
+                      </div>  
+          
+                      
+                      
+                    </article>
+                    <hr>
+                  </div>
+
       </ng-template>
     </ngb-tab>
   </ngb-tabset>
