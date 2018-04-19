@@ -33,6 +33,8 @@ import { AgmCoreModule} from '@agm/core'
 
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { CinemaDetailsComponent } from './components/cinema-details/cinema-details.component';
+import { TheaterDetailsComponent } from './components/theater-details/theater-details.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
     FanZoneComponent,
     RegisterCinemaComponent,
     CinemaRepertoireComponent,
-    TheaterRepertoireComponent
+    TheaterRepertoireComponent,
+    CinemaDetailsComponent,
+    TheaterDetailsComponent
 
   ],
   imports: [

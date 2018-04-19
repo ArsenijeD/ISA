@@ -57,6 +57,9 @@ public class ProjectionServiceImpl implements ProjectionService{
 		projection.setTime(p.getTime());
 		projection.setDiscount(p.getDiscount());
 		
+//		if(p.getTickets()!=null)
+//			projection.setTickets(p.getTickets());
+		
 		projectionRepository.flush();
 		
 		return true;

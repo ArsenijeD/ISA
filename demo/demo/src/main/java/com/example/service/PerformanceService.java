@@ -13,5 +13,9 @@ public interface PerformanceService {
 	boolean registerPerformance(Performance p);
 	
 	Performance getPerformanceByName(String name);
+	
+	boolean updatePerformance(Performance p);
+	
+	void deleteById(Long id);
 
 }

@@ -17,5 +17,7 @@ public interface HallService {
 	
 	void save(Hall hall);
 	
+	void deleteById(Long id);
+	
 
 }

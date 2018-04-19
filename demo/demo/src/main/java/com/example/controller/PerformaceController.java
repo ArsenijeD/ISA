@@ -81,6 +81,54 @@ public class PerformaceController {
 		
 	}
 	
+	
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(
+			value = "/updatePerformance",
+			method = RequestMethod.PUT,						// ovce menjao
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public boolean updatePerformance(@RequestBody Performance p) {
+		
+		//System.out.println("POGODJEN CONTROLLER /registerCinema");
+		try {
+			
+			performaceService.updatePerformance(p);
+			return true;
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(
+			value = "/deletePerformance/{performanceID:.+}",
+			method = RequestMethod.DELETE,
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public boolean deletePerformance(@PathVariable("performanceID") Long performanceID) {
+		
+	try {
+			
+		performaceService.deleteById(performanceID);
+			
+			return true;
+			
+		} catch (Exception e) {
+			
+//			e.printStackTrace();
+			return false;
+		}
+		
+		
+	}
+	
 		
 
 }

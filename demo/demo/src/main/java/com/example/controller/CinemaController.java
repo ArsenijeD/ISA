@@ -108,6 +108,33 @@ public class CinemaController {
 	}
 	
 	
+	
+	@RequestMapping(value = "/changeCinema", method = RequestMethod.PUT)
+	public Cinema changeCinema(@RequestBody Cinema c){
+	 	
+		try {
+			
+			System.out.println("Cinema id: " + c.getId());
+			System.out.println("Cinema name: " + c.getName());
+			System.out.println("Cinema address: " + c.getAdress());
+			System.out.println("Cinema description: " + c.getDescription());
+
+
+			cinemaService.changeCinema(c);
+			
+			return cinemaService.getCinemaByID(c.getId());
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
+	
+	
+	
 //	@RequestMapping(value="/registerCinema", method = RequestMethod.POST) 
 //	public ResponseEntity registerCinema(@RequestBody Cinema c) {
 //		System.out.println("POGODIO ME JE");

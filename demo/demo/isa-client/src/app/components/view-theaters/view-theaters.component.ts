@@ -40,7 +40,7 @@ export class ViewTheatersComponent implements OnInit {
 
   }
 
-  onClickTheaterDetails(Theater:any) : void {
+  onClickTheaterRepertoar(Theater:any) : void {
     this.selectedTheater = Theater;
 
     this.theaterService.selectTheater(Theater);
@@ -57,6 +57,21 @@ export class ViewTheatersComponent implements OnInit {
 
     this.geocoderService.getlatlng(address).subscribe(data=> {  this.latitudes.push(data.results[0].geometry.location.lat); this.longitudes.push(data.results[0].geometry.location.lng);});
     
+  }
+
+  onClickTheaterDetails(Theater:any) : void {
+
+    this.selectedTheater = Theater;
+
+    this.theaterService.selectTheater(Theater);
+
+    this.theaterService.currentTheater.subscribe(
+      currentTheater => 
+      {
+      console.log("Current Theater: " +  currentTheater);});
+
+    this.router.navigateByUrl('/theater-details');
+
   }
 
 }

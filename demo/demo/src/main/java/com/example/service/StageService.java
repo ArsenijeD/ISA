@@ -13,5 +13,7 @@ public interface StageService {
 	boolean registerStage(Stage s);
 	
 	void save(Stage stage);
+	
+	void deleteById(Long id);
 
 }

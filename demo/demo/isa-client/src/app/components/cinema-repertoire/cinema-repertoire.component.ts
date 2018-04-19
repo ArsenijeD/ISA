@@ -39,8 +39,11 @@ export class CinemaRepertoireComponent implements OnInit {
   private change_discount : any;
 
   private change_old_hallID : any;
+
+  private fast_tickets_number : any;
   
- 
+  private fastTickets_hall: any;
+  private fastTickets_projection: any;
 
   constructor(private router : Router, private cinemaService : CinemaService, private modalService: NgbModal) { }
 
@@ -150,6 +153,37 @@ export class CinemaRepertoireComponent implements OnInit {
 
     this.router.navigateByUrl('/cinema-repertoire');
   
+  }
+
+
+  onClickAddFastReservationTickets(h, p, FastTicketsModal) {
+
+    this.fastTickets_hall = h;
+    this.fastTickets_projection = p;
+
+    this.modalService.open(FastTicketsModal).result.then((result) => {
+      
+    }, (reason) => {
+      
+    });
+    
+  }
+
+
+  addFastTicketsSubmit() {
+
+    this.cinemaService.addFastTickets({hall_id:this.fastTickets_hall.id, projection_id:this.fastTickets_projection.id, fast_tickets_number:this.fast_tickets_number})
+    .subscribe(data =>
+      {
+        console.log(data);
+        if(!data){
+          alert("You can't create fast reservation tickets because there are no more seats in the hall!");
+        }
+      }
+    );
+
+    this.router.navigateByUrl('/cinema-repertoire');
+
   }
 
   

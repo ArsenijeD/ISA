@@ -42,4 +42,11 @@ public class StageServiceImpl implements StageService {
 		
 	}
 
+	@Override
+	public void deleteById(Long id) {
+		
+		stageRepository.deleteById(id);
+		
+	}
+
 }

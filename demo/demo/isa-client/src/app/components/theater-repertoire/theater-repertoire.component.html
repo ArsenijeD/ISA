@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col"><h2>Repertoar:</h2></div>
         <div class="col">
-            <div class="float-right"><button type="button" (click)="onClickAddPresentation(AddPresentationModal)" class="btn btn-info">Add presentation</button></div>
+            <div class="float-right"><button type="button" (click)="onClickAddPresentation(AddPresentationModal)" class="btn btn-primary">Add presentation</button></div>
         </div>
       </div>
 
@@ -71,9 +71,10 @@
                   <p> <b>Date: </b>{{p.date}}</p>
                   <p> <b>Start time: </b>{{p.time}}</p>
                   <br>
+                  <p> <b>Price: </b> {{p.performance.price}}</p> 
                   <p> <b>Discount: </b>{{p.discount}} %</p>
            
-                <button type="button" class="btn btn-success" (click)="onClickReserve(p)">Reserve</button>
+                <button type="button" class="btn btn-success" (click)="onClickReserve(p)">Fast Reserve</button>
 
                 <br>
                 </div>

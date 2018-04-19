@@ -42,14 +42,20 @@
                 </agm-map>
               </div>
               <div class="col-md-5">
-                <h3>{{c.name}}</h3>
+                  <div class="row">
+                      <div class="col"><h3>{{c.name}}</h3></div>
+                      <div class="col">
+                          <div class="float-right"><button type="button" value="submit" (click)="onClickCinemaDetails(c)" class="btn btn-info">Details</button></div>
+                      </div>
+                    </div>
+                
                 <br>
                 <p><b>Address: </b> {{c.adress}}</p>
                 <p> <b>Description: </b>{{c.description}}</p>
 
                 <br><br><br><br>
 
-                <button type="button" class="btn btn-primary" (click)="onClickCinemaDetails(c)">Details</button>
+                <button type="button" class="btn btn-primary" (click)="onClickCinemaRepertoar(c)">Repertoire</button>
 
               </div>
             </div>

@@ -56,15 +56,15 @@ export class ViewCinemasComponent implements OnInit {
   }
 
   
-  onClickCinemaDetails(Cinema:any) : void {
+  onClickCinemaRepertoar(Cinema:any) : void {
     this.selectedCinema = Cinema;
-    console.log("view-cineam: " + Cinema);  
+    console.log("Cinema: " + Cinema);  
     this.cinemaService.selectCinema(Cinema);
 
     this.cinemaService.currentCinema.subscribe(
       currentCinema => 
       {
-      console.log("viev-cinema 2: " +  currentCinema);
+      console.log("Current cinema: " +  currentCinema);
       }
     );
 
@@ -78,6 +78,20 @@ export class ViewCinemasComponent implements OnInit {
     
   }
 
+
+  onClickCinemaDetails(Cinema : any) :void {
+    this.selectedCinema = Cinema; 
+    this.cinemaService.selectCinema(Cinema);
+    this.cinemaService.currentCinema.subscribe(
+      currentCinema => 
+      {
+      console.log("Current cinema: " +  currentCinema);
+      }
+    );
+
+    this.router.navigateByUrl('/cinema-details');
+
+  }
 }
  
 

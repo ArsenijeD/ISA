@@ -6,17 +6,15 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.repository.Repository;
 
-import com.example.domain.Film;
+import com.example.domain.Ticket;
 
-public interface FilmRepository extends JpaRepository<Film, Long> {
+public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	
+	public List<Ticket> findAll();
+	public Ticket findById(Long id);
 	
-	List<Film> findAll();
-	Film findById(Long id);
-	Film findByName(String name);
-//	void save(Film film);
+//	public void save(Stage stage);
 	
 	@Modifying
     @Transactional

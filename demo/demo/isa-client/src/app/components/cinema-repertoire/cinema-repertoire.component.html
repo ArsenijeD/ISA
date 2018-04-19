@@ -29,7 +29,7 @@
       <div class="row">
         <div class="col"><h2>Repertoar:</h2></div>
         <div class="col">
-            <div class="float-right"><button type="button" value="submit" (click)="onClickAddProjection(AddProjectionModal)" class="btn btn-info">Add projection</button></div>
+            <div class="float-right"><button type="button" value="submit" (click)="onClickAddProjection(AddProjectionModal)" class="btn btn-primary">Add projection</button></div>
         </div>
       </div>
 
@@ -49,12 +49,16 @@
                     <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/400x300" alt="">
                   </a>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                   <div class="row">
                     <div class="col"><h3>{{p.film.name}}</h3></div>
                     <div class="col">
                         <div class="float-right" style="margin-left: 5px"><button type="button" class="btn btn-danger" (click)="onClickDeleteProjection(currentCinema.id, h.id, p.id)">Delete</button></div>
-                        <div class="float-right" style="margin-right: 5px"><button type="button" class="btn btn-warning" (click)="onClickChangeProjection(h, p, ChangeProjectionModal)">Change</button></div>
+                        <div class="float-right" ><button type="button" class="btn btn-warning" (click)="onClickChangeProjection(h, p, ChangeProjectionModal)">Change</button></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="float-right" style="margin-left: 5px"><button type="button" class="btn btn-default" (click)="onClickAddFastReservationTickets(h, p, FastTicketsModal)">Add Fast Tickets</button></div>
                     </div>
                   </div>
                   <br>
@@ -71,9 +75,10 @@
                     <p> <b>Date: </b>{{p.date}}</p>
                     <p> <b>Start time: </b>{{p.time}}</p>
                     <br>
+                    <p> <b>Price: </b> {{p.film.price}}</p> 
                     <p> <b>Discount: </b>{{p.discount}} %</p>
                     
-                    <button type="button" class="btn btn-success" (click)="onClickReserve(p)">Reserve</button>
+                    <button type="button" class="btn btn-success" (click)="onClickReserve(p)">Fast Reserve</button>
                     <br>
                   </div>
                 </div>
@@ -214,4 +219,29 @@
     <!-- <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
     </div> -->
+  </ng-template>
+
+
+   <!-- Dodavanje sale -->
+<ng-template #FastTicketsModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Add fast reservation tickets</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+      
+        <form name="myform" method="POST">
+            <div class="form-group">
+                <label for="ticketsNumber">Number of fast reservation tickets: </label>
+                <input id="ticketsNumber" name="ticketsNumber" [(ngModel)]="fast_tickets_number" class="form-control" type="text" data-validation="required" #ticketsNumber >
+                <span id="error_ticketsNumber" class="text-danger"></span>
+            </div> 
+            <button  (click) = "addFastTicketsSubmit()" data-dismiss="FastTicketsModal" id="submit" type="button" value="submit" class="btn btn-primary center">Submit</button>
+  
+        </form>
+  
+    </div>
+  
   </ng-template>

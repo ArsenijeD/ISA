@@ -35,9 +35,9 @@ public class Chair implements Serializable{
 	@Column(name = "chair_number", nullable = false, updatable = false)
 	private int number;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="stage_id", nullable=false)
-    private Stage stage;
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name="stage_id", nullable=false)
+//    private Stage stage;
 
 	
 //	@OneToMany(mappedBy="chair", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -64,15 +64,15 @@ public class Chair implements Serializable{
 		this.number = number;
 	}
 
-
-	public Stage getStage() {
-		return stage;
-	}
-
-
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
+//
+//	public Stage getStage() {
+//		return stage;
+//	}
+//
+//
+//	public void setStage(Stage stage) {
+//		this.stage = stage;
+//	}
 
 
 	public Chair() {
@@ -81,10 +81,9 @@ public class Chair implements Serializable{
 	}
 
 
-	public Chair(int number, Stage stage) {
+	public Chair(int number) {
 		super();
 		this.number = number;
-		this.stage = stage;
 
 	}
 
