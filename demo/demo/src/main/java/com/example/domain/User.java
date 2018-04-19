@@ -54,7 +54,12 @@ public class User implements Serializable {
 	public void setRoles(Set<MyRole> roles) {
 		this.roles = roles;
 	}
-/*
+
+    
+   @OneToMany(mappedBy="user",fetch=FetchType.EAGER)
+   private Set<Ad> ads;
+   
+	
 	public Set<Ad> getAds() {
 		return ads;
 	}
@@ -62,8 +67,8 @@ public class User implements Serializable {
 	public void setAds(Set<Ad> ads) {
 		this.ads = ads;
 	}
-	*/
-
+	
+/*
 /*	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -111,10 +116,7 @@ public class User implements Serializable {
 
     @Column(name = "enabled", nullable = true)
     private boolean enabled;
-     /*
-    @OneToMany(mappedBy="user")
-    private Set<Ad> ads;
-    */
+
     public String getFirstName() {
 		return firstName;
 	}
