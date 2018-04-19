@@ -29,7 +29,10 @@ export class LoginService {
 
   return this.http
   .get("http://localhost:8080/angularUser")
-  .map((data:Response) => console.log(data));
+  .map((data:Response) =>{ 
+     //console.log(data);
+      this.auth.setUser(data.json());//uzeti korisnika i staviti u local storage
+  });
   
   }
 

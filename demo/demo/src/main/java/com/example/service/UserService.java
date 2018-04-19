@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.example.DTO.UserUpdateDTO;
 import com.example.domain.FriendRequest;
 import com.example.domain.User;
 import com.example.domain.UserCreateForm;
@@ -20,6 +21,10 @@ public interface UserService {
 	Collection<User> getAllUsers();
 
 	boolean updateUserRole(User u);
+	
+	boolean updateUserInfo(UserUpdateDTO u,long userID);
+	boolean updateUserInfo(User u);
+
 	List<User> getAll();
 	
 	Set<User> getUsersByIdIn(Set<Long> ids);
@@ -52,5 +57,6 @@ public interface UserService {
     public Boolean deleteSentRequest(Long frequestId,Long senderId);
     
     public Boolean deleteFriend(Long frequestId,long friendUnfrinder);
+
     
 }

@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.OnRegistrationCompleteEvent;
 import com.example.RegistrationListener;
+import com.example.DTO.UserUpdateDTO;
 import com.example.domain.Cinema;
 import com.example.domain.CurrentUser;
 
@@ -67,14 +69,14 @@ public class UserController {
     @Autowired
     private MessageSource messages;
 
-   @PreAuthorize("hasAuthority('ADMIN')")
+  // @PreAuthorize("hasAuthority('ADMIN')")
   @RequestMapping(
     		value = "/angularUser",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-    public CurrentUser getUserPageAngular(@ModelAttribute("currentUser") CurrentUser currentUser) {
+    public User getUserPageAngular(@ModelAttribute("currentUser") CurrentUser currentUser) {
     	System.out.println("treba da vrati:" +currentUser);
-        return currentUser;
+        return currentUser.getUser();
     }
     
   
@@ -209,7 +211,7 @@ public class UserController {
 			
 		}
 	    
-	    @RequestMapping(value = "/changeUserRole", method = RequestMethod.PUT)
+	    @RequestMapping(value = "/public/changeUserRole", method = RequestMethod.PUT)
 		public @ResponseBody Boolean changeUserRole(@RequestBody User u){
 		 
 			
@@ -227,4 +229,23 @@ public class UserController {
 			return true;
 		}
     
+	    @RequestMapping(value ="/changeUserInfo", method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+//		public @ResponseBody Boolean changeUserInfo(@RequestBody User u,@ModelAttribute("currentUser") CurrentUser currentUser){
+		public @ResponseBody Boolean changeUserInfo(@RequestBody UserUpdateDTO u,@ModelAttribute("currentUser") CurrentUser currentUser){
+	    	ModelMapper mp=new ModelMapper();
+			
+			System.out.println("POGODJEN CONTROLLER /changeUserInfo"+mp.map(u,UserUpdateDTO.class));
+			try {
+				
+				 //userService.updateUserInfo(mp.map(u,UserUpdateDTO.class),currentUser.getUser().getId());
+				userService.updateUserInfo(u,currentUser.getUser().getId());
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				return false;
+			}
+			
+			return true;
+		}
 }

@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.domain.Cinema;
+import com.example.DTO.UserUpdateDTO;
 import com.example.domain.FriendRequest;
 import com.example.domain.FriendRequestStatus;
 import com.example.domain.MyRole;
@@ -258,4 +258,29 @@ public class UserServiceImpl implements UserService {
 			userRepository.flush();
 			return true;
 		}
+		
+		@Override
+		public boolean updateUserInfo(UserUpdateDTO u,long userID) {			
+			User user = userRepository.findOne(userID);
+			user.setCity(u.getCity());
+			user.setFirstName(u.getFirstName());
+			user.setLastName(u.getLastName());
+			user.setPhoneNumber(u.getPhoneNumber());
+			userRepository.flush();
+			System.out.println("userdto update servis");
+			return true;
+		}
+		
+		@Override
+		public boolean updateUserInfo(User u) {			
+			User user = userRepository.findOne(u.getId());
+			user.setCity(u.getCity());
+			user.setFirstName(u.getFirstName());
+			user.setLastName(u.getLastName());
+			user.setPhoneNumber(u.getPhoneNumber());
+			userRepository.flush();
+			System.out.println("user update servis");
+			return true;
+		}
+		
 }

@@ -52,8 +52,8 @@ import { Router } from '@angular/router';
 import { RegistrationConfirmComponent } from './components/registration-confirm/registration-confirm.component';
 import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
 // factory dependency injection
-export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestOptions, auth: AuthServiceService,router:Router) {
-  return new MyCustomHttp(backend, defaultOptions, auth,router);
+export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestOptions, auth: AuthServiceService, router: Router) {
+  return new MyCustomHttp(backend, defaultOptions, auth, router);
 }
 @NgModule({
   declarations: [
@@ -91,7 +91,7 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     {
       provide: Http,
       useFactory: providerCustomHttp,
-      deps: [XHRBackend, RequestOptions, AuthServiceService,Router]
+      deps: [XHRBackend, RequestOptions, AuthServiceService, Router]
     }
   ],
   bootstrap: [AppComponent]

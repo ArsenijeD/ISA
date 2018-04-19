@@ -5,9 +5,9 @@ export class AuthServiceService {
 
   constructor() { }
   private token: string;
-  private user: { id: number } | null;
+  private user:/*{ id: number }*/any | null;
 
-  public getUser(): { id: number } | null {
+  public getUser():/* { id: number }*/any | null {
     return this.user || JSON.parse(localStorage.getItem('user'));
   }
 
@@ -15,7 +15,7 @@ export class AuthServiceService {
     return this.token || localStorage.getItem('token') || '';
   }
 
-  public setUser(user: { id: number }): void {
+  public setUser(user: /*{ id: number }*/any): void {
     this.user = user;
     localStorage.setItem('user', JSON.stringify(user));
   }

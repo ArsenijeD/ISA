@@ -8,7 +8,7 @@ import { LoginComponent } from "./components/login/login.component";
 import { TestComponent } from "./components/test/test.component";
 import { RegisterUserComponent } from "./components/register-user/register-user.component";
 import { RegistrationConfirmComponent } from "./components/registration-confirm/registration-confirm.component";
-
+import { UserProfilePageComponent } from "./components/user-profile-page/user-profile-page.component";
 import { AdminProfilePageComponent } from "./components/admin-profile-page/admin-profile-page.component";
 import { FanZoneComponent } from "./components/fan-zone/fan-zone.component";
 
@@ -55,6 +55,10 @@ const appRoutes: Routes =
    {
         path:'registrationConfirm',
         component:RegistrationConfirmComponent
+    },
+    {
+        path:'profile',
+        component:UserProfilePageComponent
     },
     {
         path:'test',

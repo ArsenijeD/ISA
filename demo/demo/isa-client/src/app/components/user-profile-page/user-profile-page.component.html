@@ -1,3 +1,19 @@
-<p>
-  user-profile-page works!
-</p>
+<div class="container">
+
+  <!-- Page Heading -->
+  <h1 class="my-4">
+    PROFILE
+<!--        <small>Secondary Text</small>-->
+  </h1>
+  <h2 class="my-4">{{userEdit.firstName}}</h2>
+  <br/>
+  <button (click)="disableEditingClick()"> edit</button> <br/>
+
+
+    <label>first name: <input [(ngModel)]="userEdit.firstName" name="firstName"  [disabled]="disableEditing" type='text'/> </label> <br/>
+    <label>last name: <input [(ngModel)]="userEdit.lastName" [disabled]="disableEditing" type='text'/> </label> <br/>
+    <label>phone number: <input [(ngModel)]="userEdit.phoneNumber" [disabled]="disableEditing" type='text'/> </label> <br/>
+   <label>city: <input [(ngModel)]="userEdit.city" [disabled]="disableEditing" type='text'/> </label> <br/>
+
+  <button [disabled]="disbleEditing" [hidden]="disableEditing" (click)="saveChanges()">save changes</button>
+</div>
