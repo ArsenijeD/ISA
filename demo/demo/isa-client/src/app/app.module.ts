@@ -12,7 +12,14 @@ import { routing } from './app.routing';
 import { HomeGuestComponent } from './components/home-guest/home-guest.component';
 import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.component';
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
+
+
+
+
+
+
 import {LoginComponent} from './components/login/login.component';
+
 import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import { TestComponent } from './components/test/test.component'
@@ -22,14 +29,21 @@ import { AdminProfilePageComponent } from './components/admin-profile-page/admin
 import { FanZoneComponent } from './components/fan-zone/fan-zone.component';
 
 
+import { AgmCoreModule} from '@agm/core';
+
+import { FanZoneAdminProfileComponent } from './components/fan-zone-admin-profile/fan-zone-admin-profile.component'
+
+
 //services
-import { CinemaService } from './services/cinema.service';
+
 import { LoginService } from './services/login.service';
 import { AuthServiceService} from './services/auth-service.service';
+import { TheaterService } from './services/theater.service';
+import { CinemaService } from './services/cinema.service';
 import { UserService } from './services/user.service';
 import { AdService } from './services/ad.service';
 import { GeocoderService } from './services/geocoder.service';
-import { TheaterService } from './services/theater.service';
+import { BidService } from './services/bid.service';
 
 //httpClient interceptor
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -39,7 +53,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
-import { AgmCoreModule} from '@agm/core';
+
 
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
@@ -76,6 +90,7 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     TheaterRepertoireComponent,
     CinemaDetailsComponent,
     TheaterDetailsComponent,
+    FanZoneAdminProfileComponent,
     UserProfilePageComponent
   ],
   imports: [
@@ -90,7 +105,9 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
       libraries: ["places"]
     })
   ],
-  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,
+
+
+  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,BidService,
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true } //httpClient Interceptor
     {
       provide: Http,

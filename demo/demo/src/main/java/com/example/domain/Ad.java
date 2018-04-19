@@ -2,15 +2,20 @@ package com.example.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -35,11 +40,14 @@ public class Ad implements Serializable {
     private String image;
 	
 	@Column(name = "confirmed", nullable = false)
-    private boolean confirmed;
+    private Long confirmed;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="user_id")
     private User user;
+	
+	@OneToMany(mappedBy="ad")
+    private Set<Bid> bids;
 
 	public Long getId() {
 		return id;
@@ -67,8 +75,6 @@ public class Ad implements Serializable {
 
 	
 
-	
-
 	public Date getDate() {
 		return date;
 	}
@@ -76,6 +82,38 @@ public class Ad implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+//
+//	public Long getYear() {
+//		return year;
+//	}
+//
+//	public void setYear(Long year) {
+//		this.year = year;
+//	}
+//
+//	public Long getMonth() {
+//		return month;
+//	}
+//
+//	public void setMonth(Long month) {
+//		this.month = month;
+//	}
+//
+//	public Long getDay() {
+//		return day;
+//	}
+//
+//	public void setDay(Long day) {
+//		this.day = day;
+//	}
+
+//	public String getDate() {
+//		return date;
+//	}
+//
+//	public void setDate(String date) {
+//		this.date = date;
+//	}
 
 	public String getImage() {
 		return image;
@@ -85,13 +123,13 @@ public class Ad implements Serializable {
 		this.image = image;
 	}
 
-	public boolean isConfirmed() {
-		return confirmed;
-	}
-
-	public void setConfirmed(boolean confirmed) {
-		this.confirmed = confirmed;
-	}
+//	public boolean isConfirmed() {
+//		return confirmed;
+//	}
+//
+//	public void setConfirmed(boolean confirmed) {
+//		this.confirmed = confirmed;
+//	}
 
 	public User getUser() {
 		return user;
@@ -101,7 +139,16 @@ public class Ad implements Serializable {
 		this.user = user;
 	}
 
-	public Ad(Long id, String name, String description, Date date, String image, boolean confirmed, User user) {
+	
+	public Long getConfirmed() {
+		return confirmed;
+	}
+
+	public void setConfirmed(Long confirmed) {
+		this.confirmed = confirmed;
+	}
+
+	public Ad(Long id, String name, String description, Date date, String image, Long confirmed, User user) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -112,10 +159,26 @@ public class Ad implements Serializable {
 		this.user = user;
 	}
 
+	
+	
 	public Ad() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+//public Ad(Long id, String name, String description, Long year, Long month, Long day, String image, boolean confirmed,
+//		User user) {
+//	super();
+//	this.id = id;
+//	this.name = name;
+//	this.description = description;
+//	this.year = year;
+//	this.month = month;
+//	this.day = day;
+//	this.image = image;
+//	this.confirmed = confirmed;
+//	this.user = user;
+//}
 
 	
 }

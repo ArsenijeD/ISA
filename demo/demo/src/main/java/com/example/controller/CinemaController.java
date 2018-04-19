@@ -25,7 +25,7 @@ public class CinemaController {
 
 	@Autowired
 	private CinemaService cinemaService;
-	@PreAuthorize("hasAuthority('ADMIN')")
+//	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(
 			value = "/getAll", 
 			method = RequestMethod.GET, 

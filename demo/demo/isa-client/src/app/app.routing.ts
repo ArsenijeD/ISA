@@ -5,6 +5,8 @@ import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.com
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
 import { RegisterCinemaComponent } from "./components/register-cinema/register-cinema.component";
 
+import { FanZoneAdminProfileComponent } from "./components/fan-zone-admin-profile/fan-zone-admin-profile.component";
+
 import { LoginComponent } from "./components/login/login.component";
 import { TestComponent } from "./components/test/test.component";
 import { RegisterUserComponent } from "./components/register-user/register-user.component";
@@ -13,7 +15,6 @@ import { UserProfilePageComponent } from "./components/user-profile-page/user-pr
 
 import { AdminProfilePageComponent } from "./components/admin-profile-page/admin-profile-page.component";
 import { FanZoneComponent } from "./components/fan-zone/fan-zone.component";
-
 import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component'
 import { TheaterRepertoireComponent } from './components/theater-repertoire/theater-repertoire.component'
 
@@ -103,6 +104,11 @@ const appRoutes: Routes =
     {
         path: 'fanZone',
         component: FanZoneComponent
+    },
+
+    {
+        path: 'fanZoneAdminProfile',
+        component: FanZoneAdminProfileComponent
     }
 
 ]
