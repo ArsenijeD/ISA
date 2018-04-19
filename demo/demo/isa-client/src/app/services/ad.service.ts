@@ -23,7 +23,7 @@ export class AdService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     alert(JSON.stringify(ad));
-    return this.http.post('http://localhost:8080/public/oglasi/register', 
+    return this.http.post('http://localhost:8080/oglasi/register', 
       JSON.stringify(ad), { headers : headers }).map((data : Response) => data.json());
   }
 
@@ -32,7 +32,7 @@ export class AdService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    return this.http.get("http://localhost:8080/public/oglasi/getOglasForCurrentUser", {headers:headers}).map(data => data.json())
+    return this.http.get("http://localhost:8080/oglasi/getOglasForCurrentUser", {headers:headers}).map(data => data.json())
 
     .catch((err:HttpErrorResponse) =>
     {
@@ -47,7 +47,7 @@ export class AdService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    return this.http.get("http://localhost:8080/public/oglasi/getOglasByConfirmed/" + confirmed, {headers:headers}).map(data => data.json())
+    return this.http.get("http://localhost:8080/oglasi/getOglasByConfirmed/" + confirmed, {headers:headers}).map(data => data.json())
 
     .catch((err:HttpErrorResponse) =>
     {
@@ -62,7 +62,7 @@ export class AdService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     alert(JSON.stringify(ad));
-    return this.http.put('http://localhost:8080/public/oglasi/changeOglasStatus', 
+    return this.http.put('http://localhost:8080/oglasi/changeOglasStatus', 
       JSON.stringify(ad), { headers : headers }).map((data : Response) => data.json());
 
   }
@@ -72,7 +72,7 @@ export class AdService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     alert(JSON.stringify(ad));
-    return this.http.put('http://localhost:8080/public/oglasi/updateOglas', 
+    return this.http.put('http://localhost:8080/oglasi/updateOglas', 
       JSON.stringify(ad), { headers : headers }).map((data : Response) => data.json());
 
   }
@@ -81,7 +81,7 @@ export class AdService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    return this.http.delete("http://localhost:8080/public/oglasi/deleteOglas/"+
+    return this.http.delete("http://localhost:8080/oglasi/deleteOglas/"+
     JSON.stringify(adID),
     {headers:headers})
     .map((data) => data.json())

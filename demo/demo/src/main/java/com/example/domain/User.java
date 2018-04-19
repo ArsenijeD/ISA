@@ -49,6 +49,7 @@ public class User implements Serializable {
 
 
 
+	
 	public Set<MyRole> getRoles(){
     	return roles;
     }
@@ -97,7 +98,7 @@ public class User implements Serializable {
 
   
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<MyRole> roles;
     

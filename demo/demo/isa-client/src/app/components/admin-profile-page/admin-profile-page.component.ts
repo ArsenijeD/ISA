@@ -80,8 +80,11 @@ export class AdminProfilePageComponent implements OnInit {
 
       
       this.userService.getUsers().subscribe(data=> { this.users = data});
+      
+    } else if (index == 4) {
 
-    } 
+      
+    }
       
       
   }
@@ -175,33 +178,54 @@ export class AdminProfilePageComponent implements OnInit {
   onSubmit(cinemaName : string, cinemaAdress : string, cinemaDescription : string) {
 
     alert("iz komponente: " + cinemaName);
-    this.cinemaService.registerCinema({name : cinemaName, adress : cinemaAdress, description : cinemaDescription}).subscribe(data => console.log(data));
+    this.cinemaService.registerCinema({name : cinemaName, adress : cinemaAdress, description : cinemaDescription}).subscribe(data => {
+      
+      
+      
+      console.log(data);
+      this.cinemaService.getCinemas().subscribe(data=> { this.cinemas = data});
+      this.promeniAktivnost(0);
+    
+    });
   
 
-    this.cinemaService.getCinemas().subscribe(data=> { this.cinemas = data});
-    this.promeniAktivnost(0);
+    
   }
 
   promoteToCinemaAdmin(user : any, cinema : any) {
 
+      alert(JSON.stringify(cinema));
       cinema.admins.push(user);
-      user.role.name = "cinema_admin";
-      user.role.role_id = 2;
+      alert(JSON.stringify(cinema));
+      user.roles[0].name = "CINEMA_ADMIN";
+      user.roles[0].role_id = 2;
       
       this.cinemaService.updateCinema(cinema).subscribe(data => console.log(data));
-      this.userService.updateUserRole(user).subscribe(data => console.log(data));
+      this.userService.updateUserRole(user).subscribe(data => {
+        
+        
+        console.log(data);
+        this.userService.getUsers().subscribe(data=> { this.users = data});
+        this.promeniAktivnost(0);
+      });
 
-      this.userService.getUsers().subscribe(data=> { this.users = data});
-      this.promeniAktivnost(3);
+      
   }
 
   promoteToFanZoneAdmin(user : any) {
 
-    user.role.name = "fan_zone_admin";
-    user.role.role_id = 3;
-    this.userService.updateUserRole(user).subscribe(data => console.log(data));
+    alert(JSON.stringify(user))
+    user.roles[0].name = "FAN_ZONE_ADMIN";
+    user.roles[0].role_id = 3;
+    alert(JSON.stringify(user))
+    this.userService.updateUserRole(user).subscribe(data => {
+      
+      
+      console.log(data);
+      this.userService.getUsers().subscribe(data=> { this.users = data});
+      this.promeniAktivnost(3);
+    });
 
-    this.userService.getUsers().subscribe(data=> { this.users = data});
-    this.promeniAktivnost(3);
+    
   }
 }

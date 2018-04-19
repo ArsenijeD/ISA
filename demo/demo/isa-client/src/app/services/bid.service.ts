@@ -16,7 +16,7 @@ export class BidService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    return this.http.get("http://localhost:8080/public/bids/getBidsForSelectedOglas/" + ad_id).map(data => data.json())
+    return this.http.get("http://localhost:8080/bids/getBidsForSelectedOglas/" + ad_id).map(data => data.json())
 
     .catch((err:HttpErrorResponse) =>
     {

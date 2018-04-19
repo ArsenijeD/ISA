@@ -19,7 +19,7 @@ import com.example.service.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/public/bids")
+@RequestMapping("/bids")
 public class BidController {
 
 	@Autowired

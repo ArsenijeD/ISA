@@ -33,7 +33,7 @@ export class UserService {
   // }
 
   getUsers(){
-    return this.http.get("http://localhost:8080/public/getOnlyUsers").map(data => data.json())
+    return this.http.get("http://localhost:8080/getOnlyUsers").map(data => data.json())
     .catch((err:HttpErrorResponse) =>
     {
         alert(err.status + " " + err.error.error + " \n" + err.error.message);
@@ -43,7 +43,7 @@ export class UserService {
   }
 
   getFanZoneAdmins(){
-    return this.http.get("http://localhost:8080/public/getFanZoneAdmins").map(data => data.json())
+    return this.http.get("http://localhost:8080/getFanZoneAdmins").map(data => data.json())
     .catch((err:HttpErrorResponse) =>
     {
         alert(err.status + " " + err.error.error + " \n" + err.error.message);
@@ -56,7 +56,7 @@ export class UserService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     alert(JSON.stringify(user));
-    return this.http.put('http://localhost:8080/public/changeUserRole', 
+    return this.http.put('http://localhost:8080/changeUserRole', 
       JSON.stringify(user), { headers : headers }).map((data : Response) => data.json());
   }
 

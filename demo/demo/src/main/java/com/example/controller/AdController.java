@@ -24,7 +24,7 @@ import com.example.service.CinemaService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/public/oglasi")
+@RequestMapping("/oglasi")
 public class AdController {
 
 	
