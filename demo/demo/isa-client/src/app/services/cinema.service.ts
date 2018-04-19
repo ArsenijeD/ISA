@@ -28,6 +28,7 @@ export class CinemaService {
 
   getCinemas(){
 
+
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
@@ -35,7 +36,7 @@ export class CinemaService {
 
     .catch((err:HttpErrorResponse) =>
     {
-        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        // alert(err.status + " " + err.error.error + " \n" + err.error.message);
         return Observable.throw(err);
     });
   

@@ -86,10 +86,10 @@ public class TheaterController {
 	@RequestMapping(value = "/changeTheaterAdmin", method = RequestMethod.PUT)
 	public @ResponseBody Boolean updateTheater(@RequestBody Theater t){
 	 
-		for (com.example.domain.User u : t.getAdmins()) {
-			
-			System.out.println(u.getFirst_name());
-		}
+//		for (com.example.domain.User u : t.getAdmins()) {
+//			
+//			System.out.println(u.getFirst_name());
+//		}
 		System.out.println("POGODJEN CONTROLLER /changeCinemaAdmin");
 		try {
 			

@@ -16,7 +16,9 @@ import com.example.DemoApplication;
 import com.example.config.JpaConfig;
 import com.example.domain.FriendRequest;
 import com.example.domain.FriendRequestStatus;
+import com.example.domain.User;
 import com.example.repository.FriendRequestRepository;
+import com.example.repository.UserRepository;
 
 
 	@RunWith(SpringRunner.class)
@@ -26,9 +28,15 @@ import com.example.repository.FriendRequestRepository;
 			  classes = { JpaConfig.class }, 
 			  loader = AnnotationConfigContextLoader.class)
 	public class ApplicationTests {
+
+		@Autowired 
+		private FriendRequestRepository friendRequestRepository;
+		@Autowired 
+		private UserRepository userRepository;
 		
 		@Test
 		public void contextLoads() {
+		   
 		}
 
 	}
