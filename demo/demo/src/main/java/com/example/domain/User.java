@@ -24,7 +24,6 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User implements Serializable {
 	
-	//private ArrayList<MyRole> roleList=null;
 	
     public User() {
 		super();
@@ -35,18 +34,7 @@ public class User implements Serializable {
 
 
 
-	/*public ArrayList<MyRole> getRoles() {
-		if(roleList==null) {
-			roleList=new ArrayList<MyRole>();
-			for(MyRole role:roles) {
-				roleList.add(role);
-			}
-			return roleList;
 
-		}else {
-			return roleList;
-		}
-	}*/
     public Set<MyRole> getRoles(){
     	return roles;
     }
@@ -68,17 +56,7 @@ public class User implements Serializable {
 		this.ads = ads;
 	}
 	
-/*
-/*	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
-	//private static final long serialVersionUID = 1L;
-
-*/
-//	public void setFirstName(String firstName) {
-//		this.firstName = firstName;
-//	}
 
 
 	/**
@@ -103,10 +81,7 @@ public class User implements Serializable {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    private Set<MyRole> roles;
-    
+  
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -140,9 +115,6 @@ public class User implements Serializable {
     @Column(name = "first_name")
     private String firstName;
     
-//nullable = false, unique = true
-//    @Column(name = "last_name")
-//    private String lastName;
 
     @Column(name="city",nullable=true)
     private String city;
@@ -173,13 +145,7 @@ public class User implements Serializable {
         this.passwordHash = passwordHash;
     }
 
-//    public Set<MyRole> getRoles() {
-//		return roles;
-//	}
-//
-//	public void setRoles(Set<MyRole> roles) {
-//		this.roles = roles;
-//	}
+
 
 	public boolean isEnabled() {
 		return enabled;
@@ -190,9 +156,7 @@ public class User implements Serializable {
 	}
 
 
-//	public String getFirstName() {
-//		return firstName;
-//	}
+
 
 
 	public String getLastName() {
