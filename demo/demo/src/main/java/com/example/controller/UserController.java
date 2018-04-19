@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
@@ -37,7 +38,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.OnRegistrationCompleteEvent;
 import com.example.RegistrationListener;
+import com.example.DTO.UserUpdateDTO;
 import com.example.domain.Cinema;
+import com.example.domain.CurrentUser;
+
 import com.example.domain.MyRole;
 import com.example.domain.User;
 import com.example.domain.UserCreateForm;
@@ -45,9 +49,10 @@ import com.example.domain.VerificationToken;
 import com.example.repository.UserRepository;
 import com.example.service.UserService;
 
+
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/public")
+//@RequestMapping("/public")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -64,7 +69,18 @@ public class UserController {
     @Autowired
     private MessageSource messages;
 
+  // @PreAuthorize("hasAuthority('ADMIN')")
+  @RequestMapping(
+    		value = "/angularUser",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUserPageAngular(@ModelAttribute("currentUser") CurrentUser currentUser) {
+    	System.out.println("treba da vrati:" +currentUser);
+        return currentUser.getUser();
+    }
     
+  
+  
     @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
     @RequestMapping("/user/{id}")
     public ModelAndView getUserPage(@PathVariable Long id) {
@@ -72,22 +88,29 @@ public class UserController {
         return new ModelAndView("user", "user", userService.getUserById(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id))));
     }
-
+    /*jsp
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "	", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/create", method = RequestMethod.GET)
     public ModelAndView getUserCreatePage() {
         LOGGER.debug("User create form triggered");
         return new ModelAndView("userCreate", "form", new UserCreateForm());
-    }
+    }*/
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/user/create", method = RequestMethod.POST)
-    public String handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult,WebRequest  request) {
-        LOGGER.debug("Processing user create form={}, bindingResult={}", form, bindingResult);
+ 
+   // @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(
+			value = "/public/user/create",
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes=MediaType.APPLICATION_JSON_VALUE
+			)
+    public User handleUserCreateForm(@Valid  @RequestBody  UserCreateForm form,BindingResult bindingResult,WebRequest  request) {
+        LOGGER.debug("Processing user create form={}, bindingResult={}");//, form, bindingResult);
         final User registered;
         if (bindingResult.hasErrors()) {
             // failed validation
-            return "userCreate";
+            //return "userCreate";
+        	return null;
         }
         try {
         	registered=userService.create(form);        
@@ -100,21 +123,23 @@ public class UserController {
         } catch (DataIntegrityViolationException e) {
             //email exists
             LOGGER.warn("Duplicate email.", e);
-            return "userCreate";
+            //return "userCreate";
+            return null;
         }
            
         // ok, redirect
-        return "redirect:/users";
+        return registered;
     }
 
     @RequestMapping(value = "/public/registrationConfirm", method = RequestMethod.GET)
-    public String confirmRegistration(final HttpServletRequest request, final Model model, @RequestParam("token") final String token) throws UnsupportedEncodingException {
+    public boolean confirmRegistration(final HttpServletRequest request, final Model model, @RequestParam("token") final String token) throws UnsupportedEncodingException {
     	    Locale locale = request.getLocale();    	     
     	    VerificationToken verificationToken = userService.getVerificationToken(token);
     	    if (verificationToken == null) {
-    	        String message = messages.getMessage("auth.message.invalidToken", null, locale);
-    	        model.addAttribute("message", message);
-    	        return "redirect:/badUser.html?lang=" + locale.getLanguage();
+    	       // String message = messages.getMessage("auth.message.invalidToken", null, locale);
+    	       //model.addAttribute("message", message);
+    	    	System.out.println("token nije dobar");
+    	        return false;
     	    }
     	     
     	    User user = verificationToken.getUser();
@@ -122,12 +147,12 @@ public class UserController {
     	    if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
     	        String messageValue = messages.getMessage("auth.message.expired", null, locale);
     	        model.addAttribute("message", messageValue);
-    	        return "redirect:/badUser.html?lang=" + locale.getLanguage();
+    	        return false;
     	    } 
     	     
     	    user.setEnabled(true); 
     	    userService.saveRegisteredUser(user); 
-    	    return "redirect:/login";
+    	    return true;
     	    //return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); 
     	}
     
@@ -154,8 +179,10 @@ public class UserController {
 			
 			for (User u : all) {
 				
-				if (u.getRole().getName().equals("user"))
-					users.add(u);
+				for(MyRole role:u.getRoles()) {
+					if (role.getName().equals("USER"))
+						users.add(u);
+				}
 			}
 			
 			return users;
@@ -173,16 +200,18 @@ public class UserController {
 			List<User> fanZoneAdmins = new ArrayList<User>();
 			
 			for (User u : all) {
+				for(MyRole role:u.getRoles()) {
+					if (role.getName().equals("fan_zone_admin"))
+						fanZoneAdmins.add(u);
+				}
 				
-				if (u.getRole().getName().equals("fan_zone_admin"))
-					fanZoneAdmins.add(u);
 			}
 			
 			return fanZoneAdmins;
 			
 		}
 	    
-	    @RequestMapping(value = "/changeUserRole", method = RequestMethod.PUT)
+	    @RequestMapping(value = "/public/changeUserRole", method = RequestMethod.PUT)
 		public @ResponseBody Boolean changeUserRole(@RequestBody User u){
 		 
 			
@@ -200,4 +229,23 @@ public class UserController {
 			return true;
 		}
     
+	    @RequestMapping(value ="/changeUserInfo", method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+//		public @ResponseBody Boolean changeUserInfo(@RequestBody User u,@ModelAttribute("currentUser") CurrentUser currentUser){
+		public @ResponseBody Boolean changeUserInfo(@RequestBody UserUpdateDTO u,@ModelAttribute("currentUser") CurrentUser currentUser){
+	    	ModelMapper mp=new ModelMapper();
+			
+			System.out.println("POGODJEN CONTROLLER /changeUserInfo"+mp.map(u,UserUpdateDTO.class));
+			try {
+				
+				 //userService.updateUserInfo(mp.map(u,UserUpdateDTO.class),currentUser.getUser().getId());
+				userService.updateUserInfo(u,currentUser.getUser().getId());
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				return false;
+			}
+			
+			return true;
+		}
 }

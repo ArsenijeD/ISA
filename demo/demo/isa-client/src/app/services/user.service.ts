@@ -53,12 +53,18 @@ export class UserService {
   }
 
   updateUserRole(user : any) {
-
-
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     alert(JSON.stringify(user));
     return this.http.put('http://localhost:8080/public/changeUserRole', 
+      JSON.stringify(user), { headers : headers }).map((data : Response) => data.json());
+  }
+
+  updateUserInfo(user : any) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    alert("servis"+JSON.stringify(user));
+    return this.http.put('http://localhost:8080/changeUserInfo', 
       JSON.stringify(user), { headers : headers }).map((data : Response) => data.json());
   }
 }

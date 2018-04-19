@@ -19,12 +19,17 @@ public class MyRole {
     @Column(name = "role_id", nullable = false, updatable = false)
     private Long role_id;
     
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "role_id", nullable = false, updatable = false)
+//    private Long role_id;
+    
     @Column(name = "role", nullable = false) 
     private String name;
-
+/*
     @OneToMany(mappedBy="role")
     private Set<User> users;
-    
+    */
     public MyRole(){
     	super();
     }

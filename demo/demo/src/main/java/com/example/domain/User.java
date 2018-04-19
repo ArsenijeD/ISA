@@ -1,6 +1,7 @@
 package com.example.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,18 +23,59 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
-
 	
-//    public User() {
-//		super();
-//		roles=new HashSet<MyRole>();
-//		enabled=false;
-//	}
+	
+    public User() {
+		super();
+		roles=new HashSet<MyRole>();
+		enabled=false;
+		
+	}
+
+
+
+
+    public Set<Bid> getBids() {
+		return bids;
+	}
+
+
+
+
+	public void setBids(Set<Bid> bids) {
+		this.bids = bids;
+	}
+
+
+
+
+	public Set<MyRole> getRoles(){
+    	return roles;
+    }
+    
+	public void setRoles(Set<MyRole> roles) {
+		this.roles = roles;
+	}
+
+    
+   @OneToMany(mappedBy="user",fetch=FetchType.EAGER)
+   private Set<Ad> ads;
+   
+	
+	public Set<Ad> getAds() {
+		return ads;
+	}
+	//
+	public void setAds(Set<Ad> ads) {
+		this.ads = ads;
+	}
+	
+
+
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 
 	
 
@@ -46,60 +87,69 @@ public class User implements Serializable {
 
     @Column(name = "email", nullable = false)
     private String email;
-    //,nullable = false, unique = true
-    @Column(name = "first_name", nullable = false)
-    private String first_name;
-    
+
 //nullable = false, unique = true
     @Column(name = "last_name", nullable = false)
-    private String last_name;
+    private String lastName;
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    private Set<MyRole> roles;
+  
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<MyRole> roles;
     
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="role_id")
-    private MyRole role;
     
+
     @Column(name = "enabled", nullable = true)
     private boolean enabled;
-     
-    @OneToMany(mappedBy="user")
-    private Set<Ad> ads;
+
     
     @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
     private Set<Bid> bids;
     
-    public String getFirst_name() {
-		return first_name;
+    
+    public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String first_name) {
+		this.firstName = first_name;
 	}
 
 	public String getLast_name() {
-		return last_name;
+		return lastName;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+
 
 	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+		this.lastName = last_name;
 	}
+
+
+    //,nullable = false, unique = true
+    @Column(name = "first_name")
+    private String firstName;
+    
+
+    @Column(name="city",nullable=true)
+    private String city;
+    
+    @Column(name="phone_number",nullable=true)
+    private String phoneNumber;
+    
+
+
 
 	public Long getId() {
         return id;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -114,13 +164,7 @@ public class User implements Serializable {
         this.passwordHash = passwordHash;
     }
 
-//    public Set<MyRole> getRoles() {
-//		return roles;
-//	}
-//
-//	public void setRoles(Set<MyRole> roles) {
-//		this.roles = roles;
-//	}
+
 
 	public boolean isEnabled() {
 		return enabled;
@@ -130,24 +174,46 @@ public class User implements Serializable {
 		this.enabled = enabled;
 	}
 
-	public MyRole getRole() {
-		return role;
+
+
+
+
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setRole(MyRole role) {
-		this.role = role;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	
+	public String getCity() {
+		return city;
+	}
 
-	
-//	@Override
-//    public String toString() {
-//        return "User{" +
-//                "id=" + id +
-//                ", email='" + email +
-//                ", passwordHash='" + passwordHash.substring(0, 10) +
-//                ", role=" + roles +
-//                '}';
-//    }
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	@Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email +
+                ", passwordHash='" + passwordHash.substring(0, 10) +
+                ", role=" + roles +
+                '}';
+    }
+
+
 }

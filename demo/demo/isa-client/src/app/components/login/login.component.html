@@ -1,0 +1,29 @@
+
+	<nav role="navigation">
+		<ul>
+			<li><a href="/">Home</a></li>
+		</ul>
+	</nav>
+
+	<h1>Log in</h1>
+
+	<p>Username: admin@admin password: admin</p>
+
+	<form role="form" action="/login" method="post">
+		<!--<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />-->
+
+		<div>
+			<label for="email">Email address</label> <input type="email"
+				name="email" id="email" required autofocus #email/>
+		</div>
+		<div>
+			<label for="password">Password</label> <input type="password"
+				name="password" id="password" required #password />
+		</div>
+		<div>
+			<label for="remember-me">Remember me</label> <input type="checkbox"
+				name="remember-me" id="remember-me" #rememberMe/>
+		</div>
+        <button (click) = "onSubmit(email.value, password.value, rememberMe.value)"id="submit" type="button" value="submit" class="btn btn-primary center">Submit</button>
+	</form>
