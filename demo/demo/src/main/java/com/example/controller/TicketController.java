@@ -20,7 +20,7 @@ import com.example.service.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/public/cinemas")
+@RequestMapping("/public/tickets")
 public class TicketController {
 	
 	@Autowired
