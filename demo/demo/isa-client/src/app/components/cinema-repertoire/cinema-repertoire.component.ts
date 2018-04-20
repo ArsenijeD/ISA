@@ -41,6 +41,14 @@ export class CinemaRepertoireComponent implements OnInit {
   private change_discount : any;
 
   private change_old_hallID : any;
+<<<<<<< HEAD
+  
+ 
+  private fast_tickets_number : any;
+  
+  private fastTickets_hall: any;
+  private fastTickets_projection: any;
+=======
 
   
   private fast_tickets_number : any;
@@ -48,10 +56,11 @@ export class CinemaRepertoireComponent implements OnInit {
   private fastTickets_hall : any;
  
   private fastTickets_projection : any;
+>>>>>>> branch 'master' of https://github.com/jovica27/ISA.git
 
   private loggedInUser : any;
   private isAdmin = true;          // ovo promeni posle na true !!!
-
+  
   constructor(private router : Router, private cinemaService : CinemaService, private modalService: NgbModal, private authService:AuthServiceService) { }
 
 

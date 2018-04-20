@@ -100,5 +100,60 @@ public class TicketController {
 		
 		
 	}
+	@CrossOrigin(origins = "*")
+	@RequestMapping(
+			value = "/reserveTicket",
+			method = RequestMethod.PUT,						
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public boolean reserveTicket(@RequestBody ReservationTicketDTO rt) {
+		
+		User user = userService.getOneById(rt.getUser_id());
+		Ticket ticket = ticketService.getTicketByID(rt.getTicket_id());
 
+		Projection projection = projectionService.getProjectionByID(rt.getProjection_id());
+
+		try {
+			
+			// -------------------- provera za datum ---------------------------//
+			System.out.println("Datum pre izmene: " + projection.getDate());		
+			String[] splittedDate = projection.getDate().split("-");
+			if(splittedDate[0].length()==1) {
+				splittedDate[0] = "0"+splittedDate[0];
+			}
+			if(splittedDate[1].length()==1) {
+				splittedDate[1] = "0"+splittedDate[1];
+			}
+			String newDate = splittedDate[0] + "-" + splittedDate[1] + "-" + splittedDate[2];
+			System.out.println("Datum posle izmene: " + newDate);
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			Date today = new Date();
+			
+			try {
+	            Date date = formatter.parse(newDate);
+	            if(date.before(today)){
+	                return false;
+	            }
+	           
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }
+			
+			// ----------------------------------------- provera za datum ------------------- //
+
+					if(!ticket.isForFastReservation() && !ticket.isReserved()) {
+						ticket.setReserved(true);
+						ticketService.reserveTicket(user, ticket);					
+						return true;
+					}
+			
+							
+				return false;
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+	}
 }

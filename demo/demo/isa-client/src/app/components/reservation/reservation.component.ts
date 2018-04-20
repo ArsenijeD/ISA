@@ -29,22 +29,20 @@ export class ReservationComponent implements OnInit {
         console.log("all cinemas:"+JSON.stringify(this.allCinemas));
         }
       )
-    };
+    }
 
-    // onClickReserve(p,t) {
-    //   this.cinemaService.reserveTicket({user_id:this.loggedInUser.id, projection_id:p.id,ticket_id:t.id})
-    //   .subscribe(data =>
-    //     {
-    //       console.log(data);
-    //       if(!data){
-    //         alert("No more tickets for fast reservation!");
-    //       }
-    //     }
-    //   );
-  
-    //   this.router.navigateByUrl('/reservation');
-  
-    // }
+    onClickReserve(p,t) {
+      this.cinemaService.reserveTicket({user_id:this.loggedInUser.id, projection_id:p.id,ticket_id:t.id})
+      .subscribe(data =>
+        {
+          console.log(data);
+          if(!data){
+            alert("No more tickets for reservation!");
+          }
+        }
+      );
+
+    }
 
 
   }
