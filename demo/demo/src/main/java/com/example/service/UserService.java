@@ -18,6 +18,8 @@ public interface UserService {
 
 	Optional<User> getUserByEmail(String email);
 
+	User getOneById(Long id);
+	
 	Collection<User> getAllUsers();
 
 	boolean updateUserRole(User u);

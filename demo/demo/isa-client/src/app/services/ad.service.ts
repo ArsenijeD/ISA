@@ -27,12 +27,12 @@ export class AdService {
       JSON.stringify(ad), { headers : headers }).map((data : Response) => data.json());
   }
 
-  getAdsOfCurrentUser(){
+  getAdsOfCurrentUser(id : number){
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    return this.http.get("http://localhost:8080/oglasi/getOglasForCurrentUser", {headers:headers}).map(data => data.json())
+    return this.http.get("http://localhost:8080/oglasi/getOglasForCurrentUser/" + id , {headers:headers}).map(data => data.json())
 
     .catch((err:HttpErrorResponse) =>
     {

@@ -59,17 +59,17 @@ public class User implements Serializable {
 	}
 
     
-   @OneToMany(mappedBy="user",fetch=FetchType.EAGER)
-   private Set<Ad> ads;
+//   @OneToMany(mappedBy="user",fetch=FetchType.EAGER)
+//   private Set<Ad> ads;
    
 	
-	public Set<Ad> getAds() {
-		return ads;
-	}
+//	public Set<Ad> getAds() {
+//		return ads;
+//	}
 	//
-	public void setAds(Set<Ad> ads) {
-		this.ads = ads;
-	}
+//	public void setAds(Set<Ad> ads) {
+//		this.ads = ads;
+//	}
 	
 
 

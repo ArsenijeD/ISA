@@ -14,7 +14,7 @@ import antlr.collections.List;
 
 public interface AdRepository extends JpaRepository<Ad, Long>{
 
-	ArrayList<Ad> findAllByUser(Long user_id);
+	ArrayList<Ad> findAllByUser(User u);
 	ArrayList<Ad> findAllByConfirmed(Long confirmed);
 	
 	@Modifying

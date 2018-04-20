@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.domain.Ad;
 import com.example.domain.Cinema;
+import com.example.domain.User;
 import com.example.repository.AdRepository;
 import com.example.repository.CinemaRepository;
 
@@ -24,9 +25,9 @@ public class AdServiceImpl implements AdService {
 	}
 
 	@Override
-	public ArrayList<Ad> getAdsByUser(Long id) {
+	public ArrayList<Ad> getAdsByUser(User u) {
 		
-		return adRepository.findAllByUser(id);
+		return adRepository.findAllByUser(u);
 	}
 
 	@Override

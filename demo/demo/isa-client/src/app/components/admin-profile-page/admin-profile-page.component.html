@@ -281,14 +281,25 @@
         </div>
 
 
-        <div class="col-lg-4 order-lg-1 text-center">
-            <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
-            <h6 class="mt-2">Upload a different photo</h6>
+        <div class="col-lg-4 order-lg-1 text-center" style="margin-top:50px;">
+            <div>
+                <img src="assets/images/adminProfile.png" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            </div>
+            <div style="margin-top:50px;">
+
+                    <h4 class="mt-2" >Admin: {{currentUser.firstName}} {{currentUser.lastName}}</h4>
+
+            </div>
+        
+            
             <label class="custom-file">
-                <input type="file" id="file" class="custom-file-input">
-                <span class="custom-file-control">Choose file</span>
+                <!-- <input type="file" id="file" class="custom-file-input">
+                <span class="custom-file-control">{{currentUser.email}}</span> -->
+                <h5 class="mt-2" >E-mail: {{currentUser.email}}</h5>
             </label>
         </div>
+
+        
         
     </div>
 </div>
