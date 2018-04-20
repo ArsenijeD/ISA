@@ -25,7 +25,7 @@ public class CinemaController {
 
 	@Autowired
 	private CinemaService cinemaService;
-	@PreAuthorize("hasAuthority('ADMIN')")
+//	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(
 			value = "/getAll", 
 			method = RequestMethod.GET, 
@@ -103,6 +103,33 @@ public class CinemaController {
 		
 		return true;
 	}
+	
+	
+	
+	@RequestMapping(value = "/changeCinema", method = RequestMethod.PUT)
+	public Cinema changeCinema(@RequestBody Cinema c){
+	 	
+		try {
+			
+			System.out.println("Cinema id: " + c.getId());
+			System.out.println("Cinema name: " + c.getName());
+			System.out.println("Cinema address: " + c.getAdress());
+			System.out.println("Cinema description: " + c.getDescription());
+
+
+			cinemaService.changeCinema(c);
+			
+			return cinemaService.getCinemaByID(c.getId());
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
+	
 	
 	
 //	@RequestMapping(value="/registerCinema", method = RequestMethod.POST) 

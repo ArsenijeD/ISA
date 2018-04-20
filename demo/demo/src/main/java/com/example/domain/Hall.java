@@ -52,6 +52,10 @@ public class Hall implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "hall_projections", joinColumns = @JoinColumn(name = "hall_id"), inverseJoinColumns = @JoinColumn(name = "projection_id"))
     private Set<Projection> projections;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "hall_seats", joinColumns = @JoinColumn(name = "hall_id"), inverseJoinColumns = @JoinColumn(name = "seat_id"))
+    private Set<Seat> seats;
 
 
 	
@@ -83,16 +87,29 @@ public class Hall implements Serializable {
 
 	
 	
+	public Set<Seat> getSeats() {
+		return seats;
+	}
+
+	public void setSeats(Set<Seat> seats) {
+		this.seats = seats;
+	}
+
+	
 	public Hall() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Hall(int number, Set<Projection> projections) {
+	public Hall(int number, Set<Projection> projections, Set<Seat> seats) {
 		super();
 		this.number = number;
 		this.projections = projections;
+		this.seats = seats;
 	}
+	
+
+	
 
 	
 	

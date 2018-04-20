@@ -12,7 +12,14 @@ import { routing } from './app.routing';
 import { HomeGuestComponent } from './components/home-guest/home-guest.component';
 import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.component';
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
+
+
+
+
+
+
 import {LoginComponent} from './components/login/login.component';
+
 import { RegisterCinemaComponent } from './components/register-cinema/register-cinema.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import { TestComponent } from './components/test/test.component'
@@ -22,15 +29,26 @@ import { AdminProfilePageComponent } from './components/admin-profile-page/admin
 import { FanZoneComponent } from './components/fan-zone/fan-zone.component';
 
 
+import { AgmCoreModule} from '@agm/core';
+
+import { FanZoneAdminProfileComponent } from './components/fan-zone-admin-profile/fan-zone-admin-profile.component'
+
+
 //services
-import { CinemaService } from './services/cinema.service';
+
 import { LoginService } from './services/login.service';
 import { AuthServiceService} from './services/auth-service.service';
+import { TheaterService } from './services/theater.service';
+import { CinemaService } from './services/cinema.service';
 import { UserService } from './services/user.service';
 import { AdService } from './services/ad.service';
 import { GeocoderService } from './services/geocoder.service';
+<<<<<<< HEAD
 import { TheaterService } from './services/theater.service';
 import { FriendsService } from './services/friends.service'
+=======
+import { BidService } from './services/bid.service';
+>>>>>>> branch 'master' of https://github.com/jovica27/ISA.git
 
 //httpClient interceptor
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -40,10 +58,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
-import { AgmCoreModule} from '@agm/core';
+
 
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { CinemaDetailsComponent } from './components/cinema-details/cinema-details.component';
+import { TheaterDetailsComponent } from './components/theater-details/theater-details.component';
 
 
 //http interceptor
@@ -74,8 +94,14 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     RegisterCinemaComponent,
     CinemaRepertoireComponent,
     TheaterRepertoireComponent,
+
     UserProfilePageComponent,
-    FriendsComponent
+    FriendsComponent,
+
+    CinemaDetailsComponent,
+    TheaterDetailsComponent,
+    FanZoneAdminProfileComponent,
+    UserProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -89,8 +115,14 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
       libraries: ["places"]
     })
   ],
+<<<<<<< HEAD
   providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService
     , TheaterService, UserService, AdService, GeocoderService,FriendsService,
+=======
+
+
+  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,BidService,
+>>>>>>> branch 'master' of https://github.com/jovica27/ISA.git
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true } //httpClient Interceptor
     {
       provide: Http,

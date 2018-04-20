@@ -303,5 +303,11 @@ public class UserServiceImpl implements UserService {
 			System.out.println("user update servis");
 			return true;
 		}
+
+		@Override
+		public User getOneById(Long id) {
+			
+			return userRepository.findOne(id);
+		}
 		
 }

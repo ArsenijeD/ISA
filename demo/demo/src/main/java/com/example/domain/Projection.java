@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -48,14 +49,10 @@ public class Projection implements Serializable{
     private Film film;
 	
 	
-//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name="hall_id", nullable=false)
-//    private Hall hall;
-
 	
-//	@OneToMany(mappedBy="projection",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JsonIgnore
-//    private Set<Ticket> tickets;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "projection_tickets", joinColumns = @JoinColumn(name = "projection_id"), inverseJoinColumns = @JoinColumn(name = "ticket_id"))
+    private Set<Ticket> tickets;
 	
 	
 	@Column(name = "discount")
@@ -97,8 +94,7 @@ public class Projection implements Serializable{
 	public void setDiscount(int discount) {
 		this.discount = discount;
 	}
-	
-	
+		
 
 	public Film getFilm() {
 		return film;
@@ -106,6 +102,15 @@ public class Projection implements Serializable{
 
 	public void setFilm(Film film) {
 		this.film = film;
+	}
+	
+	
+	public Set<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 
 	public Projection() {

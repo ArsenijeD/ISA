@@ -4,17 +4,23 @@ import { HomeGuestComponent } from './components/home-guest/home-guest.component
 import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.component';
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
 import { RegisterCinemaComponent } from "./components/register-cinema/register-cinema.component";
+
+import { FanZoneAdminProfileComponent } from "./components/fan-zone-admin-profile/fan-zone-admin-profile.component";
+
 import { LoginComponent } from "./components/login/login.component";
 import { TestComponent } from "./components/test/test.component";
 import { RegisterUserComponent } from "./components/register-user/register-user.component";
 import { RegistrationConfirmComponent } from "./components/registration-confirm/registration-confirm.component";
 import { UserProfilePageComponent } from "./components/user-profile-page/user-profile-page.component";
+
 import { AdminProfilePageComponent } from "./components/admin-profile-page/admin-profile-page.component";
 import { FanZoneComponent } from "./components/fan-zone/fan-zone.component";
-
 import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component'
 import { TheaterRepertoireComponent } from './components/theater-repertoire/theater-repertoire.component'
 import { FriendsComponent } from "./components/friends/friends.component";
+
+import { CinemaDetailsComponent } from './components/cinema-details/cinema-details.component';
+import { TheaterDetailsComponent } from './components/theater-details/theater-details.component';
 
 
 
@@ -24,6 +30,16 @@ const appRoutes: Routes =
     {
         path: 'home-guest',
         component: HomeGuestComponent
+    },
+
+    {
+        path: 'cinema-details',
+        component: CinemaDetailsComponent
+    },
+
+    {
+        path: 'theater-details',
+        component: TheaterDetailsComponent
     },
 
     {
@@ -92,6 +108,11 @@ const appRoutes: Routes =
     {
         path: 'fanZone',
         component: FanZoneComponent
+    },
+
+    {
+        path: 'fanZoneAdminProfile',
+        component: FanZoneAdminProfileComponent
     }
 
 ]

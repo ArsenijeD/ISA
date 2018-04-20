@@ -38,4 +38,31 @@ public class FilmServiceImpl implements FilmService {
 		return filmRepository.findByName(name);
 	}
 
+	@Override
+	public boolean updateFilm(Film f) {
+		
+		Film film = filmRepository.findOne(f.getId());
+		
+		film.setId(f.getId());
+		film.setName(f.getName());
+		film.setDescription(f.getDescription());
+		film.setDuration(f.getDuration());
+		film.setAverageRating(f.getAverageRating());
+		film.setGenre(f.getGenre());
+		film.setPrice(f.getPrice());
+		
+		filmRepository.flush();
+		
+		return true;
+		
+		
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		
+		filmRepository.deleteById(id);
+		
+	}
+
 }

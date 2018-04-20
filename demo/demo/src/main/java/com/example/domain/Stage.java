@@ -54,6 +54,10 @@ public class Stage implements Serializable{
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "stage_presentations", joinColumns = @JoinColumn(name = "stage_id"), inverseJoinColumns = @JoinColumn(name = "presentation_id"))
     private Set<Presentation> presentations;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "stage_chairs", joinColumns = @JoinColumn(name = "stage_id"), inverseJoinColumns = @JoinColumn(name = "chair_id"))
+    private Set<Chair> chairs;
 
 	
 	public Long getId() {
@@ -83,17 +87,31 @@ public class Stage implements Serializable{
 	public void setPresentations(Set<Presentation> presentations) {
 		this.presentations = presentations;
 	}
+	
+	
+
+	public Set<Chair> getChairs() {
+		return chairs;
+	}
+
+	public void setChairs(Set<Chair> chairs) {
+		this.chairs = chairs;
+	}
 
 	public Stage() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Stage(int number, Set<Presentation> presentations) {
+	public Stage(int number, Set<Presentation> presentations, Set<Chair> chairs) {
 		super();
 		this.number = number;
 		this.presentations = presentations;
+		this.chairs = chairs;
 	}
+
+	
+	
 
 
 	

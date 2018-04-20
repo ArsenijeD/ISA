@@ -74,8 +74,8 @@
                                                     <tr class="active" *ngFor="let admin of cinema.admins; let i = index">
 
                                                         <th scope="row">{{i + 1}}</th>
-                                                        <td>{{admin.first_name}}</td>
-                                                        <td>{{admin.last_name}}</td>
+                                                        <td>{{admin.firstName}}</td>
+                                                        <td>{{admin.lastName}}</td>
                                                         <td>{{admin.email}}</td>
                                                     
                                                     </tr>
@@ -181,8 +181,8 @@
                             <tr class="active" *ngFor="let fanZoneAdmin of fanZoneAdmins; let i = index">
 
                                 <th scope="row">{{i + 1}}</th>
-                                <td>{{fanZoneAdmin.first_name}}</td>
-                                <td>{{fanZoneAdmin.last_name}}</td>
+                                <td>{{fanZoneAdmin.firstName}}</td>
+                                <td>{{fanZoneAdmin.lastName}}</td>
                                 <td>{{fanZoneAdmin.email}}</td>
                             
                             </tr>
@@ -215,8 +215,8 @@
                             <tr class="active" *ngFor="let user of users; let i = index">
 
                                 <th scope="row">{{i + 1}}</th>
-                                <td>{{user.first_name}}</td>
-                                <td>{{user.last_name}}</td>
+                                <td>{{user.firstName}}</td>
+                                <td>{{user.lastName}}</td>
                                 <td>{{user.email}}</td>
                                 <td>GOLD</td>
                                 <td>
@@ -281,14 +281,26 @@
         </div>
 
 
-        <div class="col-lg-4 order-lg-1 text-center">
-            <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
-            <h6 class="mt-2">Upload a different photo</h6>
+        <div class="col-lg-4 order-lg-1 text-center" style="margin-top:50px;">
+            <div>
+                <img src="assets/images/adminProfile.png" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            </div>
+            <div style="margin-top:50px;">
+
+                    <h4 class="mt-2" >Admin: {{currentUser.firstName}} {{currentUser.lastName}}</h4>
+
+            </div>
+        
+            
             <label class="custom-file">
-                <input type="file" id="file" class="custom-file-input">
-                <span class="custom-file-control">Choose file</span>
+                <!-- <input type="file" id="file" class="custom-file-input">
+                <span class="custom-file-control">{{currentUser.email}}</span> -->
+                <h5 class="mt-2" >E-mail: {{currentUser.email}}</h5>
             </label>
         </div>
+
+        
+        
     </div>
 </div>
 

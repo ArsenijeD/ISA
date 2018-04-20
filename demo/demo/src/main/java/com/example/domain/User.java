@@ -35,7 +35,22 @@ public class User implements Serializable {
 
 
 
-    public Set<MyRole> getRoles(){
+    public Set<Bid> getBids() {
+		return bids;
+	}
+
+
+
+
+	public void setBids(Set<Bid> bids) {
+		this.bids = bids;
+	}
+
+
+
+
+	
+	public Set<MyRole> getRoles(){
     	return roles;
     }
     
@@ -44,17 +59,17 @@ public class User implements Serializable {
 	}
 
     
-   @OneToMany(mappedBy="user",fetch=FetchType.EAGER)
-   private Set<Ad> ads;
+//   @OneToMany(mappedBy="user",fetch=FetchType.EAGER)
+//   private Set<Ad> ads;
    
 	
-	public Set<Ad> getAds() {
-		return ads;
-	}
+//	public Set<Ad> getAds() {
+//		return ads;
+//	}
 	//
-	public void setAds(Set<Ad> ads) {
-		this.ads = ads;
-	}
+//	public void setAds(Set<Ad> ads) {
+//		this.ads = ads;
+//	}
 	
 
 
@@ -83,7 +98,7 @@ public class User implements Serializable {
 
   
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<MyRole> roles;
     
@@ -92,6 +107,11 @@ public class User implements Serializable {
     @Column(name = "enabled", nullable = true)
     private boolean enabled;
 
+    
+    @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+    private Set<Bid> bids;
+    
+    
     public String getFirstName() {
 		return firstName;
 	}

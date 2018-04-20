@@ -201,7 +201,7 @@ public class UserController {
 			
 			for (User u : all) {
 				for(MyRole role:u.getRoles()) {
-					if (role.getName().equals("fan_zone_admin"))
+					if (role.getName().equals("FAN_ZONE_ADMIN"))
 						fanZoneAdmins.add(u);
 				}
 				
@@ -211,10 +211,10 @@ public class UserController {
 			
 		}
 	    
-	    @RequestMapping(value = "/public/changeUserRole", method = RequestMethod.PUT)
+	    @RequestMapping(value = "/changeUserRole", method = RequestMethod.PUT)
 		public @ResponseBody Boolean changeUserRole(@RequestBody User u){
 		 
-			
+	    	
 			System.out.println("POGODJEN CONTROLLER /changeUserRole");
 			try {
 				
@@ -234,6 +234,8 @@ public class UserController {
 		public @ResponseBody Boolean changeUserInfo(@RequestBody UserUpdateDTO u,@ModelAttribute("currentUser") CurrentUser currentUser){
 	    	ModelMapper mp=new ModelMapper();
 			
+	    	
+	    	
 			System.out.println("POGODJEN CONTROLLER /changeUserInfo"+mp.map(u,UserUpdateDTO.class));
 			try {
 				

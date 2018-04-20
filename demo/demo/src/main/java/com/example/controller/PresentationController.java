@@ -149,7 +149,7 @@ public class PresentationController {
 	@CrossOrigin(origins = "*")
 	@RequestMapping(
 			value = "/updatePresentation",
-			method = RequestMethod.POST,
+			method = RequestMethod.PUT,						// ovde menjao
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Theater updatePresentation(@RequestBody PresentationDTO p) {

@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.domain.Cinema;
 import com.example.domain.Theater;
 import com.example.service.TheaterService;
 
@@ -77,7 +78,54 @@ public class TheaterController {
 			return false;
 		}
 		
+		return true;		
+		
+	}
+	
+	
+	@RequestMapping(value = "/changeTheaterAdmin", method = RequestMethod.PUT)
+	public @ResponseBody Boolean updateTheater(@RequestBody Theater t){
+	 
+//		for (com.example.domain.User u : t.getAdmins()) {
+//			
+//			System.out.println(u.getFirst_name());
+//		}
+		System.out.println("POGODJEN CONTROLLER /changeCinemaAdmin");
+		try {
+			
+			theaterService.updateTheater(t);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		
 		return true;
+		
+	}
+	
+	
+	@RequestMapping(value = "/changeTheater", method = RequestMethod.PUT)
+	public Theater changeTheater(@RequestBody Theater t){
+	 	
+		try {
+			
+			System.out.println("Theater id: " + t.getId());
+			System.out.println("Theater name: " + t.getName());
+			System.out.println("Theater address: " + t.getAdress());
+			System.out.println("Theater description: " + t.getDescription());
+
+
+			theaterService.changeTheater(t);
+			
+			return theaterService.getTheaterByID(t.getId());
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return null;
+		}
 		
 		
 	}
