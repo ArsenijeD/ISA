@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 import { BidService } from '../../services/bid.service'
+import { AuthServiceService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-fan-zone-admin-profile',
@@ -30,9 +31,11 @@ export class FanZoneAdminProfileComponent implements OnInit {
 
   bids : any[][];
 
-  constructor(private adService : AdService, private modalService: NgbModal, private router : Router, private bidService : BidService) { 
+  currentUser : any;
 
-    
+  constructor(private authServiceService :AuthServiceService, private adService : AdService, private modalService: NgbModal, private router : Router, private bidService : BidService) { 
+
+    this.currentUser = this.authServiceService.getUser();
 
   }
 
@@ -41,7 +44,7 @@ export class FanZoneAdminProfileComponent implements OnInit {
     this.aktivna_tabela = [true, false, false, false];
 
     this.getOnWaitingAds();
-
+    
     this.bids = [];
   }
 

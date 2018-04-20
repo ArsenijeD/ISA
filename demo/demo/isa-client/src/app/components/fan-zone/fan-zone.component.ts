@@ -5,6 +5,7 @@ import { BidService } from '../../services/bid.service';
 import {} from '@types/googlemaps';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 
+import { AuthServiceService } from '../../services/auth-service.service';
 @Component({
   selector: 'app-fan-zone',
   templateUrl: './fan-zone.component.html',
@@ -21,10 +22,14 @@ export class FanZoneComponent implements OnInit {
   bids : any[][];
   officialAds : any[];
 
-  
+  currentUser : any;
  
 
-  constructor(private adService : AdService, private bidService : BidService) { }
+  constructor(private authServiceService :AuthServiceService, private adService : AdService, private bidService : BidService) { 
+
+    this.currentUser = this.authServiceService.getUser();
+
+  }
 
   ngOnInit() {
     this.myAds = [];
@@ -52,7 +57,7 @@ export class FanZoneComponent implements OnInit {
     if (img_pass == "")
       img_pass = "defaultOglas.jpg";
     
-    this.adService.registerAd({name : this.adName, description : this.adDescription, date : this.adDate.year + "-" + this.adDate.month + "-" + this.adDate.day, image : img_pass, confirmed : 0}).subscribe(data => this.getMyAds());
+    this.adService.registerAd({name : this.adName, description : this.adDescription, date : this.adDate.year + "-" + this.adDate.month + "-" + this.adDate.day, image : img_pass, confirmed : 0, user : this.currentUser}).subscribe(data => this.getMyAds());
     this.adName = "";
     this.adDescription="";
     this.adDate="";
@@ -62,7 +67,7 @@ export class FanZoneComponent implements OnInit {
 
   getMyAds() {
 
-    this.adService.getAdsOfCurrentUser().subscribe(data=> {
+    this.adService.getAdsOfCurrentUser(this.currentUser.id).subscribe(data=> {
       
       this.myAds = data;
       console.log(this.myAds);  

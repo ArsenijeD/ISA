@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domain.Ad;
 import com.example.domain.Cinema;
+import com.example.domain.CurrentUser;
 import com.example.domain.Hall;
 import com.example.domain.Projection;
+import com.example.domain.User;
 import com.example.service.AdService;
 import com.example.service.CinemaService;
+import com.example.service.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -30,6 +34,9 @@ public class AdController {
 	
 	@Autowired
 	private AdService adService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(
 			value = "/register",
@@ -55,12 +62,14 @@ public class AdController {
 	}
 	
 	@RequestMapping(
-			value = "/getOglasForCurrentUser",
+			value = "/getOglasForCurrentUser/{id}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ArrayList<Ad> getAdsOfCurrentUser(){
+	public ArrayList<Ad> getAdsOfCurrentUser(@PathVariable("id") Long id){
 		
-		return adService.getAdsByUser(null);
+		User u = userService.getOneById(id);
+		System.out.println(u.getFirstName());
+		return adService.getAdsByUser(u);
 		
 	}
 	

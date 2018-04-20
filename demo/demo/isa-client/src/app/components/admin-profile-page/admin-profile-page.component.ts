@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { CinemaService } from '../../services/cinema.service';
 import { UserService } from '../../services/user.service';
-
+import { AuthServiceService } from '../../services/auth-service.service';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
@@ -26,11 +26,18 @@ export class AdminProfilePageComponent implements OnInit {
   users : any;
   fanZoneAdmins : any;
 
+  currentUser : any;
+
   @ViewChild('cinemaAdress') searchElement : ElementRef;
 
   
   
-  constructor(private mapsAPILoader : MapsAPILoader, private ngZone : NgZone, private router : Router, private cinemaService : CinemaService, private userService : UserService, private modalService: NgbModal) { }
+  constructor(private authServiceService :AuthServiceService, private mapsAPILoader : MapsAPILoader, private ngZone : NgZone, private router : Router, private cinemaService : CinemaService, private userService : UserService, private modalService: NgbModal) { 
+
+
+    this.currentUser = this.authServiceService.getUser();
+    
+  }
 
   ngOnInit() {
 
