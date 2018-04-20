@@ -17,6 +17,7 @@ import { AdminProfilePageComponent } from "./components/admin-profile-page/admin
 import { FanZoneComponent } from "./components/fan-zone/fan-zone.component";
 import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component'
 import { TheaterRepertoireComponent } from './components/theater-repertoire/theater-repertoire.component'
+import { FriendsComponent } from "./components/friends/friends.component";
 
 import { CinemaDetailsComponent } from './components/cinema-details/cinema-details.component';
 import { TheaterDetailsComponent } from './components/theater-details/theater-details.component';
@@ -75,6 +76,9 @@ const appRoutes: Routes =
     {
         path:'profile',
         component:UserProfilePageComponent
+    },{
+        path:'friend',
+        component:FriendsComponent
     },
     {
         path:'test',

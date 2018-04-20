@@ -1,0 +1,50 @@
+<ngb-tabset>
+    <ngb-tab title="search friends">
+      <ng-template ngbTabContent>
+        <form>
+            <input type="text" #searchContent  />
+            <button (click)='searchClicked(searchContent.value)'>pretrazi</button>
+            <div *ngFor="let f of usersArray" [id]="f.id">{{f.firstName}}
+              <div *ngIf="f.friendRequestStatus==='NOTFRIENDS'">
+                  <button (click)="sendRequest(f.id)"> add friend </button>
+              </div>
+               <div *ngIf="f.friendRequestStatus==='APPROVED'">
+                  <button (click)="unfriend(f.requestId)" >  unfriend  </button>
+               </div>
+               <div *ngIf="f.friendRequestStatus==='PENDING'">
+                  <button *ngIf="f.friendRequestStatus==='PENDING'">  check other tabs </button>
+               </div>
+            </div>
+
+            
+        </form>
+        
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab  title="all friends">
+      <ng-template ngbTabContent>
+          <div *ngFor="let f of allFriendsArray" [id]="f.id">
+              {{f.firstName}} {{f.lastName}}                   
+              <button (click)="unfriend(f.requestId)" >  unfriend friend </button>
+          </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab  title="sent request pending">
+        <ng-template ngbTabContent>
+            <div *ngFor="let f of allFriendsReqSentArray" [id]="f.id">
+              {{f.firstName}} {{f.lastName}}                   
+              <button (click)="deleteSentRequest(f.requestId)" >  delete sent request </button>
+            </div>
+        </ng-template>
+    </ngb-tab>
+
+    <ngb-tab  title="received request pending">
+        <ng-template ngbTabContent>
+            <div *ngFor="let f of allFriendsReqReceivedArray" [id]="f.id">
+                {{f.firstName}} {{f.lastName}}                   
+                <button (click)="rejectRequest(f.requestId)" >  reject request </button>
+                <button (click)="approveRequest(f.requestId)" >  approve friend </button>
+              </div>
+        </ng-template>
+    </ngb-tab>
+  </ngb-tabset>

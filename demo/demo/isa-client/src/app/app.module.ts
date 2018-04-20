@@ -43,7 +43,12 @@ import { CinemaService } from './services/cinema.service';
 import { UserService } from './services/user.service';
 import { AdService } from './services/ad.service';
 import { GeocoderService } from './services/geocoder.service';
+<<<<<<< HEAD
+import { TheaterService } from './services/theater.service';
+import { FriendsService } from './services/friends.service'
+=======
 import { BidService } from './services/bid.service';
+>>>>>>> branch 'master' of https://github.com/jovica27/ISA.git
 
 //httpClient interceptor
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -67,6 +72,7 @@ import {RequestOptions, XHRBackend} from '@angular/http';
 import { Router } from '@angular/router';
 import { RegistrationConfirmComponent } from './components/registration-confirm/registration-confirm.component';
 import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
+import { FriendsComponent } from './components/friends/friends.component';
 // factory dependency injection
 export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestOptions, auth: AuthServiceService, router: Router) {
   return new MyCustomHttp(backend, defaultOptions, auth, router);
@@ -88,6 +94,10 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     RegisterCinemaComponent,
     CinemaRepertoireComponent,
     TheaterRepertoireComponent,
+
+    UserProfilePageComponent,
+    FriendsComponent,
+
     CinemaDetailsComponent,
     TheaterDetailsComponent,
     FanZoneAdminProfileComponent,
@@ -105,9 +115,14 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
       libraries: ["places"]
     })
   ],
+<<<<<<< HEAD
+  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService
+    , TheaterService, UserService, AdService, GeocoderService,FriendsService,
+=======
 
 
   providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,BidService,
+>>>>>>> branch 'master' of https://github.com/jovica27/ISA.git
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true } //httpClient Interceptor
     {
       provide: Http,
