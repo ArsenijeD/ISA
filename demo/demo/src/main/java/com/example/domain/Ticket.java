@@ -46,6 +46,10 @@ public class Ticket implements Serializable{
 	@Column(name = "forFastReservation", nullable = false)
 	private boolean forFastReservation;
 	
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id", nullable=true)
+    private User user;
+	
 
 //	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinColumn(name="projection_id", nullable=false)
@@ -104,18 +108,31 @@ public class Ticket implements Serializable{
 	}
 
 	
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public Ticket() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ticket(int price, boolean reserved, Seat seat, boolean forFastReservation) {
+	public Ticket(int price, boolean reserved, Seat seat, boolean forFastReservation, User user) {
 		super();
 		this.price = price;
 		this.reserved = reserved;
 		this.seat = seat;
 		this.forFastReservation = forFastReservation;
+		this.user = user;
 	}
+
+
+	
 	
 	
 

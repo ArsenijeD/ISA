@@ -3,6 +3,7 @@ package com.example.service;
 import java.util.List;
 
 import com.example.domain.Ticket;
+import com.example.domain.User;
 
 public interface TicketService {
 	
@@ -18,6 +19,12 @@ public interface TicketService {
 	
 	boolean changeToFastReserveTicket(Ticket t);
 	
-	boolean reserveTicket(Ticket t);
+	boolean reserveTicket(User u, Ticket t);
+	
+	List<Ticket> getUnReservedTickets(boolean reserved);
+	
+//	void assignUserToTicket(User u, Ticket t);
+	
+	
 
 }

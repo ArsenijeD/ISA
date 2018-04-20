@@ -6,6 +6,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
+import { AuthServiceService} from '../../services/auth-service.service';
+
 
 @Component({
   selector: 'app-cinema-repertoire',
@@ -45,16 +47,32 @@ export class CinemaRepertoireComponent implements OnInit {
   private fastTickets_hall: any;
   private fastTickets_projection: any;
 
-  constructor(private router : Router, private cinemaService : CinemaService, private modalService: NgbModal) { }
+  private loggedInUser : any;
+  private isAdmin = true;
+
+  constructor(private router : Router, private cinemaService : CinemaService, private modalService: NgbModal, private authService:AuthServiceService) { }
 
 
   ngOnInit() {
+
+    this.loggedInUser = this.authService.getUser();
+    console.log(this.loggedInUser);
 
     this.cinemaService.currentCinema.subscribe(
       currentCinema => 
       {
         this.currentCinema = currentCinema;
         console.log(currentCinema);
+
+        for (let i = 0; i < this.currentCinema.admins.length; i++) {
+          if(this.currentCinema.admins[i].id==this.loggedInUser.id){
+            console.log("nasao admina pozorista!");
+              this.isAdmin = false;
+          } else {
+            console.log("Nije nasao admina pozorista!");
+            this.isAdmin = true;
+          }
+        }
       }
     );
 

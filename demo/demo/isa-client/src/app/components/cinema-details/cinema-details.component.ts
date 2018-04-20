@@ -52,6 +52,9 @@ export class CinemaDetailsComponent implements OnInit {
   private number_OfSeats : any;
 
 
+  private latitudes : any[] = [];
+  private longitudes : any[] = []; 
+
   @ViewChild('cinemaAdress') searchElement : ElementRef;
 
   constructor(private mapsAPILoader : MapsAPILoader, private ngZone : NgZone, private modalService: NgbModal, private router : Router, private cinemaService : CinemaService, private geocoderService : GeocoderService) { }
@@ -62,14 +65,25 @@ export class CinemaDetailsComponent implements OnInit {
     this.aktivna_tabela = [true, false];
 
     this.cinemaService.currentCinema.subscribe(
-      currentCinema => 
+      data => 
       {
-        this.currentCinema = currentCinema;
-        console.log(currentCinema);
+        this.currentCinema = data;
+        console.log(data);
+
+        this.getCords(data.adress);
+        console.log("----");
+        console.log(data.adress);
+        
       }
     );
 
 
+  }
+
+  getCords(address : string) {
+
+    this.geocoderService.getlatlng(address).subscribe(data=> {  this.latitudes.push(data.results[0].geometry.location.lat); this.longitudes.push(data.results[0].geometry.location.lng);});
+    
   }
 
 

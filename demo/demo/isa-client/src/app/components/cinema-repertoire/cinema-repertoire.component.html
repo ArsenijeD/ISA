@@ -29,7 +29,7 @@
       <div class="row">
         <div class="col"><h2>Repertoar:</h2></div>
         <div class="col">
-            <div class="float-right"><button type="button" value="submit" (click)="onClickAddProjection(AddProjectionModal)" class="btn btn-primary">Add projection</button></div>
+            <div class="float-right"><button type="button" value="submit" [hidden]="isAdmin" (click)="onClickAddProjection(AddProjectionModal)" class="btn btn-primary">Add projection</button></div>
         </div>
       </div>
 
@@ -53,12 +53,12 @@
                   <div class="row">
                     <div class="col"><h3>{{p.film.name}}</h3></div>
                     <div class="col">
-                        <div class="float-right" style="margin-left: 5px"><button type="button" class="btn btn-danger" (click)="onClickDeleteProjection(currentCinema.id, h.id, p.id)">Delete</button></div>
-                        <div class="float-right" ><button type="button" class="btn btn-warning" (click)="onClickChangeProjection(h, p, ChangeProjectionModal)">Change</button></div>
+                        <div class="float-right" style="margin-left: 5px"><button type="button" [hidden]="isAdmin" class="btn btn-danger" (click)="onClickDeleteProjection(currentCinema.id, h.id, p.id)">Delete</button></div>
+                        <div class="float-right" ><button type="button" class="btn btn-warning" [hidden]="isAdmin" (click)="onClickChangeProjection(h, p, ChangeProjectionModal)">Change</button></div>
                     </div>
 
                     <div class="row">
-                        <div class="float-right" style="margin-left: 5px"><button type="button" class="btn btn-default" (click)="onClickAddFastReservationTickets(h, p, FastTicketsModal)">Add Fast Tickets</button></div>
+                        <div class="float-right" style="margin-left: 5px"><button type="button" class="btn btn-default" [hidden]="isAdmin" (click)="onClickAddFastReservationTickets(h, p, FastTicketsModal)">Add Fast Tickets</button></div>
                     </div>
                   </div>
                   <br>

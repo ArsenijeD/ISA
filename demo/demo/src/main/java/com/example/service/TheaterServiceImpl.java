@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.domain.Cinema;
 import com.example.domain.Theater;
-
+import com.example.domain.Ticket;
 import com.example.repository.TheaterRepository;
 
 
@@ -78,5 +78,6 @@ public class TheaterServiceImpl implements TheaterService{
 		return true;
 		
 	}
+
 
 }

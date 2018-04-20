@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col"><h3>{{t.name}}</h3></div>
                         <div class="col">
-                            <div class="float-right"><button type="button" value="submit" (click)="onClickTheaterDetails(t)" class="btn btn-info">Details</button></div>
+                            <div class="float-right"><button type="button" value="submit" [hidden]="isAdminArray[i]" (click)="onClickTheaterDetails(t)" class="btn btn-info">Details</button></div>
                         </div>
                       </div>
          

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.domain.Ticket;
+import com.example.domain.User;
 import com.example.repository.StageRepository;
 import com.example.repository.TicketRepository;
 
@@ -51,7 +52,7 @@ public class TicketServiceImpl implements TicketService{
 	}
 
 	@Override
-	public boolean changeToFastReserveTicket(Ticket t) {
+	public boolean changeToFastReserveTicket(Ticket t) {		// kreiranje karata za brzu rezervaciju
 		
 		Ticket ticket = ticketRepository.findOne(t.getId());
 		ticket.setId(t.getId());
@@ -63,15 +64,33 @@ public class TicketServiceImpl implements TicketService{
 	}
 
 	@Override
-	public boolean reserveTicket(Ticket t) {
+	public boolean reserveTicket(User u, Ticket t) {
 		
 		Ticket ticket = ticketRepository.findOne(t.getId());
 		ticket.setId(t.getId());
-		ticket.setForFastReservation(t.isReserved());
+		ticket.setReserved(t.isReserved());
+		ticket.setUser(u);
 		
 		ticketRepository.flush();
 		
 		return true;
 	}
+
+	@Override
+	public List<Ticket> getUnReservedTickets(boolean reserved) {
+		
+		return ticketRepository.getUnReservedTickets(reserved);
+	}
+
+//	@Override
+//	public void assignUserToTicket(User u, Ticket t) {
+//		
+//		Ticket ticket = ticketRepository.findOne(t.getId());
+//		ticket.setId(t.getId());
+//		ticket.setUser(u);
+//		
+//		ticketRepository.flush();
+//		
+//	}
 
 }

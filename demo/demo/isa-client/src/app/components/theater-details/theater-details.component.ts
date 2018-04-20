@@ -52,6 +52,8 @@ export class TheaterDetailsComponent implements OnInit {
   private number_OfChairs : any;
 
 
+  private latitudes : any[] = [];
+  private longitudes : any[] = []; 
 
   @ViewChild('theaterAdress') searchElement : ElementRef;
 
@@ -63,13 +65,23 @@ export class TheaterDetailsComponent implements OnInit {
     this.aktivna_tabela = [true, false];
 
     this.theaterService.currentTheater.subscribe(
-      currentTheater => 
+      data => 
       {
-        this.currentTheater = currentTheater;
-        console.log(currentTheater);
+        this.currentTheater = data;
+        console.log(data);
+
+        this.getCords(data.adress);
+        console.log("----");
+        console.log(data.adress);
       }
     );
 
+  }
+
+  getCords(address : string) {
+
+    this.geocoderService.getlatlng(address).subscribe(data=> {  this.latitudes.push(data.results[0].geometry.location.lat); this.longitudes.push(data.results[0].geometry.location.lng);});
+    
   }
 
 

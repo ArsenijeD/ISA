@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.example.domain.Theater;
+import com.example.domain.Ticket;
 
 public interface TheaterService {
 	
@@ -18,6 +19,7 @@ public interface TheaterService {
 	boolean updateTheater(Theater t);			// promena admina pozorista
 	
 	boolean changeTheater(Theater t); 		// izmena pozorista
+	
 
 
 }

@@ -6,6 +6,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
+import { AuthServiceService} from '../../services/auth-service.service';
+
 @Component({
   selector: 'app-theater-repertoire',
   templateUrl: './theater-repertoire.component.html',
@@ -41,23 +43,38 @@ export class TheaterRepertoireComponent implements OnInit {
 
   private change_old_stageID : any;
 
-  constructor(private router : Router, private theaterService : TheaterService, private modalService: NgbModal) { }
+  private loggedInUser : any;
+  private isAdmin = true;
+
+  constructor(private router : Router, private theaterService : TheaterService, private modalService: NgbModal, private authService:AuthServiceService) { }
 
   ngOnInit() {
 
     this.theaterService.currentTheater.subscribe(
       currentTheater => 
-      {this.currentTheater = currentTheater;
-      console.log(currentTheater);});
+      {
+        this.currentTheater = currentTheater;
+        console.log(currentTheater);});
 
 
-      this.theaterService.getPerformances()
-      .subscribe(
-        data=> 
-        {this.performancesArray = data;    
-          console.log(data);
+        for (let i = 0; i < this.currentTheater.admins.length; i++) {
+          if(this.currentTheater.admins[i].id==this.loggedInUser.id){
+            console.log("nasao admina pozorista!");
+              this.isAdmin = false;
+          } else {
+            console.log("Nije nasao admina pozorista!");
+            this.isAdmin = true;
+          }
         }
-      );
+
+
+        this.theaterService.getPerformances()
+        .subscribe(
+          data=> 
+          {this.performancesArray = data;    
+            console.log(data);
+          }
+        );
 
   }
 
