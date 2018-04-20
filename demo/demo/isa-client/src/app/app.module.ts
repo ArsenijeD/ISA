@@ -44,10 +44,9 @@ import { UserService } from './services/user.service';
 import { AdService } from './services/ad.service';
 import { GeocoderService } from './services/geocoder.service';
 
+import { FriendsService } from './services/friends.service'
 
-import { FriendsService } from './services/friends.service';
 import { BidService } from './services/bid.service';
-
 
 //httpClient interceptor
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -72,6 +71,7 @@ import { Router } from '@angular/router';
 import { RegistrationConfirmComponent } from './components/registration-confirm/registration-confirm.component';
 import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
 import { FriendsComponent } from './components/friends/friends.component';
+import { ReservationComponent } from './components/reservation/reservation.component';
 // factory dependency injection
 export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestOptions, auth: AuthServiceService, router: Router) {
   return new MyCustomHttp(backend, defaultOptions, auth, router);
@@ -100,7 +100,8 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     CinemaDetailsComponent,
     TheaterDetailsComponent,
     FanZoneAdminProfileComponent,
-    UserProfilePageComponent
+    UserProfilePageComponent,
+    ReservationComponent
   ],
   imports: [
     BrowserModule,

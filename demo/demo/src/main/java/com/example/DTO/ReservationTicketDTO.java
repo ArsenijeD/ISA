@@ -6,6 +6,17 @@ public class ReservationTicketDTO {
 	
 	private Long projection_id;
 
+	private Long ticket_id;
+
+	
+	public Long getTicket_id() {
+		return ticket_id;
+	}
+
+	public void setTicket_id(Long ticket_id) {
+		this.ticket_id = ticket_id;
+	}
+
 	public Long getUser_id() {
 		return user_id;
 	}

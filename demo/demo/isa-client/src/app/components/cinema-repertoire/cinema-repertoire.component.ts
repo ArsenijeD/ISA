@@ -45,8 +45,9 @@ export class CinemaRepertoireComponent implements OnInit {
   
   private fast_tickets_number : any;
   
-  private fastTickets_hall: any;
-  private fastTickets_projection: any;
+  private fastTickets_hall : any;
+ 
+  private fastTickets_projection : any;
 
   private loggedInUser : any;
   private isAdmin = true;          // ovo promeni posle na true !!!
@@ -55,33 +56,30 @@ export class CinemaRepertoireComponent implements OnInit {
 
 
   ngOnInit() {
-
-    this.loggedInUser = this.authService.getUser();
-    console.log(this.loggedInUser);
-
     this.cinemaService.currentCinema.subscribe(
       currentCinema => 
       {
         this.currentCinema = currentCinema;
         console.log(currentCinema);
-
-        for (let i = 0; i < this.currentCinema.admins.length; i++) {
-          if(this.currentCinema.admins[i].id==this.loggedInUser.id){
-            console.log("nasao admina pozorista!");
-              this.isAdmin = false;
-          } else {
-            console.log("Nije nasao admina pozorista!");
-            this.isAdmin = true;
-          }
-        }
       }
     );
+
+    for (let i = 0; i < this.currentCinema.admins.length; i++) {
+      if(this.currentCinema.admins[i].id==this.loggedInUser.id){
+        console.log("nasao admina pozorista!");
+          this.isAdmin = false;
+      } else {
+        console.log("Nije nasao admina pozorista!");
+        this.isAdmin = true;
+      }
+    }
 
     
     this.cinemaService.getFilms()
       .subscribe(
         data=> 
-        {this.filmsArray = data;    
+        {
+          this.filmsArray = data;    
           console.log(data);
         }
       );
@@ -207,7 +205,7 @@ export class CinemaRepertoireComponent implements OnInit {
 
   }
 
-  
+
   onClickFastReserve(p) {
 
     if(this.loggedInUser.roles[0].name!="USER" && this.loggedInUser.roles[0].name!="SYSTEM_ADMIN" && 
