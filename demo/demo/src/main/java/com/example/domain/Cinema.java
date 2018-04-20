@@ -43,6 +43,9 @@ public class Cinema implements Serializable {
 	
 	@Column(name = "adress", nullable = false, columnDefinition="VARCHAR(100)")
     private String adress;
+	
+	@Column(name = "averageRating", nullable = true)
+	private float averageRating;
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "user_cinema", joinColumns = @JoinColumn(name = "cinema_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -53,11 +56,22 @@ public class Cinema implements Serializable {
     private Set<Hall> halls;
 	
 	
-//	 @OneToMany(mappedBy="cinema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	 @JsonIgnore
-//	 private Set<RatingCinema> ratings;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "cinema_ratingCinema", joinColumns = @JoinColumn(name = "cinema_id"), inverseJoinColumns = @JoinColumn(name = "ratingCinema_id"))
+    private Set<RatingCinema> cinemaRatings;
+    
+
 	
-	
+	public Set<RatingCinema> getCinemaRatings() {
+		return cinemaRatings;
+	}
+
+
+	public void setCinemaRatings(Set<RatingCinema> cinemaRatings) {
+		this.cinemaRatings = cinemaRatings;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -109,19 +123,37 @@ public class Cinema implements Serializable {
 		this.halls = halls;
 	}
 
+	
+
+	public float getAverageRating() {
+		return averageRating;
+	}
+
+
+	public void setAverageRating(float averageRating) {
+		this.averageRating = averageRating;
+	}
+
+
 	public Cinema() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cinema(String name, String description, String adress, Set<User> admins, Set<Hall> halls) {
+
+	public Cinema(String name, String description, String adress, Set<User> admins, Set<Hall> halls,
+			Set<RatingCinema> cinemaRatings) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.adress = adress;
 		this.admins = admins;
 		this.halls = halls;
+		this.cinemaRatings = cinemaRatings;
 	}
+
+	
+	
 
 
 

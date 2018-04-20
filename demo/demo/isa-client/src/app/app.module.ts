@@ -43,8 +43,12 @@ import { CinemaService } from './services/cinema.service';
 import { UserService } from './services/user.service';
 import { AdService } from './services/ad.service';
 import { GeocoderService } from './services/geocoder.service';
+
 import { FriendsService } from './services/friends.service'
 
+
+import { FriendsService } from './services/friends.service';
+>>>>>>> branch 'master' of https://github.com/jovica27/ISA.git
 import { BidService } from './services/bid.service';
 
 //httpClient interceptor
@@ -115,7 +119,10 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     })
   ],
 
-  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,BidService,FriendsService,
+
+  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, 
+    TheaterService, UserService, AdService, GeocoderService,BidService,FriendsService,
+
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true } //httpClient Interceptor
     {
       provide: Http,

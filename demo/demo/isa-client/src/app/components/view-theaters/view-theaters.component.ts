@@ -48,20 +48,20 @@ export class ViewTheatersComponent implements OnInit {
 
         // ZBOG SAKRIVANJA DUGMETA DETAILS
 
-        // for (let i = 0; i < this.theatersArray.length; i++) {    
-        //   this.isAdminArray.push(true);
-        //   for (let j = 0; j < this.theatersArray[i].admins.length; j++) {
-        //     if(this.theatersArray[i].admins[j].id==this.loggedInUser.id){
-        //       console.log("nasao admina pozorista!");
-        //         this.isAdminArray[i] = false;
+        for (let i = 0; i < this.theatersArray.length; i++) {    
+          this.isAdminArray.push(true);
+          for (let j = 0; j < this.theatersArray[i].admins.length; j++) {
+            if(this.theatersArray[i].admins[j].id==this.loggedInUser.id){
+              console.log("nasao admina pozorista!");
+                this.isAdminArray[i] = false;
   
-        //       } else {
-        //         console.log("nije nasao admina pozorista!")
-        //         this.isAdminArray[i] = true;
-        //     }
-        //   }
+              } else {
+                console.log("nije nasao admina pozorista!")
+                this.isAdminArray[i] = true;
+            }
+          }
             
-        // }
+        }
 
       }
     );
