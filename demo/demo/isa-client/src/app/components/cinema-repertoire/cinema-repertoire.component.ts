@@ -42,6 +42,7 @@ export class CinemaRepertoireComponent implements OnInit {
 
   private change_old_hallID : any;
 
+  
   private fast_tickets_number : any;
   
   private fastTickets_hall: any;

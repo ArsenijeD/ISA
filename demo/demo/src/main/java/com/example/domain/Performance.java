@@ -38,8 +38,8 @@ public class Performance implements Serializable {
 	@Column(name = "duration", nullable = false)
     private int duration;
 	
-	@Column(name = "averageRating", nullable = false)
-	private float averageRating;
+	@Column(name = "averageRating", nullable = true)
+	private Float averageRating;
 	
 	
 	@Column(name = "description", nullable = false, columnDefinition="VARCHAR(50)")
@@ -49,19 +49,14 @@ public class Performance implements Serializable {
 	private int price;
 	
 	
-	
 	@Column(name = "genre", nullable = false, columnDefinition="VARCHAR(50)")
     private String genre;
 	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "film_ratingPerformance", joinColumns = @JoinColumn(name = "performance_id"), inverseJoinColumns = @JoinColumn(name = "ratingPerformance_id"))
+    private Set<RatingPerformance> performanceRatings;
 	
-//	@OneToMany(mappedBy="performance",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JsonIgnore
-//    private Set<Presentation> presentations;
-//	
-//	
-//	 @OneToMany(mappedBy="performance",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	 @JsonIgnore
-//	 private Set<RatingPerformance> ratings;
+
 
 	 
 	// POSTER IMAGE treba dodati !!!!
@@ -96,12 +91,12 @@ public class Performance implements Serializable {
 	}
 
 
-	public float getAverageRating() {
+	public Float getAverageRating() {
 		return averageRating;
 	}
 
 
-	public void setAverageRating(float averageRating) {
+	public void setAverageRating(Float averageRating) {
 		this.averageRating = averageRating;
 	}
 
@@ -137,6 +132,15 @@ public class Performance implements Serializable {
 	}
 
 
+
+	public Set<RatingPerformance> getPerformanceRatings() {
+		return performanceRatings;
+	}
+
+
+	public void setPerformanceRatings(Set<RatingPerformance> performanceRatings) {
+		this.performanceRatings = performanceRatings;
+	}
 
 
 	public Performance() {

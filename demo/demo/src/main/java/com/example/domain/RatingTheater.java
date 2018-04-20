@@ -31,15 +31,13 @@ public class RatingTheater implements Serializable{
     @Column(name = "ratingTheater_id", nullable = false, updatable = false)
     private Long id;
 	
-	@Column(name = "description", columnDefinition="VARCHAR(40)")
-    private String description;
 	
 	@Column(name = "value", nullable = false)
     private int value;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="theater_id", nullable=false)
-    private Theater theater;
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 
 	public Long getId() {
 		return id;
@@ -49,13 +47,6 @@ public class RatingTheater implements Serializable{
 		this.id = id;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	public int getValue() {
 		return value;
@@ -65,12 +56,13 @@ public class RatingTheater implements Serializable{
 		this.value = value;
 	}
 
-	public Theater getTheater() {
-		return theater;
+
+	public User getUser() {
+		return user;
 	}
 
-	public void setTheater(Theater theater) {
-		this.theater = theater;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public RatingTheater() {
@@ -78,12 +70,13 @@ public class RatingTheater implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public RatingTheater(String description, int value, Theater theater) {
+	public RatingTheater(int value, User user) {
 		super();
-		this.description = description;
 		this.value = value;
-		this.theater = theater;
+		this.user = user;
 	}
+
+		
 	
 	
 	

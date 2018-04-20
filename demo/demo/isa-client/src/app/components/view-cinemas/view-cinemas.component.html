@@ -30,8 +30,8 @@
     
     <br>
 
-    <ul class="cinemasArray">
-      <li *ngFor="let c of cinemasArray; let i = index">
+    <div class="cinemasArray">
+      <div *ngFor="let c of cinemasArray; let i = index">
 
           <div class="row">
               <div class="col-md-5">
@@ -57,7 +57,18 @@
                 
                 <br>
 
-                <p> <b>Average rating: </b>{{c.averageRating}}</p>
+                <!-- <div  *ngIf="!(c.averageRating == null)">
+                  <p> <b>Average rating: </b>{{c.averageRating}}</p>
+                </div> -->
+                <div class="row">
+                    <div class="col">
+                        <p> <b>Average rating: </b></p>
+                    </div>
+                    <div class="col" *ngIf="!(c.averageRating == null)">
+                        {{c.averageRating}}
+                       </div>
+                  </div>
+
 
                 <br><br><br><br>
 
@@ -68,8 +79,8 @@
 
             <hr>
 
-      </li>
-    </ul>
+          </div>
+        </div>
 
 
   </div>
