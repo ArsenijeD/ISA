@@ -21,6 +21,7 @@ import { FriendsComponent } from "./components/friends/friends.component";
 
 import { CinemaDetailsComponent } from './components/cinema-details/cinema-details.component';
 import { TheaterDetailsComponent } from './components/theater-details/theater-details.component';
+import { ReservationComponent } from "./components/reservation/reservation.component";
 
 
 
@@ -79,6 +80,9 @@ const appRoutes: Routes =
     },{
         path:'friend',
         component:FriendsComponent
+    },{
+        path:'reservation',
+        component:ReservationComponent
     },
     {
         path:'test',

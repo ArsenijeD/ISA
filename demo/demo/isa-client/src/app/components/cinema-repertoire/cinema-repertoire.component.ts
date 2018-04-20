@@ -6,8 +6,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
-import { AuthServiceService} from '../../services/auth-service.service';
-
 
 @Component({
   selector: 'app-cinema-repertoire',
@@ -18,7 +16,6 @@ export class CinemaRepertoireComponent implements OnInit {
 
   private currentCinema: any;
   private hallsArray : any;
-
   private filmsArray : any[] = [];
 
 
@@ -41,38 +38,18 @@ export class CinemaRepertoireComponent implements OnInit {
   private change_discount : any;
 
   private change_old_hallID : any;
-
-  private fast_tickets_number : any;
   
-  private fastTickets_hall: any;
-  private fastTickets_projection: any;
+ 
 
-  private loggedInUser : any;
-  private isAdmin = true;
-
-  constructor(private router : Router, private cinemaService : CinemaService, private modalService: NgbModal, private authService:AuthServiceService) { }
+  constructor(private router : Router, private cinemaService : CinemaService, private modalService: NgbModal) { }
 
 
   ngOnInit() {
-
-    this.loggedInUser = this.authService.getUser();
-    console.log(this.loggedInUser);
-
     this.cinemaService.currentCinema.subscribe(
       currentCinema => 
       {
         this.currentCinema = currentCinema;
         console.log(currentCinema);
-
-        for (let i = 0; i < this.currentCinema.admins.length; i++) {
-          if(this.currentCinema.admins[i].id==this.loggedInUser.id){
-            console.log("nasao admina pozorista!");
-              this.isAdmin = false;
-          } else {
-            console.log("Nije nasao admina pozorista!");
-            this.isAdmin = true;
-          }
-        }
       }
     );
 
@@ -80,7 +57,8 @@ export class CinemaRepertoireComponent implements OnInit {
     this.cinemaService.getFilms()
       .subscribe(
         data=> 
-        {this.filmsArray = data;    
+        {
+          this.filmsArray = data;    
           console.log(data);
         }
       );
@@ -173,53 +151,6 @@ export class CinemaRepertoireComponent implements OnInit {
   
   }
 
-
-  onClickAddFastReservationTickets(h, p, FastTicketsModal) {
-
-    this.fastTickets_hall = h;
-    this.fastTickets_projection = p;
-
-    this.modalService.open(FastTicketsModal).result.then((result) => {
-      
-    }, (reason) => {
-      
-    });
-    
-  }
-
-
-  addFastTicketsSubmit() {
-
-    this.cinemaService.addFastTickets({hall_id:this.fastTickets_hall.id, projection_id:this.fastTickets_projection.id, fast_tickets_number:this.fast_tickets_number})
-    .subscribe(data =>
-      {
-        console.log(data);
-        if(!data){
-          alert("You can't create fast reservation tickets because there are no more seats in the hall!");
-        }
-      }
-    );
-
-    this.router.navigateByUrl('/cinema-repertoire');
-
-  }
-
   
-  onClickFastReserve(p) {
-
-    this.cinemaService.fastReserveTicket({user_id:this.loggedInUser.id, projection_id:p.id})
-    .subscribe(data =>
-      {
-        console.log(data);
-        if(!data){
-          alert("No more tickets for fast reservation!");
-        }
-      }
-    );
-
-    this.router.navigateByUrl('/cinema-repertoire');
-
-  }
-
 
 }

@@ -28,6 +28,7 @@ public class FriendRequest {
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private User receiver;
+	
 	public FriendRequestStatus getStatus() {
 		return status;
 	}

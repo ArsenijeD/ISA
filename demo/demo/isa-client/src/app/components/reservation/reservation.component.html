@@ -1,0 +1,105 @@
+<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+      <a class="nav-link" href="home-guest">Home <span class="sr-only">(current)</span></a>
+    </li>
+  </ul>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="register"><span class="glyphicon glyphicon-user"></span>Register</a>
+    </li>
+  </ul>
+</nav>
+
+  
+<div *ngFor="let currentCinema of allCinemas" >
+
+  <!-- Page Heading -->
+  <h1 class="my-4">{{currentCinema.name}}
+<!--        <small>Secondary Text</small>-->
+  </h1>
+
+<br>
+
+  <div class="row">
+    <div class="col"><h2>Repertoar:</h2></div>
+    <div class="col">
+        <!-- <div class="float-right"><button type="button" value="submit" [hidden]="isAdmin" (click)="onClickAddProjection(AddProjectionModal)" class="btn btn-primary">Add projection</button></div> -->
+    </div>
+  </div>
+
+<br>
+
+  <div *ngFor="let h of currentCinema.halls">
+
+    <div class="container" *ngIf="h.projections.length > 0">
+
+      <h4>Sala {{h.number}}</h4>
+      <br>
+
+      <div *ngFor="let p of h.projections">
+        <div class="row">
+            <div class="col-md-5">
+              <a href="#">
+                <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/400x300" alt="">
+              </a>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col"><h3>{{p.film.name}}</h3></div>
+                <div class="col">
+                    <!-- <div class="float-right" style="margin-left: 5px"><button type="button" [hidden]="isAdmin" class="btn btn-danger" (click)="onClickDeleteProjection(currentCinema.id, h.id, p.id)">Delete</button></div> -->
+                    <!-- <div class="float-right" ><button type="button" class="btn btn-warning" [hidden]="isAdmin" (click)="onClickChangeProjection(h, p, ChangeProjectionModal)">Change</button></div> -->
+                </div>
+
+                <div class="row">
+                    <!-- <div class="float-right" style="margin-left: 5px"><button type="button" class="btn btn-default" [hidden]="isAdmin" (click)="onClickAddFastReservationTickets(h, p, FastTicketsModal)">Add Fast Tickets</button></div> -->
+                </div>
+              </div>
+              <br>
+              <div class="col-md-6">
+                <p> <b>Genre: </b>{{p.film.genre}}</p>
+                <p> <b>Description: </b>{{p.film.description}}</p>
+                <p> <b>Duration: </b>{{p.film.duration}} min</p>
+                <p> <b>Average rating: </b>{{p.film.averageRating}}</p>
+              
+              </div>  
+
+              <div class="col-md-6">
+                
+                <p> <b>Date: </b>{{p.date}}</p>
+                <p> <b>Start time: </b>{{p.time}}</p>
+                <br>
+                <p> <b>Price: </b> {{p.film.price}}</p> 
+                <p> <b>Discount: </b>{{p.discount}} %</p>
+                  <div *ngFor="let t of p.tickets">
+                    <!-- DODAJ DIV DA SE NE PRIKAZUJE AKO JE REZERVISANO MESTO-->
+                      <button type="button" class="btn btn-success" (click)="onClickReserve(p,t)"> Reserve</button>
+                      <br *ngIf="numSeat % 10===0" />
+                  </div>
+                <br>
+              </div>
+            </div>
+            
+          </div>
+
+          <br>
+          <br>
+
+        </div>  
+
+        <hr>
+
+    </div>
+
+  
+
+  </div>
+
+
+
+</div>
+ 
