@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.DTO.ReservationTicketDTO;
+import com.example.domain.Projection;
 import com.example.domain.Ticket;
 import com.example.domain.User;
 import com.example.service.ProjectionService;
 import com.example.service.TicketService;
+import com.example.service.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -26,6 +28,9 @@ public class TicketController {
 	
 	@Autowired
 	private ProjectionService projectionService;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	
@@ -39,24 +44,25 @@ public class TicketController {
 	public boolean fastReserveTicket(@RequestBody ReservationTicketDTO rt) {
 		
 		try {
-			
-			List<Ticket> tickets = ticketService.getUnReservedTickets(false);
-			if(tickets.isEmpty())
-				return false;
-			
-			for(Ticket t : tickets) {
-				t.setReserved(true);
+				User user = userService.getOneById(rt.getUser_id());
+				Projection projection = projectionService.getProjectionByID(rt.getProjection_id());
 				
-				// .... //
-			}
-			
-			
-			return true;
+				boolean slobodna = false;
+				for(Ticket ticket : projection.getTickets()) {
+					if(ticket.isForFastReservation() && !ticket.isReserved()) {
+						ticket.setReserved(true);
+						ticketService.reserveTicket(user, ticket);
+						
+						return true;
+					}
+				}
+							
+				return false;
 		
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
 		
 		
 		

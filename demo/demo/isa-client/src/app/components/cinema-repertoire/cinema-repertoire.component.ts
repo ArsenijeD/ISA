@@ -205,5 +205,21 @@ export class CinemaRepertoireComponent implements OnInit {
   }
 
   
+  onClickFastReserve(p) {
+
+    this.cinemaService.fastReserveTicket({user_id:this.loggedInUser.id, projection_id:p.id})
+    .subscribe(data =>
+      {
+        console.log(data);
+        if(!data){
+          alert("No more tickets for fast reservation!");
+        }
+      }
+    );
+
+    this.router.navigateByUrl('/cinema-repertoire');
+
+  }
+
 
 }
