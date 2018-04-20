@@ -1,5 +1,9 @@
 package com.example.controller;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +50,35 @@ public class TicketController {
 		try {
 				User user = userService.getOneById(rt.getUser_id());
 				Projection projection = projectionService.getProjectionByID(rt.getProjection_id());
+				
+				
+				// -------------------- provera za datum ---------------------------//
+				System.out.println("Datum pre izmene: " + projection.getDate());		
+				String[] splittedDate = projection.getDate().split("-");
+				if(splittedDate[0].length()==1) {
+					splittedDate[0] = "0"+splittedDate[0];
+				}
+				if(splittedDate[1].length()==1) {
+					splittedDate[1] = "0"+splittedDate[1];
+				}
+				String newDate = splittedDate[0] + "-" + splittedDate[1] + "-" + splittedDate[2];
+				System.out.println("Datum posle izmene: " + newDate);
+				
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				Date today = new Date();
+				
+				try {
+		            Date date = formatter.parse(newDate);
+		            if(date.before(today)){
+		                return false;
+		            }
+		           
+		        } catch (ParseException e) {
+		            e.printStackTrace();
+		        }
+				
+				// ----------------------------------------- provera za datum ------------------- //
+				
 				
 				boolean slobodna = false;
 				for(Ticket ticket : projection.getTickets()) {

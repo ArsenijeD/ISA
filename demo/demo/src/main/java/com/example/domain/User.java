@@ -112,6 +112,7 @@ public class User implements Serializable {
     private Set<Bid> bids;
     
     
+    
     public String getFirstName() {
 		return firstName;
 	}

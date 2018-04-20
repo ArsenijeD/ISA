@@ -195,8 +195,10 @@ export class CinemaRepertoireComponent implements OnInit {
       {
         console.log(data);
         if(!data){
-          alert("You can't create fast reservation tickets because there are no more seats in the hall!");
-        } 
+          alert("You can't create quick reservation tickets because there are no more seats in the hall!");
+        } else {
+          alert("You have successfully created a quick reservation tickets!");
+        }
       }
     );
 
@@ -207,23 +209,23 @@ export class CinemaRepertoireComponent implements OnInit {
   
   onClickFastReserve(p) {
 
-    if(this.loggedInUser.roles[0]!="USER" && this.loggedInUser.roles[0].name!="SYSTEM_ADMIN" && 
+    if(this.loggedInUser.roles[0].name!="USER" && this.loggedInUser.roles[0].name!="SYSTEM_ADMIN" && 
     this.loggedInUser.roles[0].name!="CINEMA_ADMIN" && this.loggedInUser.roles[0].name=="FAN_ZONE_ADMIN"){
       alert("Please log in!");
       this.router.navigateByUrl('/login');
     }
 
 
-    if(this.loggedInUser.roles[0]=="USER") {
+    if(this.loggedInUser.roles[0].name=="USER") {
 
       this.cinemaService.fastReserveTicket({user_id:this.loggedInUser.id, projection_id:p.id})
       .subscribe(data =>
         {
           console.log(data);
           if(!data){
-            alert("No more tickets for fast reservation!");
+            alert("Projection hass passed or no more tickets for this projection!");
           } else {
-            alert("You reserve ticket successfully!");
+            alert("You have reserved a quick ticket successfully!");
           }
         }
       );

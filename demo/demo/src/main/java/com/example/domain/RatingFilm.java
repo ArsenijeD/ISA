@@ -30,15 +30,13 @@ public class RatingFilm implements Serializable {
     @Column(name = "ratingFilm_id", nullable = false, updatable = false)
     private Long id;
 	
-	@Column(name = "description", columnDefinition="VARCHAR(40)")
-    private String description;
 	
 	@Column(name = "value", nullable = false)
     private int value;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="film_name", nullable=false)
-    private Film film;
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 	
 	
 
@@ -50,13 +48,6 @@ public class RatingFilm implements Serializable {
 		this.id = id;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	public int getValue() {
 		return value;
@@ -66,27 +57,29 @@ public class RatingFilm implements Serializable {
 		this.value = value;
 	}
 
-	public Film getFilm() {
-		return film;
+
+
+	public User getUser() {
+		return user;
 	}
 
-	public void setFilm(Film film) {
-		this.film = film;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	
 	public RatingFilm() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	public RatingFilm(String description, int value, Film film) {
+
+	public RatingFilm(int value, User user) {
 		super();
-		this.description = description;
 		this.value = value;
-		this.film = film;
+		this.user = user;
 	}
+	
+	
+	
 
 	
 	
