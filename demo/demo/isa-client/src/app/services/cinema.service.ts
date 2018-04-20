@@ -282,4 +282,13 @@ export class CinemaService {
   }
 
 
+  reserveTicket(ReservationTicketDTO :any) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    alert(JSON.stringify(ReservationTicketDTO));
+    return this.http.put('http://localhost:8080/public/tickets/reserveTicket', 
+      JSON.stringify(ReservationTicketDTO), { headers : headers }).map((data : Response) => data.json());
+
+  }
+
 }

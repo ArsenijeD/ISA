@@ -77,8 +77,10 @@
                 <p> <b>Discount: </b>{{p.discount}} %</p>
                   <div *ngFor="let t of p.tickets">
                     <!-- DODAJ DIV DA SE NE PRIKAZUJE AKO JE REZERVISANO MESTO-->
+                    <div  *ngIf="!t.reserved && !t.forFastReservation">
                       <button type="button" class="btn btn-success" (click)="onClickReserve(p,t)"> Reserve</button>
                       <br *ngIf="numSeat % 10===0" />
+                    </div>
                   </div>
                 <br>
               </div>

@@ -36,7 +36,7 @@ export class ReservationComponent implements OnInit {
         {
           console.log(data);
           if(!data){
-            alert("No more tickets for fast reservation!");
+            alert("No more tickets for reservation!");
           }
         }
       );

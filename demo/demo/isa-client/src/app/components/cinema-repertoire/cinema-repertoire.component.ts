@@ -43,11 +43,14 @@ export class CinemaRepertoireComponent implements OnInit {
   private change_old_hallID : any;
   
  
-
+  private fast_tickets_number : any;
+  
+  private fastTickets_hall: any;
+  private fastTickets_projection: any;
 
   private loggedInUser : any;
   private isAdmin = true;          // ovo promeni posle na true !!!
-
+  
   constructor(private router : Router, private cinemaService : CinemaService, private modalService: NgbModal, private authService:AuthServiceService) { }
 
 

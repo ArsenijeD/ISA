@@ -47,8 +47,6 @@ import { GeocoderService } from './services/geocoder.service';
 import { FriendsService } from './services/friends.service'
 
 
-import { FriendsService } from './services/friends.service';
->>>>>>> branch 'master' of https://github.com/jovica27/ISA.git
 import { BidService } from './services/bid.service';
 
 //httpClient interceptor

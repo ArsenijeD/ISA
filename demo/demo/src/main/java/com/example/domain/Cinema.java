@@ -45,7 +45,7 @@ public class Cinema implements Serializable {
     private String adress;
 	
 	@Column(name = "averageRating", nullable = true)
-	private float averageRating;
+	private Float averageRating;
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "user_cinema", joinColumns = @JoinColumn(name = "cinema_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -125,12 +125,12 @@ public class Cinema implements Serializable {
 
 	
 
-	public float getAverageRating() {
+	public Float getAverageRating() {
 		return averageRating;
 	}
 
 
-	public void setAverageRating(float averageRating) {
+	public void setAverageRating(Float averageRating) {
 		this.averageRating = averageRating;
 	}
 
