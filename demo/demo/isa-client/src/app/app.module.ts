@@ -46,7 +46,6 @@ import { GeocoderService } from './services/geocoder.service';
 
 import { FriendsService } from './services/friends.service'
 
-
 import { BidService } from './services/bid.service';
 
 //httpClient interceptor

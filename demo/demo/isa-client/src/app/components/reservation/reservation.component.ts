@@ -29,7 +29,8 @@ export class ReservationComponent implements OnInit {
         console.log("all cinemas:"+JSON.stringify(this.allCinemas));
         }
       )
-    };
+    }
+
     onClickReserve(p,t) {
       this.cinemaService.reserveTicket({user_id:this.loggedInUser.id, projection_id:p.id,ticket_id:t.id})
       .subscribe(data =>
@@ -40,9 +41,9 @@ export class ReservationComponent implements OnInit {
           }
         }
       );
-  
-      this.router.navigateByUrl('/reservation');
-  
+
     }
+
+
   }
 

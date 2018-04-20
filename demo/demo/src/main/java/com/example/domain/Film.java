@@ -40,8 +40,8 @@ public class Film implements Serializable {
 	@Column(name = "duration", nullable = false)
     private int duration;
 	
-	@Column(name = "averageRating", nullable = false)
-	private float averageRating;
+	@Column(name = "averageRating", nullable = true)
+	private Float averageRating;
 	
 	
 	@Column(name = "description", nullable = false, columnDefinition="VARCHAR(50)")
@@ -50,29 +50,15 @@ public class Film implements Serializable {
 	@Column(name="price", nullable = false)
 	private int price;
 	
-//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "film_director", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "director_id"))
-//    private Set<Director> director;
-	
-//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "film_actors", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
-//    private Set<Actor> actors;
-	
-//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "film_genres", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
-//    private Set<Genre> genre;
-	
+
 	@Column(name = "genre", nullable = false, columnDefinition="VARCHAR(50)")
     private String genre;
 	
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JoinTable(name = "film_projections", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "projection_id"))
-//    private Set<Projection> projections;
 	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "film_ratingFilm", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "ratingFilm_id"))
+    private Set<RatingFilm> filmRatings;
 	
-//	 @OneToMany(mappedBy="film",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	 @JsonIgnore
-//	 private Set<RatingFilm> ratings;
 	
 	
 	// POSTER IMAGE treba dodati !!!!
@@ -120,11 +106,11 @@ public class Film implements Serializable {
 		this.duration = duration;
 	}
 
-	public float getAverageRating() {
+	public Float getAverageRating() {
 		return averageRating;
 	}
 
-	public void setAverageRating(float averageRating) {
+	public void setAverageRating(Float averageRating) {
 		this.averageRating = averageRating;
 	}
 
@@ -156,6 +142,19 @@ public class Film implements Serializable {
 	}
 
 
+
+	public Set<RatingFilm> getFilmRatings() {
+		return filmRatings;
+	}
+
+
+
+	public void setFilmRatings(Set<RatingFilm> filmRatings) {
+		this.filmRatings = filmRatings;
+	}
+
+
+	
 
 
 }
