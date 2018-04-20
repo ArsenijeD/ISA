@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.example.domain.FriendRequest;
 import com.example.domain.FriendRequestStatus;
+import com.example.domain.User;
 
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long>  {
 	
@@ -26,4 +28,8 @@ public interface FriendRequestRepository extends JpaRepository<FriendRequest, Lo
 	@Query("Select fr from FriendRequest fr join fr.sender s  join fr.receiver r where s.id=?1 and r.id=?2 and fr.status!=?3 and fr.status!=?4")
 	List<FriendRequest> findBySenderAndReceiverAndNotTwoStatus(Long senderId,long receiverId,FriendRequestStatus status1,FriendRequestStatus status2);
 	
+	@Query("Select fr from FriendRequest fr join fr.sender s  join fr.receiver r where s.id=?1 or r.id=?1")
+	List<FriendRequest> findBySenderOrReceiver(Long senderId);
+	
+
 }

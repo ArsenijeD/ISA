@@ -14,6 +14,7 @@ import { FanZoneComponent } from "./components/fan-zone/fan-zone.component";
 
 import { CinemaRepertoireComponent } from './components/cinema-repertoire/cinema-repertoire.component'
 import { TheaterRepertoireComponent } from './components/theater-repertoire/theater-repertoire.component'
+import { FriendsComponent } from "./components/friends/friends.component";
 
 
 
@@ -59,6 +60,9 @@ const appRoutes: Routes =
     {
         path:'profile',
         component:UserProfilePageComponent
+    },{
+        path:'friend',
+        component:FriendsComponent
     },
     {
         path:'test',

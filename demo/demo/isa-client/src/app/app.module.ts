@@ -30,6 +30,7 @@ import { UserService } from './services/user.service';
 import { AdService } from './services/ad.service';
 import { GeocoderService } from './services/geocoder.service';
 import { TheaterService } from './services/theater.service';
+import { FriendsService } from './services/friends.service'
 
 //httpClient interceptor
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -51,6 +52,7 @@ import {RequestOptions, XHRBackend} from '@angular/http';
 import { Router } from '@angular/router';
 import { RegistrationConfirmComponent } from './components/registration-confirm/registration-confirm.component';
 import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
+import { FriendsComponent } from './components/friends/friends.component';
 // factory dependency injection
 export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestOptions, auth: AuthServiceService, router: Router) {
   return new MyCustomHttp(backend, defaultOptions, auth, router);
@@ -72,7 +74,8 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     RegisterCinemaComponent,
     CinemaRepertoireComponent,
     TheaterRepertoireComponent,
-    UserProfilePageComponent
+    UserProfilePageComponent,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,8 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
       libraries: ["places"]
     })
   ],
-  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,
+  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService
+    , TheaterService, UserService, AdService, GeocoderService,FriendsService,
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true } //httpClient Interceptor
     {
       provide: Http,

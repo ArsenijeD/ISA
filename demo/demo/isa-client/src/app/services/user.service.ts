@@ -67,4 +67,7 @@ export class UserService {
     return this.http.put('http://localhost:8080/changeUserInfo', 
       JSON.stringify(user), { headers : headers }).map((data : Response) => data.json());
   }
+
+  
+  
 }

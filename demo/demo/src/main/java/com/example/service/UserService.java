@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.example.DTO.UserDTOFriend;
 import com.example.DTO.UserUpdateDTO;
 import com.example.domain.FriendRequest;
 import com.example.domain.User;
@@ -42,7 +43,9 @@ public interface UserService {
     public VerificationToken getVerificationToken(final String VerificationToken);
     
     //////friend request
-    public List<User> getAllFriends(long friendId);
+    public List<User> getSearchedFriends(String firstName,String lastName);
+    
+    public List<UserDTOFriend> getAllFriends(long friendId);
 
     public List<FriendRequest> getAllFriendRequestSentPending(Long senderId);
     
@@ -56,7 +59,8 @@ public interface UserService {
     
     public Boolean deleteSentRequest(Long frequestId,Long senderId);
     
-    public Boolean deleteFriend(Long frequestId,long friendUnfrinder);
+    public Boolean deleteFriend(Long frequestId,Long friendUnfrinder);
 
+    public  List<FriendRequest> findBySenderOrReceiver(Long id);
     
 }

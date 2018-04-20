@@ -23,10 +23,10 @@ public class FriendRequest {
 	@Column(name = "status", nullable = false)
 	private FriendRequestStatus status=FriendRequestStatus.PENDING;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private User sender;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private User receiver;
 	public FriendRequestStatus getStatus() {
 		return status;

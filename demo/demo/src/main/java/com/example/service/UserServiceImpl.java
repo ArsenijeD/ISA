@@ -14,6 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.DTO.MyFriendDTOMaper;
+import com.example.DTO.UserDTOFriend;
 import com.example.DTO.UserUpdateDTO;
 import com.example.domain.FriendRequest;
 import com.example.domain.FriendRequestStatus;
@@ -128,13 +130,30 @@ public class UserServiceImpl implements UserService {
 	    public VerificationToken getVerificationToken(final String VerificationToken) {
 	        return tokenRepository.findByToken(VerificationToken);
 	    }
+	    
 			
 		@Override
-		public List<User> getAllFriends(long friendId) {
-			ArrayList<User> friends=new ArrayList<User>();
+		public List<FriendRequest> findBySenderOrReceiver(Long id) {
+			return friendRequestRepository.findBySenderOrReceiver(id);
+		}
+
+		@Override
+		public List<User> getSearchedFriends(String firstName, String lastName) {
+			ArrayList<User> allUsers=(ArrayList<User>) userRepository.findAllUsersFandL(firstName,lastName);			
+			return allUsers;
+		}
+
+		@Override
+		public List<UserDTOFriend> getAllFriends(long friendId) {
+			ArrayList<UserDTOFriend> friends=new ArrayList<UserDTOFriend>();
 			ArrayList<FriendRequest> allReq=(ArrayList<FriendRequest>) friendRequestRepository.findApprovedRequests(friendId,FriendRequestStatus.APPROVED);
 			for(FriendRequest freq : allReq){
-				friends.add(freq.getSender());
+				if(freq.getReceiver().getId()==friendId) {
+					friends.add(MyFriendDTOMaper.mapReceived(freq));
+				}else {
+					friends.add(MyFriendDTOMaper.mapSent(freq));
+				}
+				
 			}
 			return friends;
 		}
@@ -152,7 +171,7 @@ public class UserServiceImpl implements UserService {
 		@Override
 		public Boolean sendRequest(Long senderId, Long receiverId) {
 			//receiver and sender are same
-			if(senderId==receiverId) {
+			if(senderId.equals(receiverId)) {
 				return false;
 			}
 			
@@ -160,7 +179,9 @@ public class UserServiceImpl implements UserService {
 			if(friendRequestRepository.findBySenderAndReceiverAndNotTwoStatus(senderId,receiverId,FriendRequestStatus.APPROVED,FriendRequestStatus.PENDING).size()!=0) {
 				return false;
 			}
-			
+			if(friendRequestRepository.findBySenderAndReceiverAndNotTwoStatus(senderId,receiverId,FriendRequestStatus.APPROVED,FriendRequestStatus.PENDING).size()!=0) {
+				return false;
+			}
 			FriendRequest fr=new FriendRequest();
 			fr.setReceiver(userRepository.findOne(receiverId));
 			fr.setSender(userRepository.findOne(senderId));
@@ -177,7 +198,7 @@ public class UserServiceImpl implements UserService {
 		public Boolean approveRequest(Long frequestId, Long receiverId) {
 			// TODO Auto-generated method stub
 			FriendRequest fr=friendRequestRepository.findOne(frequestId);
-			if(fr.getReceiver().getId()==receiverId) {
+			if(fr.getReceiver().getId().equals(receiverId)) {
 				if(fr.getStatus()==FriendRequestStatus.PENDING) {
 					fr.setStatus(FriendRequestStatus.APPROVED);
 					friendRequestRepository.flush();
@@ -195,7 +216,7 @@ public class UserServiceImpl implements UserService {
 		public Boolean rejectRequest(Long frequestId, Long receiverId) {
 			// TODO Auto-generated method stub
 			FriendRequest fr=friendRequestRepository.findOne(frequestId);
-			if(fr.getReceiver().getId()==receiverId && fr.getStatus()==FriendRequestStatus.PENDING) {
+			if(fr.getReceiver().getId().equals(receiverId) && fr.getStatus()==FriendRequestStatus.PENDING) {
 				friendRequestRepository.delete(frequestId);
 				friendRequestRepository.flush();
 				return true;
@@ -208,7 +229,7 @@ public class UserServiceImpl implements UserService {
 		public Boolean deleteSentRequest(Long frequestId, Long senderId) {
 			// TODO Auto-generated method stub
 			FriendRequest fr=friendRequestRepository.findOne(frequestId);
-			if(fr.getSender().getId()==senderId && fr.getStatus()==FriendRequestStatus.PENDING) {
+			if(fr.getSender().getId().equals(senderId) && fr.getStatus()==FriendRequestStatus.PENDING) {
 				friendRequestRepository.delete(frequestId);
 				friendRequestRepository.flush();
 				return true;
@@ -218,10 +239,10 @@ public class UserServiceImpl implements UserService {
 		}
 
 		@Override
-		public Boolean deleteFriend(Long frequestId, long friendUnfriender) {
+		public Boolean deleteFriend(Long frequestId, Long friendUnfriender) {
 			// TODO Auto-generated method stub
 			FriendRequest fr=friendRequestRepository.findOne(frequestId);
-			if((fr.getSender().getId()==friendUnfriender || fr.getReceiver().getId()==friendUnfriender )&& fr.getStatus()==FriendRequestStatus.APPROVED) {
+			if((fr.getSender().getId().equals(friendUnfriender) || fr.getReceiver().getId().equals(friendUnfriender))&& fr.getStatus()==FriendRequestStatus.APPROVED) {
 				friendRequestRepository.delete(frequestId);
 				friendRequestRepository.flush();
 				return true;
