@@ -48,7 +48,7 @@ export class CinemaRepertoireComponent implements OnInit {
   private fastTickets_projection: any;
 
   private loggedInUser : any;
-  private isAdmin = true;
+  private isAdmin = true;          // ovo promeni posle na true !!!
 
   constructor(private router : Router, private cinemaService : CinemaService, private modalService: NgbModal, private authService:AuthServiceService) { }
 
@@ -196,7 +196,7 @@ export class CinemaRepertoireComponent implements OnInit {
         console.log(data);
         if(!data){
           alert("You can't create fast reservation tickets because there are no more seats in the hall!");
-        }
+        } 
       }
     );
 
@@ -207,17 +207,45 @@ export class CinemaRepertoireComponent implements OnInit {
   
   onClickFastReserve(p) {
 
-    this.cinemaService.fastReserveTicket({user_id:this.loggedInUser.id, projection_id:p.id})
-    .subscribe(data =>
-      {
-        console.log(data);
-        if(!data){
-          alert("No more tickets for fast reservation!");
-        }
-      }
-    );
+    if(this.loggedInUser.roles[0]!="USER" && this.loggedInUser.roles[0].name!="SYSTEM_ADMIN" && 
+    this.loggedInUser.roles[0].name!="CINEMA_ADMIN" && this.loggedInUser.roles[0].name=="FAN_ZONE_ADMIN"){
+      alert("Please log in!");
+      this.router.navigateByUrl('/login');
+    }
 
-    this.router.navigateByUrl('/cinema-repertoire');
+
+    if(this.loggedInUser.roles[0]=="USER") {
+
+      this.cinemaService.fastReserveTicket({user_id:this.loggedInUser.id, projection_id:p.id})
+      .subscribe(data =>
+        {
+          console.log(data);
+          if(!data){
+            alert("No more tickets for fast reservation!");
+          } else {
+            alert("You reserve ticket successfully!");
+          }
+        }
+      );
+
+      this.router.navigateByUrl('/cinema-repertoire');
+    }
+    
+    if(this.loggedInUser.roles[0].name=="SYSTEM_ADMIN") {
+      alert("Only logged-in user can resereve a ticket!");
+      this.router.navigateByUrl('/cinema-repertoire');
+    }
+
+    if(this.loggedInUser.roles[0].name=="CINEMA_ADMIN") {
+      alert("Only logged-in user can resereve a ticket!");
+      this.router.navigateByUrl('/cinema-repertoire');
+    }
+
+    if(this.loggedInUser.roles[0].name=="FAN_ZONE_ADMIN") {
+      alert("Only logged-in user can resereve a ticket!");
+      this.router.navigateByUrl('/cinema-repertoire');
+    }
+
 
   }
 
