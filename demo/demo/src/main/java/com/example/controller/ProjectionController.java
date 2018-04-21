@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +16,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.DTO.FastTicketsDTO;
 import com.example.DTO.ProjectionDTO;
 import com.example.domain.Cinema;
 import com.example.domain.Film;
 import com.example.domain.Hall;
 import com.example.domain.Projection;
+import com.example.domain.Seat;
+import com.example.domain.Ticket;
 import com.example.service.CinemaService;
 import com.example.service.FilmService;
 import com.example.service.HallService;
 import com.example.service.ProjectionService;
+import com.example.service.TicketService;
+
 
 @RestController
 @CrossOrigin
@@ -40,6 +47,9 @@ public class ProjectionController {
 	
 	@Autowired 
 	private FilmService filmService;
+	
+	@Autowired 
+	private TicketService ticketService;
 	
 	
 	
@@ -88,10 +98,30 @@ public class ProjectionController {
 			Film film = filmService.getFilmByID(p.getFilm_id());
 			
 			Projection projection = new Projection(film, p.getDate(), p.getTime(), p.getDiscount());
-				
-			projectionService.registerProjection(projection);
 			
 			Hall hall = hallService.getHallByID(p.getHall_id());
+			
+			
+			// moram da kreiram odma i karte za tu projekciju
+			projection.setTickets(new HashSet<Ticket>());
+			
+			
+			for(Seat s : hall.getSeats()) {
+				Ticket ticket = new Ticket(); 		// ovde sam stao
+				ticket.setReserved(false);
+				ticket.setForFastReservation(false);
+				ticket.setSeat(s);
+				ticket.setPrice(film.getPrice() - (p.getDiscount()*film.getPrice())/100);
+				
+				if(ticketService.registerTicket(ticket))
+					System.out.println("UPISAO KARTU!");
+				
+				projection.getTickets().add(ticket);
+			}
+			
+					
+			projectionService.registerProjection(projection);
+			
 			
 			hall.getProjections().add(projection);
 			
@@ -127,34 +157,128 @@ public class ProjectionController {
 			method = RequestMethod.DELETE, 
 			produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity deleteProjection(@PathVariable("cinemaID") Long cinemaID,
+	public Cinema deleteProjection(@PathVariable("cinemaID") Long cinemaID,
 			@PathVariable("hallID") Long hallID,
 			@PathVariable("projectionID") Long projectionID) {
 
-		Hall hall = new Hall();
-		hall = hallService.getHallByID(hallID);
-//		Long pID = (projectionID);
-		Projection projection = new Projection();
-
-		for (Projection p : hall.getProjections()) {
-			if (projectionID.equals(p.getId())) {
-				projection = p;
-				hall.getProjections().remove(p);
-				System.out.println("ID obrisane projekcije: " + projectionID);
+		try { 
+			
+			Hall hall = new Hall();
+			hall = hallService.getHallByID(hallID);
+	//		Long pID = (projectionID);
+			Projection projection = new Projection();
+	
+			for (Projection p : hall.getProjections()) {
+				if (projectionID.equals(p.getId())) {
+					projection = p;
+					hall.getProjections().remove(p);
+					System.out.println("ID obrisane projekcije: " + projectionID);
+				}
 			}
+	
+			hallService.save(hall);
+			projectionService.deleteById(projectionID);
+			System.out.println("Obrisao projekciju " + projectionID + " iz tabele projection!");
+			
+	
+			return cinemaService.getCinemaByID(cinemaID);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+			return null;
 		}
-
-		hallService.save(hall);
-		projectionService.deleteById(projectionID);
-		System.out.println("Obrisao projekciju " + projectionID + " iz tabele projection!");
-		
-
-		return new ResponseEntity(cinemaService.getCinemaByID(cinemaID), HttpStatus.OK);
 
 	}
 	
 	
 	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(
+			value = "/updateProjection",
+			method = RequestMethod.PUT,						// ovde menjao
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Cinema updateProjection(@RequestBody ProjectionDTO p) {
+		
+		try {
+			
+			Cinema c1 = deleteProjection(p.getCinema_id(), p.getOld_hall_id(), p.getProjection_id());
+			
+			Cinema c2 = registerProjection(p);
+			
+			return c2;
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+			return null;
+		}
+	
+	}
+	
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(
+			value = "/addFastTickets",
+			method = RequestMethod.PUT,						// ovde menjao
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ArrayList<Integer> addFastTickets(@RequestBody FastTicketsDTO ft) {
+		
+		int potrebanBrojBrzihKarata = ft.getFast_tickets_number();
+		Projection projection = projectionService.getProjectionByID(ft.getProjection_id());
+		
+		boolean ima_ih_dovoljno = false;
+		ArrayList<Long> list_ticketsID = new ArrayList<Long>();
+		
+		ArrayList<Integer> list_seatNumberOnTicket = new ArrayList<Integer>();
+		
+		// prvo proveravam hoce li biti dovoljno karata
+		for(Ticket ticket : projection.getTickets()) {
+			System.out.println("Da li je rezervisana: " + ticket.isReserved());
+			if(!ticket.isReserved()) {
+				if(!ticket.isForFastReservation()) {
+					potrebanBrojBrzihKarata--;
+					list_ticketsID.add(ticket.getId());
+					
+					list_seatNumberOnTicket.add(ticket.getSeat().getNumber());
+				}		
+			}
+			
+			if(potrebanBrojBrzihKarata == 0) {
+				ima_ih_dovoljno = true;
+				break;
+			}
+			
+		}
+		
+		
+		if(ima_ih_dovoljno) {
+			
+			for(Long ticketID : list_ticketsID) {
+				Ticket t = ticketService.getTicketByID(ticketID);
+				t.setForFastReservation(true);
+				ticketService.changeToFastReserveTicket(t);
+			}
+			
+			return list_seatNumberOnTicket;
+			
+			
+		}
+		
+		return new ArrayList<Integer>();
+		
+		
+		
+	}
+	
+	
+	
+	
+	/*
 	@CrossOrigin(origins = "*")
 	@RequestMapping(
 			value = "/updateProjection",
@@ -178,6 +302,32 @@ public class ProjectionController {
 			Projection projection = new Projection(film, p.getDate(), p.getTime(), p.getDiscount());
 			projection.setId(p.getProjection_id());
 			
+			
+			//-----------ovo sam dodao sad --------------//
+			projection.setTickets(new HashSet<Ticket>());
+			projectionService.updateProjection(projection);
+			// ------------------------------------------//
+			
+			Hall hall = hallService.getHallByID(p.getHall_id());
+			for(Seat s : hall.getSeats()) {
+				Ticket ticket = new Ticket(); 		// ovde sam stao
+				ticket.setReserved(false);
+				ticket.setForFastReservation(false);
+				ticket.setSeat(s);
+				ticket.setPrice(film.getPrice() - (p.getDiscount()*film.getPrice())/100);
+				
+				if(ticketService.registerTicket(ticket))
+					System.out.println("UPISAO KARTU!");
+				
+				projection.getTickets().add(ticket);
+			}
+			
+			// ---------------------------------------- //
+			
+					
+			projectionService.registerProjection(projection);
+			
+			
 			// updatejtujem projekciju prvo u tabeli PROJECTION
 			projectionService.updateProjection(projection);
 			
@@ -192,8 +342,6 @@ public class ProjectionController {
 			}
 			hallService.save(old_hall);		// upisem tu staru salu u bazu
 			
-			
-			Hall hall = hallService.getHallByID(p.getHall_id());
 			
 			hall.getProjections().add(projection);	// dodam updejtovanu projekciju u novu izabranu salu
 			
@@ -213,7 +361,7 @@ public class ProjectionController {
 		
 	}
 	
-	
+	*/
 	
 	
 	

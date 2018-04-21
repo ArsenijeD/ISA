@@ -42,6 +42,9 @@ public class Theater implements Serializable{
 	@Column(name = "adress", nullable = false, unique = true, columnDefinition="VARCHAR(100)")
     private String adress;
 	
+	@Column(name = "averageRating", nullable = true)
+	private Double averageRating;
+	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_theater", joinColumns = @JoinColumn(name = "theater_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> admins;
@@ -51,9 +54,9 @@ public class Theater implements Serializable{
     private Set<Stage> stages;
 	
 
-//	@OneToMany(mappedBy="theater",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JsonIgnore
-//	private Set<RatingTheater> ratings;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "theater_ratingTheater", joinColumns = @JoinColumn(name = "theater_id"), inverseJoinColumns = @JoinColumn(name = "ratingTheater_id"))
+    private Set<RatingTheater> theaterRatings;
 
 	 
 	 
@@ -99,7 +102,22 @@ public class Theater implements Serializable{
 
 
 	
-	
+	public Double getAverageRating() {
+		return averageRating;
+	}
+
+	public void setAverageRating(Double averageRating) {
+		this.averageRating = averageRating;
+	}
+
+	public Set<RatingTheater> getTheaterRatings() {
+		return theaterRatings;
+	}
+
+	public void setTheaterRatings(Set<RatingTheater> theaterRatings) {
+		this.theaterRatings = theaterRatings;
+	}
+
 	public Set<Stage> getStages() {
 		return stages;
 	}

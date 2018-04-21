@@ -6,6 +6,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
+import { AuthServiceService} from '../../services/auth-service.service';
+
 @Component({
   selector: 'app-theater-repertoire',
   templateUrl: './theater-repertoire.component.html',
@@ -41,23 +43,41 @@ export class TheaterRepertoireComponent implements OnInit {
 
   private change_old_stageID : any;
 
-  constructor(private router : Router, private theaterService : TheaterService, private modalService: NgbModal) { }
+  private loggedInUser : any;
+  private isAdmin = true;
+
+  constructor(private router : Router, private theaterService : TheaterService, private modalService: NgbModal, private authService:AuthServiceService) { }
 
   ngOnInit() {
 
+    this.loggedInUser = this.authService.getUser();
+    console.log(this.loggedInUser);
+
     this.theaterService.currentTheater.subscribe(
       currentTheater => 
-      {this.currentTheater = currentTheater;
-      console.log(currentTheater);});
+      {
+        this.currentTheater = currentTheater;
+        console.log(currentTheater);});
 
 
-      this.theaterService.getPerformances()
-      .subscribe(
-        data=> 
-        {this.performancesArray = data;    
-          console.log(data);
+        for (let i = 0; i < this.currentTheater.admins.length; i++) {
+          if(this.currentTheater.admins[i].id==this.loggedInUser.id){
+            console.log("nasao admina pozorista!");
+              this.isAdmin = false;
+          } else {
+            console.log("Nije nasao admina pozorista!");
+            this.isAdmin = true;
+          }
         }
-      );
+
+
+        this.theaterService.getPerformances()
+        .subscribe(
+          data=> 
+          {this.performancesArray = data;    
+            console.log(data);
+          }
+        );
 
   }
 
@@ -67,8 +87,19 @@ export class TheaterRepertoireComponent implements OnInit {
     this.theaterService.deletePresentationById(theaterID, stageID, presentationID)
     .subscribe(data =>
       {
-        console.log(data);
-        this.currentTheater = data;
+
+        if(data==null){
+          alert("An error has occurred!");
+
+        } else {
+
+          console.log(data);
+          this.currentTheater = data;
+          alert("Succesfully deleted presentation!");
+
+        }
+
+        
       }
     );
 
@@ -96,8 +127,19 @@ export class TheaterRepertoireComponent implements OnInit {
     this.theaterService.registerPresentation({theater_id: this.currentTheater.id, stage_id : this.stage, performance_id : this.performance , date :  this.modified_date, time : this.modified_time, discount : this.discount})
     .subscribe(data =>
       {
-        console.log(data);
-        this.currentTheater = data;
+
+        if(data==null){
+          alert("An error has occurred!");
+
+        } else {
+
+
+          console.log(data);
+          this.currentTheater = data;
+          alert("Succesfully add presentation!");
+
+        }
+          
       } 
     );
 
@@ -137,13 +179,28 @@ export class TheaterRepertoireComponent implements OnInit {
     this.theaterService.updatePresentation({old_stage_id: this.change_old_stageID, presentation_id : this.change_presentation, theater_id : this.currentTheater.id, stage_id : this.change_stage, performance_id : this.change_performance , date :  this.change_modified_date, time : this.change_modified_time, discount : this.change_discount})
     .subscribe(data =>
       {
-        console.log(data);
-        this.currentTheater = data;
+
+        if(data==null){
+          alert("An error has occurred!");
+
+        } else {
+
+          console.log(data);
+          this.currentTheater = data;
+          alert("Succesfully changed presentation!");
+
+        }
+
       } 
     );
 
     this.router.navigateByUrl('/theater-repertoire');
   
+  }
+
+
+  onClickFastReserve(p) {
+    console.log("Nije implementirano...");
   }
 
   

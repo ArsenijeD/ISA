@@ -3,14 +3,14 @@ package com.example.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
@@ -38,15 +37,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.OnRegistrationCompleteEvent;
 import com.example.RegistrationListener;
+import com.example.DTO.ReservationTicketDTO;
 import com.example.DTO.UserUpdateDTO;
 import com.example.domain.Cinema;
 import com.example.domain.CurrentUser;
-
+import com.example.domain.Hall;
 import com.example.domain.MyRole;
+import com.example.domain.Projection;
+import com.example.domain.Ticket;
 import com.example.domain.User;
 import com.example.domain.UserCreateForm;
 import com.example.domain.VerificationToken;
-import com.example.repository.UserRepository;
+import com.example.service.CinemaService;
+import com.example.service.TicketService;
 import com.example.service.UserService;
 
 
@@ -68,6 +71,12 @@ public class UserController {
     
     @Autowired
     private MessageSource messages;
+    
+	@Autowired
+	private CinemaService cinemaService;
+	
+	@Autowired
+	private TicketService ticketService;
 
   // @PreAuthorize("hasAuthority('ADMIN')")
   @RequestMapping(
@@ -273,4 +282,78 @@ public class UserController {
 			
 			return true;
 		}
+	    
+
+		@CrossOrigin(origins = "*")
+		@RequestMapping(
+				value = "/user/getAllTickets",
+				method = RequestMethod.GET,						
+				produces = MediaType.APPLICATION_JSON_VALUE
+				)
+		public List<ReservationTicketDTO> getAllTicketsForUser(@ModelAttribute("currentUser") CurrentUser currentUser) {
+				System.out.println("** mida ");
+			List<ReservationTicketDTO> reservedTickets=new ArrayList<ReservationTicketDTO>();
+			List<Ticket> userTickets= ticketService.getTicketByUser(currentUser.getId());
+
+			List<Cinema> allCinemas=cinemaService.getAll();
+			
+			for(Ticket ticket : userTickets) {
+				
+				for(Cinema currentCinema : allCinemas) {
+				
+					for(Hall currentHall:currentCinema.getHalls()) {
+					
+						for(Projection currentProjection:currentHall.getProjections()) {
+						
+							for(Ticket currentTicket:currentProjection.getTickets()) {
+							
+								if(currentTicket.getId().equals(ticket.getId())) {
+									ReservationTicketDTO ticketDTO=new ReservationTicketDTO();
+									ticketDTO.setCinema(currentCinema.getName());
+									ticketDTO.setMovie(currentProjection.getFilm().getName());
+									ticketDTO.setTicket_id(ticket.getId());
+									ticketDTO.setDate(currentProjection.getDate());
+									ticketDTO.setTime(currentProjection.getTime());
+									Date today = new Date();			
+									Date date=ticketService.convertDateFromString(currentProjection.getDate());
+									if(date.before(today)){
+										ticketDTO.setVisited(true);	
+									}else if(date.equals(today)) {									
+											Calendar now =Calendar.getInstance();
+											int currentHour=now.get(Calendar.HOUR_OF_DAY);
+											int currentMinute=now.get(Calendar.MINUTE);
+											String timeParsedProjection[]=currentProjection.getTime().split(":");
+											if(Integer.parseInt(timeParsedProjection[0])*60+Integer.parseInt(timeParsedProjection[1]) +30<currentHour*60+currentMinute) {
+												ticketDTO.setVisited(false);	
+											}else {
+												ticketDTO.setVisited(true);	
+											}
+											ticketDTO.setVisited(true);	
+									}else {
+										ticketDTO.setVisited(false);	
+
+									}
+									reservedTickets.add(ticketDTO);
+								}
+								
+							}
+						}
+					}
+				}
+			}
+			
+			return reservedTickets;
+		}
+		
+		@CrossOrigin(origins = "*")
+		@RequestMapping(
+				value = "/user/cancleReservation/{id}",
+				method = RequestMethod.GET,						
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public boolean cancleReservation(@ModelAttribute("currentUser") CurrentUser currentUser,@PathVariable Long id) {
+
+			return ticketService.cancleTicket(id);
+
+		}
+		
 }

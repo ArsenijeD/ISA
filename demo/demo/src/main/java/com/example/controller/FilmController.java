@@ -81,5 +81,80 @@ public class FilmController {
 		
 	}
 	
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(
+			value = "/updateFilm",
+			method = RequestMethod.PUT,						// ovde menjao
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public boolean updateFilm(@RequestBody Film f) {
+		
+		//System.out.println("POGODJEN CONTROLLER /registerCinema");
+		try {
+			
+			filmService.updateFilm(f);
+			return true;
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+		
+	}
+	
+//	@CrossOrigin(origins = "*")
+//	@RequestMapping(
+//			value = "/deleteFilm",
+//			method = RequestMethod.POST,
+//			produces = MediaType.APPLICATION_JSON_VALUE,
+//			consumes = MediaType.APPLICATION_JSON_VALUE)
+//	public boolean deleteFilm(@RequestBody Film f) {
+//		
+//	try {
+//			
+//			filmService.deleteById(f.getId());
+//			
+//			return true;
+//			
+//		} catch (Exception e) {
+//			
+////			e.printStackTrace();
+//			return false;
+//		}
+//		
+//		
+//	}
+	
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(
+			value = "/deleteFilm/{filmID:.+}",
+			method = RequestMethod.DELETE,
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public boolean deleteFilm(@PathVariable("filmID") Long filmID) {
+		
+	try {
+			
+			filmService.deleteById(filmID);
+			
+			return true;
+			
+		} catch (Exception e) {
+			
+//			e.printStackTrace();
+			return false;
+		}
+		
+		
+	}
+	
+	
+	
+	
 
 }

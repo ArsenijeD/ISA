@@ -16,5 +16,7 @@ public interface CinemaService {
 	
 	Cinema getCinemaByName(String name);
 		
-	boolean updateCinema(Cinema c);
+	boolean updateCinema(Cinema c);			// promena admina bioskopu
+	
+	boolean changeCinema(Cinema c); 		// izmena bioskopa
 }

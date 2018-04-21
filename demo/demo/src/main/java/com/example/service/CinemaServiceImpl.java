@@ -45,7 +45,7 @@ public class CinemaServiceImpl implements CinemaService {
 	}
 
 	@Override
-	public boolean updateCinema(Cinema c) {
+	public boolean updateCinema(Cinema c) {			// izmena admina bioskopa
 		
 		Cinema cinema = cinemaRepository.findOne(c.getId());
 		cinema.setAdmins(c.getAdmins());
@@ -53,6 +53,36 @@ public class CinemaServiceImpl implements CinemaService {
 		
 		
 		cinemaRepository.flush();
+		return true;
+	}
+
+	@Override
+	public boolean changeCinema(Cinema c) {
+		
+		Cinema cinema = cinemaRepository.findOne(c.getId());
+		cinema.setId(c.getId());
+		cinema.setName(c.getName());
+		cinema.setAdress(c.getAdress());
+		cinema.setDescription(c.getDescription());
+		
+		
+		if(c.getAverageRating()!=null) {
+			cinema.setAverageRating(c.getAverageRating());
+		}
+		
+		if(c.getHalls()!=null) {
+			cinema.setHalls(c.getHalls());
+			System.out.println("Zamenio listu sala sa novom listom sala!");
+		}
+		
+		if(c.getCinemaRatings()!=null) {										// ovo sam dodao
+			cinema.setCinemaRatings(c.getCinemaRatings());
+			System.out.println("Zamenio listu ocena sa novom listom sala!");
+		}
+		
+		cinemaRepository.flush();
+		
+		
 		return true;
 	}
 

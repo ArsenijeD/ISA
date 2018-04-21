@@ -7,6 +7,10 @@ export class AuthServiceService {
   private token: string;
   private user:/*{ id: number }*/any | null;
 
+  public logoutUser(){
+    this.user=null;
+    localStorage.clear();
+  }
   public getUser():/* { id: number }*/any | null {
     return this.user || JSON.parse(localStorage.getItem('user'));
   }

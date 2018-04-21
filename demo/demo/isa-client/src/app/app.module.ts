@@ -43,6 +43,9 @@ import { CinemaService } from './services/cinema.service';
 import { UserService } from './services/user.service';
 import { AdService } from './services/ad.service';
 import { GeocoderService } from './services/geocoder.service';
+
+import { FriendsService } from './services/friends.service'
+
 import { BidService } from './services/bid.service';
 import { NotificationService } from './services/notification.service';
 
@@ -58,6 +61,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { CinemaDetailsComponent } from './components/cinema-details/cinema-details.component';
+import { TheaterDetailsComponent } from './components/theater-details/theater-details.component';
 
 
 //http interceptor
@@ -66,10 +71,17 @@ import {RequestOptions, XHRBackend} from '@angular/http';
 import { Router } from '@angular/router';
 import { RegistrationConfirmComponent } from './components/registration-confirm/registration-confirm.component';
 import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
+import { FriendsComponent } from './components/friends/friends.component';
+import { ReservationComponent } from './components/reservation/reservation.component';
 // factory dependency injection
 export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestOptions, auth: AuthServiceService, router: Router) {
   return new MyCustomHttp(backend, defaultOptions, auth, router);
 }
+import { OrderModule } from 'ngx-order-pipe';
+import { HomeUserComponent } from './components/home-user/home-user.component';
+import { LoginLogoutComponent } from './components/login-logout/login-logout.component';
+import { TicketPreviewComponent } from './components/ticket-preview/ticket-preview.component'; // <-- Import OrderModule
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,11 +99,21 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     RegisterCinemaComponent,
     CinemaRepertoireComponent,
     TheaterRepertoireComponent,
-    FanZoneAdminProfileComponent,
-    UserProfilePageComponent
 
+    UserProfilePageComponent,
+    FriendsComponent,
+
+    CinemaDetailsComponent,
+    TheaterDetailsComponent,
+    FanZoneAdminProfileComponent,
+    UserProfilePageComponent,
+    ReservationComponent,
+    HomeUserComponent,
+    LoginLogoutComponent,
+    TicketPreviewComponent
   ],
   imports: [
+    OrderModule,
     BrowserModule,
     routing,
     HttpClientModule,
@@ -107,8 +129,11 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
   ],
 
 
-  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,BidService, NotificationService,
-    //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true } //httpClient Interceptor
+
+
+  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, 
+    TheaterService, UserService, AdService, GeocoderService,BidService,FriendsService,NotificationService,
+
     {
       provide: Http,
       useFactory: providerCustomHttp,

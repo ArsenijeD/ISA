@@ -36,9 +36,9 @@ public class Seat implements Serializable{
 	@Column(name = "seat_number", nullable = false, updatable = false)
 	private int number;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="hall_id", nullable=false)
-    private Hall hall;
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name="hall_id", nullable=false)
+//    private Hall hall;
 
 	
 //	@OneToMany(mappedBy="seat",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -64,25 +64,16 @@ public class Seat implements Serializable{
 		this.number = number;
 	}
 
-	public Hall getHall() {
-		return hall;
-	}
-
-	public void setHall(Hall hall) {
-		this.hall = hall;
-	}
 	
-
 
 	public Seat() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Seat(int number, Hall hall) {
+	public Seat(int number) {
 		super();
 		this.number = number;
-		this.hall = hall;
 
 	}
 

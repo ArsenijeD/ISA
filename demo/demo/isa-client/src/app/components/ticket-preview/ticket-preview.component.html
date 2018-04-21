@@ -1,0 +1,19 @@
+<div *ngFor="let t of ticketArray"> 
+  <div class="row">
+    <div class="col">
+      <p> {{t.cinema}}</p>
+    </div>
+    <div class="col">
+        <p> {{t.movie}}</p>
+    </div>
+    <div class="col">
+       <p> {{t.date}}</p>
+    </div>
+    <div class="col">
+        <p> {{t.time}}</p>
+    </div>
+    <div *ngIf="!t.visited">
+      <button (click)="cancleTicket(t.ticket_id)"> cancle ticket </button>
+    </div>
+  </div>
+</div>

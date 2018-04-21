@@ -26,29 +26,34 @@ public class Ticket implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	
-//	@Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "ticket_id", nullable = false, updatable = false)
-//    private Long id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ticket_id", nullable = false, updatable = false)
+    private Long id;
 	
-	@Column(name = "price", nullable = false)
+	@Column(name = "price")
     private int price;
 	
-//	@Column(name = "discount")
-//	private int discount;
-	
-	@Column(name = "reserved")
+
+	@Column(name = "reserved", nullable = false)
 	private boolean reserved;
 	
-	@Id
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="projection_id", nullable=false)
-    private Projection projection;
 	
-	@Id
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name="seat_id", nullable=false)
     private Seat seat;
+	
+	@Column(name = "forFastReservation", nullable = false)
+	private boolean forFastReservation;
+	
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id", nullable=true)
+    private User user;
+	
+
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name="projection_id", nullable=false)
+//    private Projection projection;
 
 	
 //	public Long getId() {
@@ -67,14 +72,6 @@ public class Ticket implements Serializable{
 		this.price = price;
 	}
 
-//	public int getDiscount() {
-//		return discount;
-//	}
-//
-//	public void setDiscount(int discount) {
-//		this.discount = discount;
-//	}
-
 
 	public boolean isReserved() {
 		return reserved;
@@ -85,15 +82,6 @@ public class Ticket implements Serializable{
 	}
 
 	
-	
-	public Projection getProjection() {
-		return projection;
-	}
-
-	public void setProjection(Projection projection) {
-		this.projection = projection;
-	}
-
 	public Seat getSeat() {
 		return seat;
 	}
@@ -101,19 +89,54 @@ public class Ticket implements Serializable{
 	public void setSeat(Seat seat) {
 		this.seat = seat;
 	}
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public boolean isForFastReservation() {
+		return forFastReservation;
+	}
+
+	public void setForFastReservation(boolean forFastReservation) {
+		this.forFastReservation = forFastReservation;
+	}
 
 	
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public Ticket() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ticket(int price, boolean reserved) {
+	public Ticket(int price, boolean reserved, Seat seat, boolean forFastReservation, User user) {
 		super();
 		this.price = price;
 		this.reserved = reserved;
+		this.seat = seat;
+		this.forFastReservation = forFastReservation;
+		this.user = user;
 	}
+
+
+	
+	
+	
+
+
 
 	
 	

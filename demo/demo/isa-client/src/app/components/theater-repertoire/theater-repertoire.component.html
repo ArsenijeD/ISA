@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+<!-- <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="home-guest">Home <span class="sr-only">(current)</span></a>
@@ -13,7 +13,7 @@
         <a class="nav-link" href="register"><span class="glyphicon glyphicon-user"></span>Register</a>
       </li>
     </ul>
-  </nav>
+  </nav> -->
   
   
   <!-- Page Content -->
@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col"><h2>Repertoar:</h2></div>
         <div class="col">
-            <div class="float-right"><button type="button" (click)="onClickAddPresentation(AddPresentationModal)" class="btn btn-info">Add presentation</button></div>
+            <div class="float-right"><button type="button" [hidden]="isAdmin" (click)="onClickAddPresentation(AddPresentationModal)" class="btn btn-primary">Add presentation</button></div>
         </div>
       </div>
 
@@ -53,8 +53,8 @@
                   <div class="row">
                     <div class="col"><h3>{{p.performance.name}}</h3></div>
                     <div class="col">
-                        <div class="float-right" style="margin-left: 5px"><button type="button" class="btn btn-danger" (click)="onClickDeletePresentation(currentTheater.id, s.id, p.id)">Delete</button></div>
-                        <div class="float-right" style="margin-right: 5px"><button type="button" class="btn btn-warning" (click)="onClickChangePresentation(s, p, ChangePresentationModal)">Change</button></div>
+                        <div class="float-right" style="margin-left: 5px"><button type="button" class="btn btn-danger" [hidden]="isAdmin" (click)="onClickDeletePresentation(currentTheater.id, s.id, p.id)">Delete</button></div>
+                        <div class="float-right" style="margin-right: 5px"><button type="button" class="btn btn-warning" [hidden]="isAdmin" (click)="onClickChangePresentation(s, p, ChangePresentationModal)">Change</button></div>
                     </div>
                   </div>
                   <br>
@@ -71,9 +71,10 @@
                   <p> <b>Date: </b>{{p.date}}</p>
                   <p> <b>Start time: </b>{{p.time}}</p>
                   <br>
+                  <p> <b>Price: </b> {{p.performance.price}}</p> 
                   <p> <b>Discount: </b>{{p.discount}} %</p>
            
-                <button type="button" class="btn btn-success" (click)="onClickReserve(p)">Reserve</button>
+                <button type="button" class="btn btn-success" (click)="onClickFastReserve(p)">Fast Reserve</button>
 
                 <br>
                 </div>
