@@ -211,6 +211,29 @@ public class UserController {
 			
 		}
 	    
+	    
+	    @RequestMapping(
+				value = "/getSystemAdmins", 
+				method = RequestMethod.GET, 
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<User> getSystemAdmins() {
+			
+	    	System.out.println("pogodjen /getSystemAdmins");
+			List<User> all = userService.getAll();
+			List<User> systemAdmins = new ArrayList<User>();
+			
+			for (User u : all) {
+				for(MyRole role:u.getRoles()) {
+					if (role.getName().equals("SYSTEM_ADMIN"))
+						systemAdmins.add(u);
+				}
+				
+			}
+			
+			return systemAdmins;
+			
+		}
+	    
 	    @RequestMapping(value = "/changeUserRole", method = RequestMethod.PUT)
 		public @ResponseBody Boolean changeUserRole(@RequestBody User u){
 		 

@@ -151,7 +151,14 @@
                             </tr>
                           </thead>
                           <tbody>
-    
+                                <tr class="active" *ngFor="let systemAdmin of systemAdmins; let i = index">
+
+                                        <th scope="row">{{i + 1}}</th>
+                                        <td>{{systemAdmin.firstName}}</td>
+                                        <td>{{systemAdmin.lastName}}</td>
+                                        <td>{{systemAdmin.email}}</td>
+                                    
+                                    </tr>
                               
                           </tbody>
                         </table>
@@ -268,6 +275,7 @@
 
                                     <button id="addFanZoneAdmin" (click)="promoteToFanZoneAdmin(user)" ngbTooltip="set user as fan zone admin" type="button" value="submit" class="btn btn-primary center btn-sm">Fan Zone</button>
 
+                                    <button id="addSystemAdmin" (click)="promoteToSystemAdmin(user)" ngbTooltip="set user as system admin" type="button" value="submit" class="btn btn-primary center btn-sm">System</button>
                                 </td>
                             </tr>
                               

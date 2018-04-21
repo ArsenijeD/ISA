@@ -57,6 +57,21 @@ export class AdService {
   
   }
 
+  getOtherUsersAds(id : number, confirmed : number){
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get("http://localhost:8080/oglasi/getOtherUsersOglasi/" + id + "/" + confirmed, {headers:headers}).map(data => data.json())
+
+    .catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        return Observable.throw(err);
+    });
+  
+  }
+
   changeAdStatus(ad : any) {
 
     const headers = new Headers();

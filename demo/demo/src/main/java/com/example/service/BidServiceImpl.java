@@ -21,4 +21,16 @@ public class BidServiceImpl implements BidService {
 		
 		return bidRepository.findAllByAd(ad);
 	}
+
+	@Override
+	public boolean registerBid(Bid b) {
+		bidRepository.save(b);
+		return true;
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		bidRepository.deleteById(id);
+		
+	}
 }

@@ -12,50 +12,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domain.Ad;
-import com.example.domain.Bid;
+import com.example.domain.Notification;
 import com.example.domain.User;
 import com.example.service.AdService;
-import com.example.service.BidService;
+import com.example.service.NotificationService;
 import com.example.service.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/bids")
-public class BidController {
+@RequestMapping("/notifications")
+public class NotificationController {
 
+	
 	@Autowired
-	private BidService bidService;
+	private NotificationService notificationService;
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private AdService adService;
-	
-	@RequestMapping(
-			value = "/getBidsForSelectedOglas/{id}",
-			method = RequestMethod.GET,
-			
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ArrayList<Bid> getBidsForSelectedOglas(@PathVariable("id") Long id){
-		
-		Ad ad = adService.findOneById(id);
-		return bidService.getBidsByAd(ad);
-		
-	}
 	
 	@RequestMapping(
 			value = "/register",
 			method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean registerAd(@RequestBody Bid b) {
+	public boolean registerAd(@RequestBody Notification n) {
 		
 		
-		System.out.println("POGODJEN CONTROLLER /bids/register");
+		System.out.println("POGODJEN CONTROLLER /notifications/register");
 		try {
 			
-			bidService.registerBid(b);
+			notificationService.registerNotification(n);
 			
 		} catch (Exception e) {
 			
@@ -67,17 +53,31 @@ public class BidController {
 		
 	}
 	
+	
 	@RequestMapping(
-			value = "/deleteBid/{id}",
+			value = "/getNotificationsForCurrentUser/{id}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ArrayList<Notification> getNotificationsForCurrentUser(@PathVariable("id") Long id){
+		
+		User u = userService.getOneById(id);
+		System.out.println(u.getFirstName());
+		return notificationService.findAllByUser(u);
+		
+	}
+	
+	@RequestMapping(
+			value = "/deleteNotification/{id}",
 			method = RequestMethod.DELETE, 
 			produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean deleteBid(@PathVariable("id") Long id) {
+	public boolean deleteOglas(@PathVariable("id") Long id) {
 
-		System.out.println("pogodio /deleteBid");
+		System.out.println("pogodio /deleteNotification/{id}");
 		try {
 			
-			bidService.deleteById(id);
+			User u = userService.getOneById(id);
+			notificationService.deleteByUser(u);
 			
 		} catch (Exception e) {
 			

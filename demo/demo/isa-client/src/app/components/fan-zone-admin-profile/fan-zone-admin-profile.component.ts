@@ -6,6 +6,8 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 import { BidService } from '../../services/bid.service'
 import { AuthServiceService } from '../../services/auth-service.service';
+import { NotificationService } from '../../services/notification.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-fan-zone-admin-profile',
@@ -18,6 +20,7 @@ export class FanZoneAdminProfileComponent implements OnInit {
   aktivna_tabela : boolean[];
   unconfirmedAds : any;
   myAds : any;
+  myAdsBids : any;
 
   adName : string;
   adDescription : string;
@@ -29,14 +32,14 @@ export class FanZoneAdminProfileComponent implements OnInit {
   adDateUpdate : any;
   adImageUpdate : any;
 
-  bids : any[][];
 
   currentUser : any;
 
-  constructor(private authServiceService :AuthServiceService, private adService : AdService, private modalService: NgbModal, private router : Router, private bidService : BidService) { 
+
+  constructor(private userService : UserService, private notificationService : NotificationService, private authServiceService : AuthServiceService, private adService : AdService, private modalService: NgbModal, private router : Router, private bidService : BidService) { 
 
     this.currentUser = this.authServiceService.getUser();
-
+    
   }
 
   ngOnInit() {
@@ -45,7 +48,7 @@ export class FanZoneAdminProfileComponent implements OnInit {
 
     this.getOnWaitingAds();
     
-    this.bids = [];
+    this.myAdsBids = new Map();
   }
 
   promeniAktivnost(index: number) {
@@ -104,11 +107,18 @@ export class FanZoneAdminProfileComponent implements OnInit {
     });
   }
 
-  getBidsForMyAds(ad_id : number) {
+  getBidsForSelectedAd(ad_id : number, bids : any) {
 
-    this.bidService.getBidsForSelectedAd(ad_id).subscribe(data=> { this.bids.push(data); console.log(data); console.log("----")});
+    this.bidService.getBidsForSelectedAd(ad_id).subscribe(data=> { 
+      
+      bids.set(ad_id, data); 
+      console.log(bids);
+      console.log("----");
+    
+    });
 
   }
+
   getMyAds() {
 
     this.adService.getAdsByConfirmed(3).subscribe(data=> { 
@@ -118,12 +128,10 @@ export class FanZoneAdminProfileComponent implements OnInit {
 
       for (var _i = 0; _i < this.myAds.length; _i++) {
 
-        this.getBidsForMyAds(this.myAds[_i].id);
+        this.getBidsForSelectedAd(this.myAds[_i].id, this.myAdsBids);
 
       }  
 
-
-    
     });
   }
 
@@ -149,7 +157,7 @@ export class FanZoneAdminProfileComponent implements OnInit {
     if (img_pass == "")
       img_pass = "defaultOglas.jpg";
     
-    this.adService.registerAd({name : this.adName, description : this.adDescription, date : this.adDate.year + "-" + this.adDate.month + "-" + this.adDate.day, image : img_pass, confirmed : 3}).subscribe(data => this.getMyAds());
+    this.adService.registerAd({name : this.adName, description : this.adDescription, date : this.adDate.year + "-" + this.adDate.month + "-" + this.adDate.day, image : img_pass, confirmed : 3, user : this.currentUser}).subscribe(data => this.getMyAds());
     this.adName = "";
     this.adDescription="";
     this.adDate="";
@@ -206,6 +214,33 @@ export class FanZoneAdminProfileComponent implements OnInit {
    
   
     this.adService.updateWholeAd(ad).subscribe(data => this.getMyAds());
+  }
+
+  sendNotifications(bids : any, indexDobitnika : number, ad : any) {
+
+    alert(ad.user.firstName);
+    alert("Oglas za brisanje" + ad.id);
+    for (var i = 0; i < bids.length; i++) {
+      
+      if (i != indexDobitnika) {
+
+        this.notificationService.registerNotification({message : "Your bid on ad " + ad.name + " [" + bids[i].money + " rsd] has been rejected by user " +  ad.user.firstName + " " + ad.user.lastName, user : bids[i].user}).subscribe(data => this.getMyAds());
+        
+      }
+      
+    }
+
+    this.notificationService.registerNotification({message : "Your bid on ad " + ad.name + " [" + bids[indexDobitnika].money + " rsd] has been accepted by user " +  ad.user.firstName + " " + ad.user.lastName, user : bids[indexDobitnika].user}).subscribe(data => this.getMyAds());
+    
+    ad.confirmed = 4;
+    alert("AD" + JSON.stringify(ad));
+    this.adService.changeAdStatus(ad).subscribe(data =>  this.getMyAds());
+  }
+
+  updateFanZoneAdmin() {
+
+    this.userService.updateUserInfo(this.currentUser).subscribe(data => console.log(data));
+    this.authServiceService.setUser(this.currentUser);
   }
 
 }

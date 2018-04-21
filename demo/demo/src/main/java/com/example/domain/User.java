@@ -35,16 +35,16 @@ public class User implements Serializable {
 
 
 
-    public Set<Bid> getBids() {
-		return bids;
-	}
-
-
-
-
-	public void setBids(Set<Bid> bids) {
-		this.bids = bids;
-	}
+//    public Set<Bid> getBids() {
+//		return bids;
+//	}
+//
+//
+//
+//
+//	public void setBids(Set<Bid> bids) {
+//		this.bids = bids;
+//	}
 
 
 
@@ -108,8 +108,8 @@ public class User implements Serializable {
     private boolean enabled;
 
     
-    @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
-    private Set<Bid> bids;
+//    @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+//    private Set<Bid> bids;
     
     
     public String getFirstName() {

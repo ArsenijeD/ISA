@@ -26,4 +26,13 @@ export class BidService {
   
   }
 
+  registerBid(bid : any) {
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    alert(JSON.stringify(bid));
+    return this.http.post('http://localhost:8080/bids/register', 
+      JSON.stringify(bid), { headers : headers }).map((data : Response) => data.json());
+  }
+
 }

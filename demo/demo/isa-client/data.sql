@@ -6,6 +6,9 @@ INSERT INTO user (user_id, email, enabled, password_hash,first_name,last_name) V
 INSERT INTO user (user_id, email, enabled, password_hash,first_name,last_name) VALUES ('1', 'aki@aki', b'1', '$10$2nL3nm6LGoderKkWgJOcY.hUKEOCMqW32ooJ1z3eNc0yWQJzZsDGe','arsenije','degenek');
 INSERT INTO user (user_id, email, enabled, password_hash,first_name,last_name) VALUES ('2', 'mida@mida', b'1', '$2a$10$xyBGGrdKmPlzDijnO1Cd5uN0JyMPqOTbZ788Z01d0uyLMwMpLAHuK','milan','suvajdzic');
 INSERT INTO user (user_id, email, enabled, password_hash,first_name,last_name) VALUES ('3', 'joja@joja', b'1', '$2a$10$UG1/ZiGqigRytRmGC5Li9ux0JR8XAIvlQmPEfUa0bCQH8VxosgSv2','jovica','cubric');
+INSERT INTO `database`.`user` (`user_id`, `city`, `email`, `enabled`, `first_name`, `last_name`, `password_hash`) VALUES ('6', 'Backi Sokolac', 'brco@brco', b'1', 'brco', 'brcic', '$2a$10$2nL3nm6LGoderKkWgJOcY.hUKEOCMqW32ooJ1z3eNc0yWQJzZsDGe');
+INSERT INTO `database`.`user` (`user_id`, `city`, `email`, `enabled`, `first_name`, `last_name`, `password_hash`) VALUES ('7', 'Krivaja', 'gane@gane', b'1', 'gane', 'ganic', '$2a$10$2nL3nm6LGoderKkWgJOcY.hUKEOCMqW32ooJ1z3eNc0yWQJzZsDGe');
+
 INSERT INTO user_role (user_id, role_id) VALUES ('666', '1');
 INSERT INTO verificationtoken (id, expiryDate, token, user_id) VALUES ('99', '2018-12-12', 'token', '666');
 

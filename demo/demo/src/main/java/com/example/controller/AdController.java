@@ -132,6 +132,9 @@ public class AdController {
 		System.out.println("pogodio /deleteOglas");
 		try {
 			
+			Ad ad = adService.findOneById(id);
+			
+			
 			adService.deleteById(id);
 			
 		} catch (Exception e) {
@@ -140,6 +143,19 @@ public class AdController {
 		}
 			
 		return true;
+	}
+	
+	@RequestMapping(
+			value = "/getOtherUsersOglasi/{id}/{confirmed}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ArrayList<Ad> getAdsOfCurrentUser(@PathVariable("id") Long id, @PathVariable("confirmed") Long confirmed){
+		
+		System.out.println("kao momak zivim");
+		User u = userService.getOneById(id);
+		System.out.println(u.getFirstName());
+		return adService.findByUserNotAndConfirmed(u, confirmed);
+		
 	}
 	
 	

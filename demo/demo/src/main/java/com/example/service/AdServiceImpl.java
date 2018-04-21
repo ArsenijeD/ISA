@@ -74,4 +74,10 @@ public class AdServiceImpl implements AdService {
 	
 		return adRepository.findOneById(id);
 	}
+
+	@Override
+	public ArrayList<Ad> findByUserNotAndConfirmed(User u, Long confirmed) {
+		
+		return adRepository.findByUserNotAndConfirmed(u, confirmed);
+	}
 }

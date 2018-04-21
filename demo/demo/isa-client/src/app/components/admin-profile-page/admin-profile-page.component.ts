@@ -25,6 +25,7 @@ export class AdminProfilePageComponent implements OnInit {
   cinemaAdmins : any;
   users : any;
   fanZoneAdmins : any;
+  systemAdmins : any;
 
   currentUser : any;
 
@@ -88,9 +89,14 @@ export class AdminProfilePageComponent implements OnInit {
       
       this.userService.getUsers().subscribe(data=> { this.users = data});
       
+
     } else if (index == 4) {
 
       
+    } else if (index == 1) {
+
+      this.userService.getSystemAdmins().subscribe(data=> { this.systemAdmins = data});
+
     }
       
       
@@ -234,5 +240,21 @@ export class AdminProfilePageComponent implements OnInit {
     });
 
     
+  }
+
+  promoteToSystemAdmin(user : any) {
+
+    user.roles[0].name = "SYSTEM_ADMIN";
+    user.roles[0].role_id = 1;
+
+    this.userService.updateUserRole(user).subscribe(data => {
+      
+      
+      console.log(data);
+      this.userService.getUsers().subscribe(data=> { this.users = data});
+      this.promeniAktivnost(3);
+
+    });
+
   }
 }

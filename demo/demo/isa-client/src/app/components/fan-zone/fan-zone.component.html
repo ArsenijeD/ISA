@@ -1,7 +1,10 @@
+
+
 <h1> Welcome to fan zone:</h1>
 
-<ngb-tabset>
-    <ngb-tab title="New ad">
+<ngb-tabset (tabChange)= "refreshAll()">
+    <ngb-tab title="New ad" >
+           
       <ng-template ngbTabContent>
         
           <form name="myform" method="POST">  
@@ -130,7 +133,9 @@
 
                    
 
-                    <ngb-accordion #acc="ngbAccordion" > 
+                    <ngb-accordion #acc="ngbAccordion" 
+                    
+                    > 
 
 
                         <ngb-panel title="Bids" >
@@ -149,12 +154,12 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="active" *ngFor="let bid of bids[i]; let j = index">
-
+                                        <tr class="active" *ngFor="let myAdsBid of myAdsBids.get(myAd.id); let j = index">
+                                            
                                             <th scope="row">{{j + 1}}</th>
-                                            <td>{{bid.user.first_name}} {{bid.user.first_name}}</td>
-                                            <td>{{bid.money}}</td>
-                                            <td><button id="accept"  type="button" class="btn btn-primary btn-sm center" >accept</button></td>
+                                            <td>{{myAdsBid.user.firstName}} {{myAdsBid.user.lastName}}</td>
+                                            <td>{{myAdsBid.money}}</td>
+                                            <td><button id="accept" (click) = "sendNotifications(myAdsBids.get(myAd.id), j, myAd)" type="button" class="btn btn-primary btn-sm center" >accept</button></td>
                                             
                                         </tr>
 
@@ -180,7 +185,7 @@
       </ng-template>
     </ngb-tab>
 
-    <ngb-tab title="Official adds">
+    <ngb-tab title="Official ads">
       <ng-template ngbTabContent>
         
             <div class="container" style="margin-top:50px;" *ngFor="let officialAd of officialAds; let i = index">
@@ -244,7 +249,11 @@
               
                             </div>
           
-                            
+                            <div class="row" style="margin-top:30px">
+                  
+                                    <h5> Posted by: <span style="font-weight:normal">  {{officialAd.user.firstName}} {{officialAd.user.lastName}} </span></h5>
+                                   
+                            </div>
                               
           
                           </div>
@@ -252,44 +261,56 @@
                           <div class="col-4">
           
                              
-          
-                              <ngb-accordion #acc="ngbAccordion" > 
-          
-          
-                                  <ngb-panel title="Bids" >
-                                      <ng-template ngbPanelContent >
-          
-                                              
-                                          <table class="table">
-                                              <thead>
-                                                <tr>
-                                  
-                                                    <th>#</th>
-                                                    <th>User</th>
-                                                    <th>RSD</th>
-                                                   
-                                  
-                                                </tr>
-                                              </thead>
-                                              <tbody>
-                                                  <!-- <tr class="active" *ngFor="let bid of bids[i]; let j = index">
-          
-                                                      <th scope="row">{{j + 1}}</th>
-                                                      <td>{{bid.user.first_name}} {{bid.user.first_name}}</td>
-                                                      <td>{{bid.money}}</td>
-                                                      <td><button id="accept"  type="button" class="btn btn-primary btn-sm center" >accept</button></td>
-                                                      
-                                                  </tr> -->
-          
-                                                  
-          
-                                              </tbody>
-                                          </table>
-          
+                            <div class="row">
+
+                                <ngb-accordion #acc="ngbAccordion" > 
+            
+            
+                                    <ngb-panel title="Bids" >
+                                        <ng-template ngbPanelContent >
+            
+                                                
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
                                     
-                                      </ng-template>
-                                    </ngb-panel>
-                              </ngb-accordion>
+                                                        <th>#</th>
+                                                        <th>User</th>
+                                                        <th>RSD</th>
+                                                    
+                                    
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="active" *ngFor="let officialAdsBid of officialAdsBids.get(officialAd.id); let j = index">
+            
+                                                        <th scope="row">{{j + 1}}</th>
+                                                        <td>{{officialAdsBid.user.firstName}} {{officialAdsBid.user.lastName}}</td>
+                                                        <td>{{officialAdsBid.money}}</td>
+                                                        
+                                                        
+                                                    </tr>
+            
+                                                    
+            
+                                                </tbody>
+                                            </table>
+            
+                                        
+                                        </ng-template>
+                                        </ngb-panel>
+                                </ngb-accordion>
+                            </div>
+                              
+                            <div class="row" style="margin-top:20px">
+                                        
+                                        
+                                    <input id="officialAdMoney"  name="officialAdMoney" class="form-control input-sm" type="text" data-validation="required" #officialAdMoney>
+                                    <button  style="margin-top:5px" (click) = "makeABid(officialAdMoney.value, officialAd)" id="makeABidOfficial"  type="button" value="submit" class="btn btn-primary ">Make a bid</button>
+                            
+
+                                    
+                                </div>
                           </div>
           
                       </div>  
@@ -298,8 +319,152 @@
                       
                     </article>
                     <hr>
-                  </div>
+            </div>
 
       </ng-template>
     </ngb-tab>
+
+    <ngb-tab title="Other users ads" >
+           
+            <ng-template ngbTabContent>
+              
+                    <div class="container" style="margin-top:50px;" *ngFor="let otherUsersAd of otherUsersAds; let i = index">
+                    
+                            <article class="col-10">
+                              
+                              <div class = "row">
+                  
+                                  <div class="col-4">
+                  
+                                      <img class="card-img-top" src="assets/images/{{otherUsersAd.image}}">
+                  
+                                  </div>
+                  
+                                  <div class="col-4">
+                  
+                                    <div class="row">
+                  
+                                        <h3>Name:<span style="font-weight:normal"> {{otherUsersAd.name}} </span></h3>
+                                        
+                                    </div>
+                  
+                                    <div class="row">
+                  
+                                        <h4>Description:<span style="font-weight:normal"> {{otherUsersAd.description}} </span></h4> 
+                  
+                                    </div>
+                  
+                                    <div class="row">
+                  
+                                        <h5> Valid until: <span style="font-weight:normal"> {{otherUsersAd.date}} </span></h5>      
+                                    </div>
+                  
+                                    <!-- <div class="row" style="margin-top:100px;">
+                  
+                                      <h3>Status:</h3>
+                                      
+                                    </div> -->
+                  
+                                    <div class="row" *ngIf="otherUsersAd.confirmed == 0">
+                   
+                                        <span class="badge badge-info">Waiting for admin to approve</span>
+                  
+                                    </div>
+                  
+                                    <div class="row" *ngIf="otherUsersAd.confirmed == 1">
+                  
+                                        <span class="badge badge-success">Approved</span>
+                  
+                                    </div>
+                  
+                                    <div class="row" *ngIf="otherUsersAd.confirmed == 2">
+                  
+                                        <span class="badge badge-danger">Rejected</span>
+                  
+                                    </div>
+        
+                                    <div class="row" *ngIf="otherUsersAd.confirmed == 3">
+         
+                                            <span class="badge badge-primary">Posted by admin</span>
+                      
+                                    </div>
+                  
+                                    <div class="row" style="margin-top:30px">
+                          
+                                            <h5> Posted by: <span style="font-weight:normal">  {{otherUsersAd.user.firstName}} {{otherUsersAd.user.lastName}} </span></h5>
+                                           
+                                    </div>
+                                      
+                  
+                                  </div>
+                                    
+                                  <div class="col-4">
+                  
+                                     
+                                    <div class="row">
+
+
+                                    
+                                        <ngb-accordion #acc="ngbAccordion" > 
+                    
+                    
+                                            <ngb-panel title="Bids" >
+                                                <ng-template ngbPanelContent >
+                    
+                                                        
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                            
+                                                                <th>#</th>
+                                                                <th>User</th>
+                                                                <th>RSD</th>
+                                                            
+                                            
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="active" *ngFor="let otherUsersAdsBid of otherUsersAdsBids.get(otherUsersAd.id); let j = index">
+        
+                                                                    <th scope="row">{{j + 1}}</th>
+                                                                    <td>{{otherUsersAdsBid.user.firstName}} {{otherUsersAdsBid.user.lastName}}</td>
+                                                                    <td>{{otherUsersAdsBid.money}}</td>
+                                                                    
+                                                                    
+                                                            </tr>
+                    
+                                                            
+                    
+                                                        </tbody>
+                                                    </table>
+                    
+                                                
+                                                </ng-template>
+                                                </ngb-panel>
+                                        </ngb-accordion>
+
+                                    </div>
+
+                                    <div class="row" style="margin-top:20px">
+                                        
+                                        
+                                        <input id="otherUsersAdMoney"  name="otherUsersAdMoney" class="form-control input-sm" type="text" data-validation="required" #otherUsersAdMoney>
+                                        <button  style="margin-top:5px" (click) = "makeABid(otherUsersAdMoney.value, otherUsersAd)" id="makeABid"  type="button" value="submit" class="btn btn-primary ">Make a bid</button>
+                                
+
+                                        
+                                    </div>
+
+                                </div>
+                  
+                              </div>  
+                  
+                              
+                              
+                            </article>
+                            <hr>
+                    </div>
+               
+            </ng-template>
+          </ngb-tab>
   </ngb-tabset>

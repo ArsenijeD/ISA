@@ -24,4 +24,6 @@ public interface AdService {
 	boolean updateWholeAd(Ad a);
 	
 	Ad findOneById(Long id);
+	
+	public ArrayList<Ad> findByUserNotAndConfirmed(User u, Long confirmed);
 }

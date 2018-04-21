@@ -13,8 +13,8 @@ import { HomeGuestComponent } from './components/home-guest/home-guest.component
 import { ViewCinemasComponent } from './components/view-cinemas/view-cinemas.component';
 import { ViewTheatersComponent } from './components/view-theaters/view-theaters.component';
 
-
-
+import {ToastModule} from 'ng2-toastr/ng2-toastr';  
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 
@@ -44,6 +44,7 @@ import { UserService } from './services/user.service';
 import { AdService } from './services/ad.service';
 import { GeocoderService } from './services/geocoder.service';
 import { BidService } from './services/bid.service';
+import { NotificationService } from './services/notification.service';
 
 //httpClient interceptor
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -97,6 +98,8 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     HttpModule,
     NgbModule.forRoot(),
     FormsModule,
+    BrowserAnimationsModule,
+    ToastModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBWhwJkhsPej0DGz5a0MKu-x_24m6RBVYc',
       libraries: ["places"]
@@ -104,7 +107,7 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
   ],
 
 
-  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,BidService,
+  providers: [HttpClientModule, CinemaService, LoginService,AuthServiceService, TheaterService, UserService, AdService, GeocoderService,BidService, NotificationService,
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true } //httpClient Interceptor
     {
       provide: Http,

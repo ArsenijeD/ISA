@@ -8,15 +8,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 
 import com.example.domain.Ad;
-import com.example.domain.Bid;
+import com.example.domain.Notification;
+import com.example.domain.User;
 
+public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-public interface BidRepository  extends JpaRepository<Bid, Long> {
-
-	ArrayList<Bid> findAllByAd(Ad ad);
+	
+	ArrayList<Notification> findAllByUser(User u);
 	
 	@Modifying
     @Transactional
-    void deleteById(Long id);
-	
+    void deleteByUser(User u);
 }

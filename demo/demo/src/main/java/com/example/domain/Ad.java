@@ -46,8 +46,8 @@ public class Ad implements Serializable {
     @JoinColumn(name="user_id")
     private User user;
 	
-	@OneToMany(mappedBy="ad")
-    private Set<Bid> bids;
+//	@OneToMany(mappedBy="ad")
+//    private Set<Bid> bids;
 
 	public Long getId() {
 		return id;

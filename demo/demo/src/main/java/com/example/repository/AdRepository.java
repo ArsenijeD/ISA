@@ -22,4 +22,7 @@ public interface AdRepository extends JpaRepository<Ad, Long>{
     void deleteById(Long id);
 	
 	Ad findOneById(Long id);
+	
+	public ArrayList<Ad> findByUserNotAndConfirmed(User u, Long confirmed);
+
 }

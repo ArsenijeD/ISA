@@ -52,6 +52,16 @@ export class UserService {
   
   }
 
+  getSystemAdmins(){
+    return this.http.get("http://localhost:8080/getSystemAdmins").map(data => data.json())
+    .catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        return Observable.throw(err);
+    });
+  
+  }
+
   updateUserRole(user : any) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
