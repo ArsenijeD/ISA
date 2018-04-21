@@ -268,7 +268,7 @@ export class CinemaService {
     headers.append('Content-Type', 'application/json');
     alert(JSON.stringify(FastTicketsDTO));
     return this.http.put('http://localhost:8080/public/projections/addFastTickets', 
-      JSON.stringify(FastTicketsDTO), { headers : headers }).map((data : Response) => data.json());
+      JSON.stringify(FastTicketsDTO), { headers : headers }).map((data : Response) => data.json());    
 
   }
 
@@ -277,7 +277,7 @@ export class CinemaService {
     headers.append('Content-Type', 'application/json');
     alert(JSON.stringify(ReservationTicketDTO));
     return this.http.put('http://localhost:8080/public/tickets/fastReserveTicket', 
-      JSON.stringify(ReservationTicketDTO), { headers : headers }).map((data : Response) => data.json());
+      JSON.stringify(ReservationTicketDTO), { headers : headers }).map((data : Response) => data.json()); 
 
   }
 
@@ -288,6 +288,14 @@ export class CinemaService {
     alert(JSON.stringify(ReservationTicketDTO));
     return this.http.put('http://localhost:8080/public/tickets/reserveTicket', 
       JSON.stringify(ReservationTicketDTO), { headers : headers }).map((data : Response) => data.json());
+
+  }
+
+  rateCinema(ratingCinemaDTO) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:8080/public/cinemas/rateCinema', 
+      JSON.stringify(ratingCinemaDTO), { headers : headers }).map((data : Response) => data.json());  
 
   }
 

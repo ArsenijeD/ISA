@@ -89,7 +89,7 @@ export class TheaterService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     alert(JSON.stringify(performance));
-    return this.http.post('http://localhost:8080/public/performances/updatePerformance', 
+    return this.http.put('http://localhost:8080/public/performances/updatePerformance', 
       JSON.stringify(performance), { headers : headers }).map((data : Response) => data.json());
   }
 
@@ -157,7 +157,7 @@ export class TheaterService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     alert(JSON.stringify(presentationDTO));
-    return this.http.post('http://localhost:8080/public/presentations/updatePresentation',
+    return this.http.put('http://localhost:8080/public/presentations/updatePresentation',
     JSON.stringify(presentationDTO), { headers : headers }).map((data : Response) => data.json());
 
   }
@@ -176,6 +176,15 @@ export class TheaterService {
         return Observable.throw(err);
     });
   
+  }
+
+
+  rateTheater(ratingTheaterDTO) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:8080/public/theaters/rateTheater', 
+      JSON.stringify(ratingTheaterDTO), { headers : headers }).map((data : Response) => data.json());
+
   }
 
 

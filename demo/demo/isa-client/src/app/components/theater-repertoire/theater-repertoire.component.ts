@@ -50,6 +50,9 @@ export class TheaterRepertoireComponent implements OnInit {
 
   ngOnInit() {
 
+    this.loggedInUser = this.authService.getUser();
+    console.log(this.loggedInUser);
+
     this.theaterService.currentTheater.subscribe(
       currentTheater => 
       {
@@ -84,8 +87,19 @@ export class TheaterRepertoireComponent implements OnInit {
     this.theaterService.deletePresentationById(theaterID, stageID, presentationID)
     .subscribe(data =>
       {
-        console.log(data);
-        this.currentTheater = data;
+
+        if(data==null){
+          alert("An error has occurred!");
+
+        } else {
+
+          console.log(data);
+          this.currentTheater = data;
+          alert("Succesfully deleted presentation!");
+
+        }
+
+        
       }
     );
 
@@ -113,8 +127,19 @@ export class TheaterRepertoireComponent implements OnInit {
     this.theaterService.registerPresentation({theater_id: this.currentTheater.id, stage_id : this.stage, performance_id : this.performance , date :  this.modified_date, time : this.modified_time, discount : this.discount})
     .subscribe(data =>
       {
-        console.log(data);
-        this.currentTheater = data;
+
+        if(data==null){
+          alert("An error has occurred!");
+
+        } else {
+
+
+          console.log(data);
+          this.currentTheater = data;
+          alert("Succesfully add presentation!");
+
+        }
+          
       } 
     );
 
@@ -154,13 +179,28 @@ export class TheaterRepertoireComponent implements OnInit {
     this.theaterService.updatePresentation({old_stage_id: this.change_old_stageID, presentation_id : this.change_presentation, theater_id : this.currentTheater.id, stage_id : this.change_stage, performance_id : this.change_performance , date :  this.change_modified_date, time : this.change_modified_time, discount : this.change_discount})
     .subscribe(data =>
       {
-        console.log(data);
-        this.currentTheater = data;
+
+        if(data==null){
+          alert("An error has occurred!");
+
+        } else {
+
+          console.log(data);
+          this.currentTheater = data;
+          alert("Succesfully changed presentation!");
+
+        }
+
       } 
     );
 
     this.router.navigateByUrl('/theater-repertoire');
   
+  }
+
+
+  onClickFastReserve(p) {
+    console.log("Nije implementirano...");
   }
 
   

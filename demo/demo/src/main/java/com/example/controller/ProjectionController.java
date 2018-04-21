@@ -226,7 +226,7 @@ public class ProjectionController {
 			method = RequestMethod.PUT,						// ovde menjao
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean addFastTickets(@RequestBody FastTicketsDTO ft) {
+	public ArrayList<Integer> addFastTickets(@RequestBody FastTicketsDTO ft) {
 		
 		int potrebanBrojBrzihKarata = ft.getFast_tickets_number();
 		Projection projection = projectionService.getProjectionByID(ft.getProjection_id());
@@ -234,6 +234,7 @@ public class ProjectionController {
 		boolean ima_ih_dovoljno = false;
 		ArrayList<Long> list_ticketsID = new ArrayList<Long>();
 		
+		ArrayList<Integer> list_seatNumberOnTicket = new ArrayList<Integer>();
 		
 		// prvo proveravam hoce li biti dovoljno karata
 		for(Ticket ticket : projection.getTickets()) {
@@ -242,6 +243,8 @@ public class ProjectionController {
 				if(!ticket.isForFastReservation()) {
 					potrebanBrojBrzihKarata--;
 					list_ticketsID.add(ticket.getId());
+					
+					list_seatNumberOnTicket.add(ticket.getSeat().getNumber());
 				}		
 			}
 			
@@ -261,12 +264,12 @@ public class ProjectionController {
 				ticketService.changeToFastReserveTicket(t);
 			}
 			
-			return true;
+			return list_seatNumberOnTicket;
 			
 			
 		}
 		
-		return false;
+		return new ArrayList<Integer>();
 		
 		
 		

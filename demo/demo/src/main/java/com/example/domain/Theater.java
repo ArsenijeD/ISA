@@ -43,7 +43,7 @@ public class Theater implements Serializable{
     private String adress;
 	
 	@Column(name = "averageRating", nullable = true)
-	private Float averageRating;
+	private Double averageRating;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_theater", joinColumns = @JoinColumn(name = "theater_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -102,11 +102,11 @@ public class Theater implements Serializable{
 
 
 	
-	public Float getAverageRating() {
+	public Double getAverageRating() {
 		return averageRating;
 	}
 
-	public void setAverageRating(Float averageRating) {
+	public void setAverageRating(Double averageRating) {
 		this.averageRating = averageRating;
 	}
 

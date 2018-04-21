@@ -65,9 +65,19 @@ public class CinemaServiceImpl implements CinemaService {
 		cinema.setAdress(c.getAdress());
 		cinema.setDescription(c.getDescription());
 		
+		
+		if(c.getAverageRating()!=null) {
+			cinema.setAverageRating(c.getAverageRating());
+		}
+		
 		if(c.getHalls()!=null) {
 			cinema.setHalls(c.getHalls());
 			System.out.println("Zamenio listu sala sa novom listom sala!");
+		}
+		
+		if(c.getCinemaRatings()!=null) {										// ovo sam dodao
+			cinema.setCinemaRatings(c.getCinemaRatings());
+			System.out.println("Zamenio listu ocena sa novom listom sala!");
 		}
 		
 		cinemaRepository.flush();

@@ -147,8 +147,19 @@ export class TheaterDetailsComponent implements OnInit {
     this.theaterService.changeTheater({id : this.currentTheater.id, name : this.theater_name, adress : this.theater_address , description :  this.theater_description})
     .subscribe(data =>
       {
-        console.log(data);
-        this.currentTheater = data;
+
+        if(data==null){
+
+          alert("An error has occurred!");
+
+        } else {
+
+          console.log(data);
+          this.currentTheater = data;
+          alert("Succesfully changed theater!");
+
+        }
+        
       } 
     );
 
@@ -171,15 +182,27 @@ export class TheaterDetailsComponent implements OnInit {
 
   addPerformanceSubmit() {
 
-    this.theaterService.registerPerformance({name:this.performance_name, duration:this.performance_duration, description:this.performance_description, genre:this.performance_genre, averageRating:this.performance_averageRating, price:this.performance_price})
+    this.theaterService.registerPerformance({name:this.performance_name, duration:this.performance_duration, description:this.performance_description, genre:this.performance_genre, averageRating:0, price:this.performance_price})
     .subscribe(data => {
         console.log(data);
 
         this.theaterService.getPerformances().subscribe(
           data=> 
           {
-            this.performancesArray = data;    
-            console.log(data);
+
+            if(data==null){
+
+              alert("An error has occurred!");
+    
+            } else {
+    
+              this.performancesArray = data;    
+              console.log(data);
+              alert("Succesfully added performance!");
+
+            }
+
+         
           }
         );
 
@@ -211,15 +234,26 @@ export class TheaterDetailsComponent implements OnInit {
 
   changePerformanceSubmit() {
 
-    this.theaterService.updatePerformance({id:this.change_performance_id, name:this.change_performance_name, duration:this.change_performance_duration, description:this.change_performance_description, genre:this.change_performance_genre, averageRating:this.change_performance_averageRating, price:this.change_performance_price})
+    this.theaterService.updatePerformance({id:this.change_performance_id, name:this.change_performance_name, duration:this.change_performance_duration, description:this.change_performance_description, genre:this.change_performance_genre, price:this.change_performance_price})
     .subscribe(data => {
         console.log(data);
 
         this.theaterService.getPerformances().subscribe(
           data=> 
           {
-            this.performancesArray = data;    
-            console.log(data);
+
+            if(data==null){
+
+              alert("An error has occurred!");
+    
+            } else {
+     
+              this.performancesArray = data;    
+              console.log(data);
+              alert("Succesfully changed performance!");
+              
+            }
+
           }
         );
 
@@ -245,6 +279,7 @@ export class TheaterDetailsComponent implements OnInit {
             {
               this.performancesArray = data;    
               console.log(data);
+              alert("Succesfully deleted performance!");
             }
           );
 
@@ -274,11 +309,20 @@ export class TheaterDetailsComponent implements OnInit {
 
   addStageSubmit() {
 
-    this.theaterService.addStage({cinema_id:this.currentTheater.id, number:this.stage_number, numberOfSeats:this.number_OfChairs})
+    this.theaterService.addStage({theater_id:this.currentTheater.id, number:this.stage_number, numberOfSeats:this.number_OfChairs})
     .subscribe(data => {
-        console.log(data);
 
+      if(data==null){
+
+        alert("An error has occurred!");
+
+      } else {
+
+        console.log(data);
         this.currentTheater = data;
+        alert("Succesfully added stage!");
+        
+      }
 
       } 
     );
@@ -292,8 +336,19 @@ export class TheaterDetailsComponent implements OnInit {
     this.theaterService.deleteStage(theaterID, stageID)
     .subscribe(data =>
       {
-        console.log(data);
-        this.currentTheater = data;
+
+        if(data==null){
+
+          alert("An error has occurred!");
+
+        } else {
+
+          console.log(data);
+          this.currentTheater = data;
+          alert("Succesfully deleted stage!");
+          
+        }
+
       }
     );
 

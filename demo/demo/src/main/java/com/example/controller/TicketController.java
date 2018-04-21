@@ -45,7 +45,7 @@ public class TicketController {
 			method = RequestMethod.PUT,						
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean fastReserveTicket(@RequestBody ReservationTicketDTO rt) {
+	public Ticket fastReserveTicket(@RequestBody ReservationTicketDTO rt) {
 		
 		try {
 				User user = userService.getOneById(rt.getUser_id());
@@ -70,7 +70,9 @@ public class TicketController {
 				try {
 		            Date date = formatter.parse(newDate);
 		            if(date.before(today)){
-		                return false;
+		            	Ticket t = new Ticket();
+		            	t.setPrice(10041995);
+		                return t;
 		            }
 		           
 		        } catch (ParseException e) {
@@ -86,15 +88,19 @@ public class TicketController {
 						ticket.setReserved(true);
 						ticketService.reserveTicket(user, ticket);
 						
-						return true;
+						return ticket;
 					}
 				}
 							
-				return false;
+				Ticket t = new Ticket();
+            	t.setPrice(10041995);
+                return t;
 		
 			} catch (Exception e) {
 				e.printStackTrace();
-				return false;
+				Ticket t = new Ticket();
+            	t.setPrice(10041995);
+                return t;
 			}
 		
 		

@@ -67,6 +67,16 @@ public class TheaterServiceImpl implements TheaterService{
 		theater.setAdress(t.getAdress());
 		theater.setDescription(t.getDescription());
 		
+		
+		if(t.getAverageRating()!=null) {
+			theater.setAverageRating(t.getAverageRating());
+		}
+		
+		if(t.getStages()!=null) {
+			theater.setStages(t.getStages());
+			System.out.println("Zamenio listu sala sa novom listom sala!");
+		}
+		
 		if(t.getStages()!=null) {
 			theater.setStages(t.getStages());
 			System.out.println("Zamenio listu sala sa novom listom sala!");

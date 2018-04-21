@@ -38,6 +38,15 @@
                     <agm-marker [latitude]="latitudes[i]" [longitude]="longitudes[i]" ></agm-marker>
                   </agm-map>
 
+                  <br>
+
+                <ngb-rating [(rate)]="currentRate" (rateChange) = "rated(t)" [readonly]="isLoggedInUser">
+                    <ng-template let-fill="fill" let-index="index">
+                      <span class="star" [class.filled]="fill === 100" [class.bad]="index < 3">&#9733;</span>
+                    </ng-template>
+                  </ngb-rating>
+
+
                 </div>
                 <div class="col-md-5">
                     <div class="row">
@@ -66,9 +75,6 @@
                          </div>
                     </div>
                     
-                    
-                    
-
                   <br><br><br><br>
 
                   <button type="button" class="btn btn-primary" (click)="onClickTheaterRepertoar(t)">Repertoire</button>

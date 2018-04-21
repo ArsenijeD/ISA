@@ -22,7 +22,11 @@ export class ViewCinemasComponent implements OnInit {
 
   private latitudes : any[] = [];
   private longitudes : any[] = []; 
+
+  private currentRate = 6;
  
+
+  private isLoggedInUser = true;
 
   constructor(private router : Router, private cinemaService : CinemaService, private geocoderService : GeocoderService, private authService:AuthServiceService) {
 
@@ -33,6 +37,9 @@ export class ViewCinemasComponent implements OnInit {
 
     this.loggedInUser = this.authService.getUser();
     console.log(this.loggedInUser);
+
+    if(this.loggedInUser.roles[0].name == "USER")
+      this.isLoggedInUser = false;
 
     this.cinemaService.getCinemas()
       .subscribe(
@@ -116,6 +123,29 @@ export class ViewCinemasComponent implements OnInit {
     this.router.navigateByUrl('/cinema-details');
 
   }
+
+
+  rated(cinema : any) {
+    alert("GLASAO!")
+    this.cinemaService.rateCinema({userID:this.loggedInUser.id, cinemaID:cinema.id, mark:this.currentRate}).subscribe(
+      data =>
+      {
+        console.log(data);
+
+        if(data!=null){
+          for (let i = 0; i < this.cinemasArray.length; i++) {
+            if(this.cinemasArray[i].id == data.id){
+              this.cinemasArray[i] = data;
+            }
+          }
+        } 
+
+      }
+    );
+
+  }
+
+
 }
  
 

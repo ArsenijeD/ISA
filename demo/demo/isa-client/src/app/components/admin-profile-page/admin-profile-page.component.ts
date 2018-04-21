@@ -165,7 +165,7 @@ export class AdminProfilePageComponent implements OnInit {
   //     return 'by pressing ESC';
   //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
   //     return 'by clicking on a backdrop';
-  //   } else {
+  //   } else {on
   //     return  `with: ${reason}`;
   //   }
   // }
@@ -185,7 +185,7 @@ export class AdminProfilePageComponent implements OnInit {
   onSubmit(cinemaName : string, cinemaAdress : string, cinemaDescription : string) {
 
     alert("iz komponente: " + cinemaName);
-    this.cinemaService.registerCinema({name : cinemaName, adress : cinemaAdress, description : cinemaDescription}).subscribe(data => {
+    this.cinemaService.registerCinema({name : cinemaName, adress : cinemaAdress, averageRating:0, description : cinemaDescription}).subscribe(data => {
       
       
       

@@ -148,9 +148,18 @@ export class CinemaDetailsComponent implements OnInit {
 
     this.cinemaService.changeCinema({id : this.currentCinema.id, name : this.cinema_name, adress : this.cinema_address , description :  this.cinema_description})
     .subscribe(data =>
-      {
-        console.log(data);
-        this.currentCinema = data;
+      {      
+        if(data==null){
+
+          alert("An error has occurred!");
+
+        } else {
+
+          console.log(data);
+          this.currentCinema = data;
+          alert("Succesfully changed cinema!");
+
+        }
       } 
     );
 
@@ -172,15 +181,26 @@ export class CinemaDetailsComponent implements OnInit {
 
   addFilmSubmit() {
 
-    this.cinemaService.registerFilm({name:this.film_name, duration:this.film_duration, description:this.film_description, genre:this.film_genre, averageRating:this.film_averageRating, price:this.film_price})
+    this.cinemaService.registerFilm({name:this.film_name, duration:this.film_duration, description:this.film_description, genre:this.film_genre, averageRating:0, price:this.film_price})
     .subscribe(data => {
         console.log(data);
 
         this.cinemaService.getFilms().subscribe(
           data=> 
           {
-            this.filmsArray = data;    
-            console.log(data);
+
+            if(data==null){
+
+              alert("An error has occurred!");
+    
+            } else {
+    
+              this.filmsArray = data;    
+              console.log(data);
+              alert("Succesfully added film!");
+
+            }
+ 
           }
         );
 
@@ -214,15 +234,26 @@ export class CinemaDetailsComponent implements OnInit {
 
   changeFilmSubmit() {
 
-    this.cinemaService.updateFilm({id:this.change_film_id, name:this.change_film_name, duration:this.change_film_duration, description:this.change_film_description, genre:this.change_film_genre, averageRating:this.change_film_averageRating, price:this.change_film_price})
+    this.cinemaService.updateFilm({id:this.change_film_id, name:this.change_film_name, duration:this.change_film_duration, description:this.change_film_description, genre:this.change_film_genre, price:this.change_film_price})
     .subscribe(data => {
         console.log(data);
 
         this.cinemaService.getFilms().subscribe(
           data=> 
           {
-            this.filmsArray = data;    
-            console.log(data);
+            
+            if(data==null){
+
+              alert("An error has occurred!");
+    
+            } else {
+    
+              this.filmsArray = data;    
+              console.log(data);
+              alert("Succesfully changed film!");
+              
+            }
+
           }
         );
 
@@ -250,6 +281,7 @@ export class CinemaDetailsComponent implements OnInit {
             {
               this.filmsArray = data;    
               console.log(data);
+              alert("Succesfully deleted film!");
             }
           );
 
@@ -281,9 +313,18 @@ export class CinemaDetailsComponent implements OnInit {
 
     this.cinemaService.addHall({cinema_id:this.currentCinema.id, number:this.hall_number, numberOfSeats:this.number_OfSeats})
     .subscribe(data => {
-        console.log(data);
 
+      if(data==null){
+
+        alert("An error has occurred!");
+
+      } else {
+
+        console.log(data);
         this.currentCinema = data;
+        alert("Succesfully added hall!");
+        
+      }
 
       } 
     );
@@ -297,8 +338,20 @@ export class CinemaDetailsComponent implements OnInit {
     this.cinemaService.deleteHall(cinemaID, hallID)
     .subscribe(data =>
       {
-        console.log(data);
-        this.currentCinema = data;
+
+        if(data==null){
+
+          alert("An error has occurred!");
+
+        } else {
+
+          console.log(data);
+          this.currentCinema = data;
+          alert("Succesfully deleted hall!");
+          
+        }
+      
+       
       }
     );
 
