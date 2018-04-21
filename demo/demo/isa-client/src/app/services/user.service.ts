@@ -68,6 +68,29 @@ export class UserService {
       JSON.stringify(user), { headers : headers }).map((data : Response) => data.json());
   }
 
-  
+  //SLUCAJNO SI BIO OVDE PROMENIO PUTANJU NA /user/getAllTickets" MOZDA SI JOS NESTO PROEMNIO
+  reserveTicket(ReservationTicketDTO :any) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    alert(JSON.stringify(ReservationTicketDTO));
+    return this.http.get('http://localhost:8080/public/tickets/reserveTicket').map((data : Response) => data.json());
+  }
+
+  getAllTickets(){
+    return this.http.get("http://localhost:8080/user/getAllTickets").map(data => data.json())
+    .catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " " + err.error.error + " \n" + err.error.message);
+        return Observable.throw(err);
+    });
+  }
+    cancleTicket(ticketId:any){
+      return this.http.get("http://localhost:8080/user/cancleReservation/"+ticketId).map(data => data.json())
+      .catch((err:HttpErrorResponse) =>
+      {
+          alert(err.status + " " + err.error.error + " \n" + err.error.message);
+          return Observable.throw(err);
+      });
+    }
   
 }

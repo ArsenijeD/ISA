@@ -1,18 +1,3 @@
-<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-      <a class="nav-link" href="home-guest">Home <span class="sr-only">(current)</span></a>
-    </li>
-  </ul>
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="register"><span class="glyphicon glyphicon-user"></span>Register</a>
-    </li>
-  </ul>
-</nav>
 
   
 <div *ngFor="let currentCinema of allCinemas" >
@@ -75,14 +60,11 @@
                 <br>
                 <p> <b>Price: </b> {{p.film.price}}</p> 
                 <p> <b>Discount: </b>{{p.discount}} %</p>
-                  <div *ngFor="let t of p.tickets">
-                    <!-- DODAJ DIV DA SE NE PRIKAZUJE AKO JE REZERVISANO MESTO-->
-                    <div  *ngIf="!t.reserved && !t.forFastReservation">
-                      <button type="button" class="btn btn-success" (click)="onClickReserve(p,t)"> Reserve</button>
-                      <br *ngIf="numSeat % 10===0" />
+                <div class="row">
+                    <div class="col-4"  *ngFor="let t of p.tickets | orderBy:'id'; let i = index"> <!--| orderBy: {property: id}-->
+                        <button [disabled]="!(!t.reserved && !t.forFastReservation)" type="button" class="btn btn-success" (click)="onClickReserve(p,t)"> Reserve-{{t.id}}</button>                  
                     </div>
-                  </div>
-                <br>
+                </div>
               </div>
             </div>
             

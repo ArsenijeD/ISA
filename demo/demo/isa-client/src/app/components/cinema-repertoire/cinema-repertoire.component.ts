@@ -41,14 +41,12 @@ export class CinemaRepertoireComponent implements OnInit {
   private change_discount : any;
 
   private change_old_hallID : any;
-  
- 
+
   private fast_tickets_number : any;
   
   private fastTickets_hall: any;
   private fastTickets_projection: any;
 
-  
 
   private loggedInUser : any;
   private isAdmin = true;          // ovo promeni posle na true !!!
@@ -60,8 +58,11 @@ export class CinemaRepertoireComponent implements OnInit {
 
   ngOnInit() {
 
+
     this.loggedInUser = this.authService.getUser();
     console.log(this.loggedInUser);
+
+  
 
     this.cinemaService.currentCinema.subscribe(
       currentCinema => 
@@ -85,10 +86,11 @@ export class CinemaRepertoireComponent implements OnInit {
           }
         }
 
+
       }
     );
 
-    
+
 
     this.cinemaService.getFilms()
       .subscribe(

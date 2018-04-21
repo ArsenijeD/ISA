@@ -1,6 +1,8 @@
 package com.example.controller;
 
 
+import static org.mockito.Matchers.anyList;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +20,8 @@ import com.example.DTO.ReservationTicketDTO;
 import com.example.domain.Projection;
 import com.example.domain.Ticket;
 import com.example.domain.User;
+import com.example.repository.CinemaRepository;
+import com.example.service.CinemaService;
 import com.example.service.ProjectionService;
 import com.example.service.TicketService;
 import com.example.service.UserService;
@@ -162,4 +166,6 @@ public class TicketController {
 				return false;
 			}
 	}
+	
+
 }
