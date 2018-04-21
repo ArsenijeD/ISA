@@ -2,10 +2,12 @@ import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import { Router } from '@angular/router';
 import { CinemaService } from '../../services/cinema.service';
 import { AuthServiceService} from '../../services/auth-service.service';
+import { OrderPipe } from 'ngx-order-pipe';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-reservation',
@@ -16,8 +18,10 @@ export class ReservationComponent implements OnInit {
   private allCinemas:any[] = [];
   private numSeat:any;  
   private loggedInUser : any;
+  result: number[];
 
-  constructor(private router : Router, private cinemaService : CinemaService, private modalService: NgbModal, private authService:AuthServiceService) { }
+  constructor(private orderPipe: OrderPipe,private router : Router, private cinemaService : CinemaService, private modalService: NgbModal, private authService:AuthServiceService) { 
+  }
 
   ngOnInit() {
     this.loggedInUser = this.authService.getUser();
@@ -38,6 +42,8 @@ export class ReservationComponent implements OnInit {
           console.log(data);
           if(!data){
             alert("No more tickets for reservation!");
+          }else{
+            this.router.navigateByUrl("/reservation");
           }
         }
       );

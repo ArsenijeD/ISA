@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active" >
+        <a class="nav-link" href="/home-guest">Welcome<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active"  *ngIf="loggedUser!=null" >
+          <a class="nav-link" href="/home-user">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li *ngIf="loggedUser==null" class="nav-item">
+        <a class="nav-link" href="/login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+      </li>
+      
+
+      <li *ngIf="loggedUser!=null" class="nav-item">
+          <a class="nav-link"  href="/home-guest" (clic)='clickLogout()'><span class="glyphicon glyphicon-log-in"></span>Logout</a>
+        </li>
+
+      <li  *ngIf="loggedUser==null"class="nav-item">
+        <a class="nav-link" href="/register"><span class="glyphicon glyphicon-user"></span>Register</a>
+      </li>
+
+    </ul>
+  </nav>

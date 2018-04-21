@@ -41,22 +41,11 @@ export class CinemaRepertoireComponent implements OnInit {
   private change_discount : any;
 
   private change_old_hallID : any;
-<<<<<<< HEAD
-  
  
   private fast_tickets_number : any;
   
   private fastTickets_hall: any;
   private fastTickets_projection: any;
-=======
-
-  
-  private fast_tickets_number : any;
-  
-  private fastTickets_hall : any;
- 
-  private fastTickets_projection : any;
->>>>>>> branch 'master' of https://github.com/jovica27/ISA.git
 
   private loggedInUser : any;
   private isAdmin = true;          // ovo promeni posle na true !!!
@@ -65,23 +54,29 @@ export class CinemaRepertoireComponent implements OnInit {
 
 
   ngOnInit() {
+    this.loggedInUser = this.authService.getUser();
+    console.log(this.loggedInUser);
+
+    
     this.cinemaService.currentCinema.subscribe(
       currentCinema => 
       {
         this.currentCinema = currentCinema;
         console.log(currentCinema);
+
+        for (let i = 0; i < this.currentCinema.admins.length; i++) {
+          if(this.currentCinema.admins[i].id==this.loggedInUser.id){
+            console.log("nasao admina pozorista!");
+              this.isAdmin = false;
+          } else {
+            console.log("Nije nasao admina pozorista!");
+            this.isAdmin = true;
+          }
+        }
       }
     );
 
-    for (let i = 0; i < this.currentCinema.admins.length; i++) {
-      if(this.currentCinema.admins[i].id==this.loggedInUser.id){
-        console.log("nasao admina pozorista!");
-          this.isAdmin = false;
-      } else {
-        console.log("Nije nasao admina pozorista!");
-        this.isAdmin = true;
-      }
-    }
+
 
     
     this.cinemaService.getFilms()

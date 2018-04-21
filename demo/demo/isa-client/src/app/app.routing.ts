@@ -22,6 +22,7 @@ import { FriendsComponent } from "./components/friends/friends.component";
 import { CinemaDetailsComponent } from './components/cinema-details/cinema-details.component';
 import { TheaterDetailsComponent } from './components/theater-details/theater-details.component';
 import { ReservationComponent } from "./components/reservation/reservation.component";
+import { HomeUserComponent } from "./components/home-user/home-user.component";
 
 
 
@@ -87,11 +88,14 @@ const appRoutes: Routes =
     {
         path:'test',
         component: TestComponent
+    },{
+        path:'home-user',
+        component:HomeUserComponent
     }
     ,
     {
         path: '',
-        redirectTo: '/login',
+        redirectTo: '/home-guest',
         pathMatch:'full'
         //component: LoginComponent
     },

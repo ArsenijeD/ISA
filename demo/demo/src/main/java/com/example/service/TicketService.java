@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.example.domain.Ticket;
@@ -23,8 +24,12 @@ public interface TicketService {
 	
 	List<Ticket> getUnReservedTickets(boolean reserved);
 	
+	List<Ticket> getTicketByUser(Long userId);
+	
+	Date convertDateFromString(String date);
 //	void assignUserToTicket(User u, Ticket t);
 	
+	boolean cancleTicket(Long id);
 	
 
 }

@@ -76,6 +76,11 @@ import { ReservationComponent } from './components/reservation/reservation.compo
 export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestOptions, auth: AuthServiceService, router: Router) {
   return new MyCustomHttp(backend, defaultOptions, auth, router);
 }
+import { OrderModule } from 'ngx-order-pipe';
+import { HomeUserComponent } from './components/home-user/home-user.component';
+import { LoginLogoutComponent } from './components/login-logout/login-logout.component';
+import { TicketPreviewComponent } from './components/ticket-preview/ticket-preview.component'; // <-- Import OrderModule
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -101,9 +106,13 @@ export function providerCustomHttp(backend: XHRBackend, defaultOptions: RequestO
     TheaterDetailsComponent,
     FanZoneAdminProfileComponent,
     UserProfilePageComponent,
-    ReservationComponent
+    ReservationComponent,
+    HomeUserComponent,
+    LoginLogoutComponent,
+    TicketPreviewComponent
   ],
   imports: [
+    OrderModule,
     BrowserModule,
     routing,
     HttpClientModule,

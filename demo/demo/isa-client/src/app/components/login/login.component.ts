@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     alert("iz komponente: " + name+password+rememberMe);
     let response=this.loginService.loginUser({name : name, password : password, rememberMe : rememberMe})
     .subscribe((next) => {
-      this.router.navigateByUrl("/profile"); // login succeleed\
+      this.router.navigateByUrl("/home-user"); // login succeleed\
       console.log("uspelo");
     }, error => {
       this.error = "Bad credentials"; // or extract smth from <error> object
