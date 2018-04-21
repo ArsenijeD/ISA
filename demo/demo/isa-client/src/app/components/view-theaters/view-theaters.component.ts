@@ -36,8 +36,10 @@ export class ViewTheatersComponent implements OnInit {
     this.loggedInUser = this.authService.getUser();
     console.log(this.loggedInUser);
 
-    if(this.loggedInUser.roles[0].name == "USER")
-      this.isLoggedInUser = false;
+    if(this.loggedInUser!= null){
+      if(this.loggedInUser.roles[0].name == "USER")
+        this.isLoggedInUser = false;
+    }
 
     this.theaterService.getTheaters()
     .subscribe(
@@ -54,21 +56,27 @@ export class ViewTheatersComponent implements OnInit {
         }
 
 
-        // ZBOG SAKRIVANJA DUGMETA DETAILS
-
         for (let i = 0; i < this.theatersArray.length; i++) {    
           this.isAdminArray.push(true);
-          for (let j = 0; j < this.theatersArray[i].admins.length; j++) {
-            if(this.theatersArray[i].admins[j].id==this.loggedInUser.id){
-              console.log("nasao admina pozorista!");
-                this.isAdminArray[i] = false;
-  
-              } else {
-                console.log("nije nasao admina pozorista!")
-                this.isAdminArray[i] = true;
+        }
+
+        // ZBOG SAKRIVANJA DUGMETA DETAILS
+
+        if(this.loggedInUser!= null){
+          for (let i = 0; i < this.theatersArray.length; i++) {    
+            this.isAdminArray.push(true);
+            for (let j = 0; j < this.theatersArray[i].admins.length; j++) {
+              if(this.theatersArray[i].admins[j].id==this.loggedInUser.id){
+                console.log("nasao admina pozorista!");
+                  this.isAdminArray[i] = false;
+    
+                } else {
+                  console.log("nije nasao admina pozorista!")
+                  this.isAdminArray[i] = true;
+              }
             }
-          }
             
+          }
         }
 
       }

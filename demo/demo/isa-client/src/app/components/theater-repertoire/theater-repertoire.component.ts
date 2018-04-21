@@ -60,13 +60,15 @@ export class TheaterRepertoireComponent implements OnInit {
         console.log(currentTheater);});
 
 
-        for (let i = 0; i < this.currentTheater.admins.length; i++) {
-          if(this.currentTheater.admins[i].id==this.loggedInUser.id){
-            console.log("nasao admina pozorista!");
-              this.isAdmin = false;
-          } else {
-            console.log("Nije nasao admina pozorista!");
-            this.isAdmin = true;
+        if(this.loggedInUser!= null){
+          for (let i = 0; i < this.currentTheater.admins.length; i++) {
+            if(this.currentTheater.admins[i].id==this.loggedInUser.id){
+              console.log("nasao admina pozorista!");
+                this.isAdmin = false;
+            } else {
+              console.log("Nije nasao admina pozorista!");
+              this.isAdmin = true;
+            }
           }
         }
 

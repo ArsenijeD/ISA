@@ -38,8 +38,10 @@ export class ViewCinemasComponent implements OnInit {
     this.loggedInUser = this.authService.getUser();
     console.log(this.loggedInUser);
 
-    if(this.loggedInUser.roles[0].name == "USER")
-      this.isLoggedInUser = false;
+    if(this.loggedInUser!= null){
+      if(this.loggedInUser.roles[0].name == "USER")
+        this.isLoggedInUser = false;
+    }
 
     this.cinemaService.getCinemas()
       .subscribe(
@@ -55,22 +57,29 @@ export class ViewCinemasComponent implements OnInit {
             console.log(data[i].adress);
           }
 
-
-          // OVO JE ZA SAKRIVANJA DUGMETA DETAILS
           
           for (let i = 0; i < this.cinemasArray.length; i++) {   
             this.isAdminArray.push(true);
-            for (let j = 0; j < this.cinemasArray[i].admins.length; j++) {
-              if(this.cinemasArray[i].admins[j].id==this.loggedInUser.id){
-                console.log("nasao admina pozorista!");
-                  this.isAdminArray[i] = false;
-    
-                } else {
-                  console.log("nije nasao admina pozorista!")
-                  this.isAdminArray[i] = true;
+          }
+
+
+          if(this.loggedInUser!= null){
+          // OVO JE ZA SAKRIVANJA DUGMETA DETAILS
+          
+            for (let i = 0; i < this.cinemasArray.length; i++) {   
+              this.isAdminArray.push(true);
+              for (let j = 0; j < this.cinemasArray[i].admins.length; j++) {
+                if(this.cinemasArray[i].admins[j].id==this.loggedInUser.id){
+                  console.log("nasao admina pozorista!");
+                    this.isAdminArray[i] = false;
+      
+                  } else {
+                    console.log("nije nasao admina pozorista!")
+                    this.isAdminArray[i] = true;
+                }
               }
+                
             }
-              
           }
             
         }

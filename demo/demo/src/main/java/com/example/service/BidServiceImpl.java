@@ -2,6 +2,8 @@ package com.example.service;
 
 import java.util.ArrayList;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ public class BidServiceImpl implements BidService {
 	}
 
 	@Override
+	@Transactional
 	public boolean registerBid(Bid b) {
 		bidRepository.save(b);
 		return true;

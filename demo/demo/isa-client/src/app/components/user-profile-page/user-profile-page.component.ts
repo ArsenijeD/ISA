@@ -3,6 +3,7 @@ import { AuthServiceService } from '../../services/auth-service.service';
 import { LoginService } from '../../services/login.service';
 import {FormsModule} from '@angular/forms'
 import { UserService } from '../../services/user.service'
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-user-profile-page',
   templateUrl: './user-profile-page.component.html',
@@ -11,7 +12,7 @@ import { UserService } from '../../services/user.service'
 export class UserProfilePageComponent implements OnInit {
   userEdit:any;
   disableEditing:boolean;
-  constructor(private auth:AuthServiceService,private userService:UserService ) {
+  constructor(private router : Router, private auth:AuthServiceService,private userService:UserService ) {
  
     this.disableEditing=true;
    }
@@ -46,5 +47,10 @@ export class UserProfilePageComponent implements OnInit {
     else{
       this.disableEditing=true
     }
+  }
+
+  goToFanZone() {
+
+    this.router.navigateByUrl('/fanZone');
   }
 }

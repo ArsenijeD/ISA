@@ -8,6 +8,7 @@ export class AuthServiceService {
   private user:/*{ id: number }*/any | null;
 
   public logoutUser(){
+    this.token=null;
     this.user=null;
     localStorage.clear();
   }
